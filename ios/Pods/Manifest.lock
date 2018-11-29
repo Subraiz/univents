@@ -1,0 +1,36 @@
+PODS:
+  - Crashlytics (3.11.1):
+    - Fabric (~> 1.8.1)
+  - Fabric (1.8.2)
+  - GoogleMaps (2.7.0):
+    - GoogleMaps/Maps (= 2.7.0)
+  - GoogleMaps/Base (2.7.0)
+  - GoogleMaps/Maps (2.7.0):
+    - GoogleMaps/Base
+  - yoga (0.57.4.React)
+
+DEPENDENCIES:
+  - Crashlytics
+  - Fabric
+  - GoogleMaps
+  - yoga (from `../node_modules/react-native/ReactCommon/yoga/Yoga.podspec`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Crashlytics
+    - Fabric
+    - GoogleMaps
+
+EXTERNAL SOURCES:
+  yoga:
+    :path: "../node_modules/react-native/ReactCommon/yoga/Yoga.podspec"
+
+SPEC CHECKSUMS:
+  Crashlytics: ca7ab4bc304aa216bdc2e4c1a96389ee77252203
+  Fabric: d2b22f443ba195d8a7cc204da230977c72733b40
+  GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
+  yoga: b1ce48b6cf950b98deae82838f5173ea7cf89e85
+
+PODFILE CHECKSUM: eb3ef9ade1b0ad99be31c5cd8d5af2879b6b9907
+
+COCOAPODS: 1.5.3
