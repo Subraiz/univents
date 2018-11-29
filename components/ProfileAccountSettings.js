@@ -12,6 +12,7 @@ class ProfileAccountSettings extends Component {
 
   signOutUser() {
     this.props.signOutUser();
+    this.props.navigation.navigate("Explore");
     this.props.navigation.navigate("Login");
   }
   render() {

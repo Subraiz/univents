@@ -30,12 +30,6 @@ class SignUpPersonalInfo extends Component {
     female: female0
   };
 
-  componentWillUpdate() {
-    UIManager.setLayoutAnimationEnabledExperimental &&
-      UIManager.setLayoutAnimationEnabledExperimental(true);
-    LayoutAnimation.spring();
-  }
-
   renderButton() {
     if (this.props.sex !== "" && this.props.major !== "") {
       return (
