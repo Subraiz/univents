@@ -14,6 +14,7 @@ import com.facebook.soloader.SoLoader;
 
 import java.util.Arrays;
 import java.util.List;
+import com.RNFetchBlob.RNFetchBlobPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -30,7 +31,8 @@ public class MainApplication extends Application implements ReactApplication {
             new ImagePickerPackage(),
             new VectorIconsPackage(),
             new MapsPackage(),
-            new RNCameraPackage()
+            new RNCameraPackage(),
+              new RNFetchBlobPackage()
       );
     }
 
