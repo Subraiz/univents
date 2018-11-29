@@ -6,9 +6,11 @@ export default class Event {
     day: "",
     year: ""
   };
+  eventCoordinates = {
+    latitude: 1,
+    longitude: 1
+  };
   eventLocation = {
-    longitude: 0,
-    latitude: 0,
     locationAddress: "",
     locationName: ""
   };
@@ -17,12 +19,15 @@ export default class Event {
     endTime: ""
   };
   eventType = ""; // Can be school wide, public, or private
+  eventImage = { uri: "url" };
   eventID = ""; // Will be doc ID of the event
 
-  Event(
+  constructor(
     eventName,
+    eventDescription,
     eventDate,
     eventHost,
+    eventCoordinates,
     eventLocation,
     eventTime,
     eventType,
@@ -30,8 +35,10 @@ export default class Event {
     eventID
   ) {
     this.eventName = eventName;
+    this.eventDescription = eventDescription;
     this.eventDate = eventDate;
     this.eventHost = eventHost;
+    this.eventCoordinates = eventCoordinates;
     this.eventLocation = eventLocation;
     this.eventTime = eventTime;
     this.eventType = eventType;
@@ -46,6 +53,9 @@ export default class Event {
   getEventName() {
     return this.eventName;
   }
+  getEventDescription() {
+    return this.eventDescription;
+  }
   getEventDate() {
     return this.eventDate;
   }
@@ -55,6 +65,9 @@ export default class Event {
   getEventLocation() {
     return this.eventLocation;
   }
+  getEventCoordinates() {
+    return this.eventCoordinates;
+  }
   getAttendance() {
     return this.attendance;
   }
@@ -63,6 +76,9 @@ export default class Event {
   }
   getEventType() {
     return this.eventType;
+  }
+  getEventImage() {
+    return this.eventImage;
   }
   getEventID() {
     return this.eventID;
