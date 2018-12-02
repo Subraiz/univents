@@ -42,7 +42,7 @@ class Explore extends Component {
           searchIcon={{ size: 24 }}
           placeholder="Search For an Event..."
         />
-        <Map />
+        <Map navigation={this.props.navigation} />
         <Deck navigation={this.props.navigation} />
       </SafeAreaView>
     );

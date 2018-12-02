@@ -8,7 +8,7 @@ import {
   PermissionsAndroid,
   Platform
 } from "react-native";
-import MapView, { Marker } from "react-native-maps";
+import MapView, { Marker, Callout } from "react-native-maps";
 import Event from "../classes/Event";
 import CustomMarker from "./CustomMarker";
 
@@ -18,14 +18,14 @@ const screenHeight = Dimensions.get("window").height;
 let event = new Event(
   "Soul Night",
   "Some good music",
-  { month: "11", day: "29", year: "2018" },
+  { month: "November", day: "29", year: "2018" },
   "BSF",
   {
-    latitude: 42.45455,
-    longitude: -71.1634
+    latitude: 42.33834229849836,
+    longitude: -71.16716750431807
   },
   {
-    locationAddress: "Commontwealth Ave",
+    locationAddress: "140 Commontwealth Ave, Chestnut Hill, MA 02135",
     locationName: "Vandy"
   },
   {
@@ -99,14 +99,18 @@ class Map extends Component {
     navigator.geolocation.clearWatch(this.watchId);
   }
 
+  onCalloutPress() {
+    this.marker.hideCallout();
+  }
+
   render() {
     return (
       <MapView
         style={styles.mapStyle}
-        region={this.state.mapRegion}
-        showsUserLocation={true}
-        followUserLocation={true}
-        onRegionChange={this.onRegionChange.bind(this)}
+        // region={this.state.mapRegion}
+        // showsUserLocation={true}
+        // followUserLocation={true}
+        // onRegionChange={this.onRegionChange.bind(this)}
         initialRegion={{
           latitude: 42.3355488,
           longitude: -71.16849450000001,
@@ -114,16 +118,13 @@ class Map extends Component {
           longitudeDelta: 0.00421 * 3
         }}
       >
-        <Marker
-          coordinate={{
-            latitude: 42.33834229849836,
-            longitude: -71.16716750431807
-          }}
+        <CustomMarker
+          navigation={this.props.navigation}
+          event={event}
+          coordinate={event.getEventCoordinates()}
           title={event.getEventName()}
           description={event.getEventDescription()}
-        >
-          <CustomMarker />
-        </Marker>
+        />
       </MapView>
     );
   }

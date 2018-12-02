@@ -9,7 +9,6 @@ import TabBarIcon from "../components/TabBarIcon";
 import Explore from "../screens/Explore";
 import Events from "../screens/Events";
 import Profile from "../screens/Profile";
-import EventInformation from "../screens/EventInformation";
 import BottomNavigation, {
   IconTab,
   Badge
@@ -73,7 +72,8 @@ export default createBottomTabNavigator(
   {
     initialRouteName: "Explore",
     tabBarOptions: {
-      activeTintColor: "red"
+      activeTintColor: "red",
+      inactiveTintColor: "#4D4D4D"
     }
   }
 );

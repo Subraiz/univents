@@ -25,7 +25,8 @@ import SignUpInterests from "./screens/login/SignUpInterests";
 import Explore from "./screens/Explore";
 import Events from "./screens/Events";
 import Profile from "./screens/Profile";
-import EventInformation from "./screens/EventInformation";
+import EventInformation from "./components/EventInformation";
+import CreateEvent from "./screens/CreateEvent";
 import EventCardsRow from "./components/EventCardsRow";
 import AdminTools from "./components/AdminTools";
 import { AppNavigator, ProfileNavigator } from "./navigation/AppNavigator";
@@ -36,6 +37,7 @@ let count = 0;
 const LoginStack = createStackNavigator(
   {
     Login: Login,
+    CreateEvent: CreateEvent,
     SignUpForm: SignUpForm,
     SignUpPersonalInfo: SignUpPersonalInfo,
     SignUpProfilePhoto: SignUpProfilePhoto,
@@ -44,6 +46,7 @@ const LoginStack = createStackNavigator(
     EventInformation: EventInformation,
     EventCardsRow: EventCardsRow,
     AdminTools: AdminTools,
+    Events: Events,
     AppNavigator: {
       screen: AppNavigator,
       navigationOptions: {
@@ -61,6 +64,7 @@ const LoginStack = createStackNavigator(
 const HomeStack = createStackNavigator(
   {
     Login: Login,
+    CreateEvent: CreateEvent,
     SignUpForm: SignUpForm,
     SignUpPersonalInfo: SignUpPersonalInfo,
     SignUpProfilePhoto: SignUpProfilePhoto,

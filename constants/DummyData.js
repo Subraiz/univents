@@ -1,31 +1,83 @@
-const DummyData = [
+import Event from "../classes/Event";
+
+let event1 = new Event(
+  "Soul Night",
+  "Some good music",
+  { month: "November", day: "29", year: "2018" },
+  "BSF",
   {
-    eventDate: "Oct 18, 2018 All-Day",
-    eventName: "Starbucks 25% off Student Discount",
-    eventHost: "Host: Starbucks",
-    eventLocation: "2197 Commonwealth Ave - Brighton",
-    imageURL:
-      "https://www.incimages.com/uploaded_files/image/970x450/getty_945685712_2000133420009280406_353733.jpg",
-    eventID: "1"
+    latitude: 42.33834229849836,
+    longitude: -71.16716750431807
   },
   {
-    eventDate: "October 31, 2018 at 9:00PM",
-    eventName: "33% off Ice Cream",
-    eventHost: "Host: White Mountain",
-    eventLocation: "White Mountain - Brighton",
-    imageURL:
-      "https://d2rd7etdn93tqb.cloudfront.net/wp-content/uploads/2016/06/ice-cream-cones-062816.jpg",
-    eventID: "2"
+    locationAddress: "140 Commontwealth Ave, Chestnut Hill, MA",
+    locationName: "Vandy"
   },
   {
-    eventDate: "October 9, 2018 at 9:00PM",
-    eventName: "Cookies and Coffee",
-    eventHost: "Host: Arrupe",
-    eventLocation: "Devlin 212 - Boston College",
-    imageURL:
-      "https://cook.fnr.sndimg.com/content/dam/images/cook/fullset/2011/11/8/0/CC_cookies-on-trays_s4x3.jpg.rend.hgtvcom.616.462.suffix/1348842142379.jpeg",
-    eventID: "3"
-  }
-];
+    startTime: "7:00PM",
+    endTime: "9:00PM"
+  },
+  "School",
+  {
+    uri:
+      "http://2.bp.blogspot.com/-_Pt34rSuAG4/UVTJVmFingI/AAAAAAAAADM/sfeHZt-8jtk/s1600/neo+soul.jpg"
+  },
+  "862-273-2073",
+  1998
+);
+
+let event2 = new Event(
+  "Soul Night",
+  "Some good music",
+  { month: "November", day: "29", year: "2018" },
+  "BSF",
+  {
+    latitude: 42.33834229849836,
+    longitude: -71.16716750431807
+  },
+  {
+    locationAddress: "140 Commontwealth Ave, Chestnut Hill, MA",
+    locationName: "Vandy"
+  },
+  {
+    startTime: "7:00PM",
+    endTime: "9:00PM"
+  },
+  "School",
+  {
+    uri:
+      "http://2.bp.blogspot.com/-_Pt34rSuAG4/UVTJVmFingI/AAAAAAAAADM/sfeHZt-8jtk/s1600/neo+soul.jpg"
+  },
+  "862-273-2073",
+  1998
+);
+
+let event3 = new Event(
+  "Soul Night",
+  "Some good music",
+  { month: "November", day: "29", year: "2018" },
+  "BSF",
+  {
+    latitude: 42.33834229849836,
+    longitude: -71.16716750431807
+  },
+  {
+    locationAddress: "140 Commontwealth Ave, Chestnut Hill, MA",
+    locationName: "Vandy"
+  },
+  {
+    startTime: "7:00PM",
+    endTime: "9:00PM"
+  },
+  "School",
+  {
+    uri:
+      "http://2.bp.blogspot.com/-_Pt34rSuAG4/UVTJVmFingI/AAAAAAAAADM/sfeHZt-8jtk/s1600/neo+soul.jpg"
+  },
+  "862-273-2073",
+  1998
+);
+
+const DummyData = [event1, event2, event3];
 
 export default DummyData;

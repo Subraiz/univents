@@ -20,6 +20,7 @@ export default class Event {
   };
   eventType = ""; // Can be school wide, public, or private
   eventImage = { uri: "url" };
+  eventContact = "";
   eventID = ""; // Will be doc ID of the event
 
   constructor(
@@ -32,6 +33,7 @@ export default class Event {
     eventTime,
     eventType,
     eventImage,
+    eventContact,
     eventID
   ) {
     this.eventName = eventName;
@@ -43,6 +45,7 @@ export default class Event {
     this.eventTime = eventTime;
     this.eventType = eventType;
     this.eventImage = eventImage;
+    this.eventContact = eventContact;
     this.eventID = eventID;
 
     this.usersAttended = [];
@@ -79,6 +82,9 @@ export default class Event {
   }
   getEventImage() {
     return this.eventImage;
+  }
+  getEventContact() {
+    return this.eventContact;
   }
   getEventID() {
     return this.eventID;

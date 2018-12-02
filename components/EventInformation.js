@@ -22,7 +22,7 @@ import InterestContainer from "../components/InterestContainer";
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
 
-let data = {};
+let event = {};
 let navigatable = {};
 
 class EventInformation extends Component {
@@ -37,7 +37,7 @@ class EventInformation extends Component {
     LayoutAnimation.easeInEaseOut();
 
     const { navigation } = this.props;
-    data = navigation.getParam("data", "NO-DATA");
+    event = navigation.getParam("data", "NO-DATA");
     navigatable = navigation.getParam("navigation", "NO-NAVIGATION");
   }
 
@@ -50,6 +50,15 @@ class EventInformation extends Component {
   }
 
   render() {
+    let locationAddress = event.getEventLocation().locationAddress;
+    locationAddress = locationAddress.split(",");
+
+    let { month, day, year } = event.getEventDate();
+    let eventDate = `${month} ${day}, ${year}`;
+
+    let { startTime, endTime } = event.getEventTime();
+    let eventTime = `${startTime} - ${endTime}`;
+
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView>
@@ -57,7 +66,7 @@ class EventInformation extends Component {
             <View style={styles.headerImageContainer}>
               <Image
                 style={styles.headerImage}
-                source={{ uri: data.imageURL }}
+                source={event.getEventImage()}
               />
               <TouchableOpacity
                 onPress={this.onReturn}
@@ -73,9 +82,9 @@ class EventInformation extends Component {
             </View>
 
             <View style={styles.informationContainer}>
-              <Text style={styles.eventNameStyle}>{data.eventName}</Text>
+              <Text style={styles.eventNameStyle}>{event.getEventName()}</Text>
               <Text style={styles.eventHostTextStyle}>
-                Public • {data.eventHost}
+                {event.getEventType()} • {event.getEventHost()}
               </Text>
               <View style={styles.dateStyle}>
                 <View style={styles.dateIcon}>
@@ -88,9 +97,9 @@ class EventInformation extends Component {
                 </View>
                 <View style={styles.dateInformation}>
                   <Text style={{ fontSize: 19, color: "black" }}>
-                    Wed, Oct 31, 2018
+                    {eventDate}
                   </Text>
-                  <Text style={{ color: "black" }}>9:00PM - 10:00PM</Text>
+                  <Text style={{ color: "black" }}>{eventTime}</Text>
                   <TouchableOpacity>
                     <Text style={{ color: "blue" }}>Add to Calendar</Text>
                   </TouchableOpacity>
@@ -115,9 +124,14 @@ class EventInformation extends Component {
                   </View>
                 </View>
                 <View style={styles.locationInformation}>
-                  <Text>White Mountain - Chestnut Hill</Text>
-                  <Text>19 Commonwealth Ave</Text>
-                  <Text>Chestnut Hill, MA 02467</Text>
+                  <Text style={{ fontSize: 19, color: "black" }}>
+                    {event.getEventLocation().locationName}
+                  </Text>
+                  <Text>{locationAddress[0]}</Text>
+                  <Text>
+                    {locationAddress[1].trim()}, {locationAddress[2]}
+                  </Text>
+                  <Text />
                 </View>
               </View>
             </View>
@@ -145,10 +159,7 @@ class EventInformation extends Component {
                 <Text style={styles.headerText}>Details</Text>
               </View>
               <Text style={styles.detailsText}>
-                In honor of the first day of fall we are giving away 33% on Ice
-                Cream of any flavor! We have all your flavors and toppings so
-                continue this semester with some of our falvorful and delcious
-                ice cream which is 33% off for Univents users only!
+                {event.getEventDescription()}
               </Text>
             </View>
 
@@ -173,7 +184,6 @@ class EventInformation extends Component {
                       latitude: 42.3355488,
                       longitude: -71.16849450000001
                     }}
-                    title={data.eventName}
                   />
                 </MapView>
               </View>
@@ -252,7 +262,6 @@ const styles = {
     marginRight: 6,
     justifyContent: "center"
   },
-  locationInformation: {},
   headerTextContainer: {
     borderBottomWidth: 0.25,
     borderBottomColor: "red",

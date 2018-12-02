@@ -17,27 +17,34 @@ import {
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
 
-const EventCard = props => {
+const EventCard = ({ event, onPress }) => {
+  let { month, day, year } = event.getEventDate();
+  let eventDate = `${month} ${day}, ${year}`;
+
+  let { locationAddress, locationName } = event.getEventLocation();
+  let eventLocation = `${locationName} - ${locationAddress}`;
+
+  let eventName = event.getEventName();
+  let hostName = event.getEventHost();
+
   return (
     <TouchableOpacity
       activeOpacity={0.8}
-      onPress={props.onPress}
+      onPress={onPress}
       style={styles.container}
     >
       <Image
         style={styles.imageStyle}
         borderRadius={10}
-        source={{
-          uri: props.event.imageURL
-        }}
+        source={event.getEventImage()}
       />
       <View style={styles.opacityContainer} />
 
       <View style={styles.textContainer}>
-        <Text style={styles.dateStyle}>{props.event.eventDate}</Text>
-        <Text style={styles.eventNameStyle}>{props.event.eventName}</Text>
-        <Text style={styles.hostNameStyle}>{props.event.eventHost}</Text>
-        <Text style={styles.locationStyle}>{props.event.eventLocation}</Text>
+        <Text style={styles.dateStyle}>{eventDate}</Text>
+        <Text style={styles.eventNameStyle}>{eventName}</Text>
+        <Text style={styles.hostNameStyle}>{hostName}</Text>
+        <Text style={styles.locationStyle}>{eventLocation}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -122,7 +129,7 @@ class EventCardsRow extends Component {
   renderEvent(item) {
     return (
       <EventCard
-        key={item.item.eventID}
+        key={item.item.getEventName()}
         event={item.item}
         navigation={this.props.navigation}
         onPress={this.onPress.bind(this, item.item)}

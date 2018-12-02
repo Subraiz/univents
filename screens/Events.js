@@ -6,12 +6,18 @@ import {
   SafeAreaView,
   UIManager,
   LayoutAnimation,
-  TouchableOpacity
+  TouchableOpacity,
+  Dimensions
 } from "react-native";
+import SavedEvents from "../components/SavedEvents";
+import CreatedEvents from "../components/CreatedEvents";
+import CreateEvent from "./CreateEvent";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { signOutUser } from "../redux/actions/SettingsActions";
-import QRCodeScanner from "react-native-qrcode-scanner";
+
+const screenWidth = Dimensions.get("window").width;
+const screenHeight = Dimensions.get("window").height;
 
 class Events extends Component {
   static navigationOptions = {
@@ -19,23 +25,93 @@ class Events extends Component {
     gesturesEnabled: false
   };
 
-  componentWillMount() {
-    UIManager.setLayoutAnimationEnabledExperimental &&
-      UIManager.setLayoutAnimationEnabledExperimental(true);
-    LayoutAnimation.easeInEaseOut();
+  state = {
+    screen: "Saved"
+  };
+
+  onButtonPress() {
+    console.log("Move");
+    this.props.navigation.navigate("CreateEvent", {
+      navigation: this.props.navigation
+    });
   }
 
-  onSuccess(e) {
-    Linking.openURL(e.data).catch(err =>
-      console.error("An error occured", err)
-    );
+  renderScreen() {
+    if (this.state.screen == "Saved") {
+      return <SavedEvents />;
+    } else {
+      return <CreatedEvents />;
+    }
+  }
+
+  renderTabs() {
+    if (this.state.screen == "Saved") {
+      return (
+        <View style={{ flexDirection: "row", marginTop: 10 }}>
+          <TouchableOpacity
+            onPress={() => {
+              this.setState({ screen: "Saved" });
+            }}
+            style={styles.activeTabContainer}
+          >
+            <Text>Saved</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              this.setState({ screen: "Past" });
+            }}
+            style={styles.inactiveTabContainer}
+          >
+            <Text>Past</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    } else {
+      return (
+        <View style={{ flexDirection: "row", marginTop: 10 }}>
+          <TouchableOpacity
+            onPress={() => {
+              this.setState({ screen: "Saved" });
+            }}
+            style={styles.inactiveTabContainer}
+          >
+            <Text>Saved</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              this.setState({ screen: "Past" });
+            }}
+            style={styles.activeTabContainer}
+          >
+            <Text>Past</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    }
   }
 
   render() {
+    console.log(this.props.navigation);
     return (
-      <SafeAreaView>
-        <Text>Coming Soon</Text>
-      </SafeAreaView>
+      <View>
+        <View style={styles.headerContainer}>
+          <SafeAreaView style={{ marginLeft: screenWidth * 0.03 }}>
+            <View style={{ flexDirection: "row" }}>
+              <Text style={{ fontSize: 24, color: "black", fontWeight: "600" }}>
+                My Events
+              </Text>
+              <TouchableOpacity
+                style={styles.buttonStyle}
+                onPress={this.onButtonPress.bind(this)}
+              >
+                <Text style={{ color: "white", fontSize: 34 }}>+</Text>
+              </TouchableOpacity>
+            </View>
+            {this.renderTabs()}
+          </SafeAreaView>
+        </View>
+        {this.renderScreen()}
+      </View>
     );
   }
 }
@@ -70,7 +146,27 @@ const styles = {
   },
   buttonTouchable: {
     padding: 16
-  }
+  },
+  activeTabContainer: {
+    borderBottomWidth: 2,
+    borderBottomColor: "red",
+    paddingBottom: 3,
+    marginRight: 30
+  },
+  inactiveTabContainer: {
+    paddingBottom: 3,
+    marginRight: 30
+  },
+  buttonStyle: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: "#05B7EC",
+    position: "absolute",
+    marginLeft: screenWidth * 0.75,
+    alignItems: "center"
+  },
+  headerContainer: { paddingTop: 10, paddingLeft: 10, backgroundColor: "white" }
 };
 
 export default connect(

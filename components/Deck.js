@@ -16,8 +16,6 @@ import {
 import EventCardsRow from "./EventCardsRow";
 import FilterButtonGroup from "./FilterButtonGroup";
 import DummyData from "../constants/DummyData";
-import DummyData1 from "../constants/DummyData1";
-import DummyData2 from "../constants/DummyData2";
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
@@ -36,7 +34,6 @@ class Deck extends Component {
 
     const panResponderForBar = PanResponder.create({
       onStartShouldSetPanResponder: () => {
-        console.log(this.state.activated);
         if (this.state.activated) {
           return true;
         }
@@ -161,18 +158,6 @@ class Deck extends Component {
                     scroll={this.state.scroll}
                     data={DummyData}
                     title={"Popular Near You"}
-                    navigation={this.props.navigation}
-                  />
-                  <EventCardsRow
-                    scroll={this.state.scroll}
-                    data={DummyData1}
-                    title={"Entertainment"}
-                    navigation={this.props.navigation}
-                  />
-                  <EventCardsRow
-                    scroll={this.state.scroll}
-                    data={DummyData2}
-                    title={"Suggestions"}
                     navigation={this.props.navigation}
                   />
                 </View>

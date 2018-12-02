@@ -52,11 +52,6 @@ class Profile extends Component {
     showModal: false
   };
 
-  async onPress() {
-    await this.props.signOutUser();
-    this.props.navigation.navigate("Login");
-  }
-
   setSize() {
     //LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
     this.setState({ showModal: !this.state.showModal });
