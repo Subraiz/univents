@@ -20,6 +20,7 @@ let event = new Event(
   "Some good music",
   { month: "November", day: "29", year: "2018" },
   "BSF",
+  ["Music"],
   {
     latitude: 42.33834229849836,
     longitude: -71.16716750431807

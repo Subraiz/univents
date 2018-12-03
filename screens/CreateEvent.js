@@ -19,12 +19,17 @@ const screenHeight = Dimensions.get("window").height;
 let screens = ["Screen1", "Screen2", "Screen3"];
 
 class CreateEvent extends Component {
-  static navigationOptions = ({ navigation }) => {
+  static navigationOptions = ({ navigation, props }) => {
     return {
       title: "Create An Event",
       gesturesEnabled: false,
       headerLeft: (
-        <Button title="Cancel" onPress={() => navigation.navigate("Events")} />
+        <Button
+          title="Cancel"
+          onPress={() => {
+            navigation.navigate("Events");
+          }}
+        />
       )
     };
   };

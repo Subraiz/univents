@@ -14,7 +14,6 @@ import CreatedEvents from "../components/CreatedEvents";
 import CreateEvent from "./CreateEvent";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { signOutUser } from "../redux/actions/SettingsActions";
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
@@ -30,7 +29,6 @@ class Events extends Component {
   };
 
   onButtonPress() {
-    console.log("Move");
     this.props.navigation.navigate("CreateEvent", {
       navigation: this.props.navigation
     });
@@ -58,11 +56,11 @@ class Events extends Component {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              this.setState({ screen: "Past" });
+              this.setState({ screen: "Created" });
             }}
             style={styles.inactiveTabContainer}
           >
-            <Text>Past</Text>
+            <Text>Created</Text>
           </TouchableOpacity>
         </View>
       );
@@ -79,11 +77,11 @@ class Events extends Component {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              this.setState({ screen: "Past" });
+              this.setState({ screen: "Created" });
             }}
             style={styles.activeTabContainer}
           >
-            <Text>Past</Text>
+            <Text>Created</Text>
           </TouchableOpacity>
         </View>
       );
@@ -91,7 +89,6 @@ class Events extends Component {
   }
 
   render() {
-    console.log(this.props.navigation);
     return (
       <View>
         <View style={styles.headerContainer}>
@@ -121,12 +118,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators(
-    {
-      signOutUser: signOutUser
-    },
-    dispatch
-  );
+  return bindActionCreators({}, dispatch);
 };
 
 const styles = {

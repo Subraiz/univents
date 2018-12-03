@@ -127,9 +127,6 @@ export default class App extends React.Component {
     }
 
     if (this.state.authenticated) {
-      {
-        console.log("loading");
-      }
       return (
         <Provider store={store}>
           <HomeStack />

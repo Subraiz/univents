@@ -9,6 +9,7 @@ const INITIAL_STATE = {
     year: ""
   },
   eventHost: "",
+  eventCategories: [],
   eventCoordinates: {
     latitude: 1,
     longitude: 1
@@ -22,9 +23,16 @@ const INITIAL_STATE = {
     endTime: ""
   },
   eventType: "Public",
-  eventImage: { uri: "url" },
+  eventImage: {
+    uri:
+      "http://aooevents.com/wp-content/themes/invictus_3.3/images/dummy-image.jpg"
+  },
   eventContact: "",
-  eventID: ""
+  eventID: "",
+  tempEventImage: {
+    uri:
+      "http://aooevents.com/wp-content/themes/invictus_3.3/images/dummy-image.jpg"
+  }
 };
 
 export default (state = INITIAL_STATE, action) => {

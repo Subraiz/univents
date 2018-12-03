@@ -16,7 +16,7 @@ import {
 } from "react-native-elements";
 import { Button } from "../../components/common";
 import InterestContainer from "../../components/InterestContainer";
-import allInterests from "./Interests";
+import allInterests from "../../constants/Interests";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { updateUserInfo, saveUser } from "../../redux/actions/LoginActions";

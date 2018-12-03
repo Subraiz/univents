@@ -6,6 +6,7 @@ export default class Event {
     day: "",
     year: ""
   };
+  eventCategories = [];
   eventCoordinates = {
     latitude: 1,
     longitude: 1
@@ -19,7 +20,10 @@ export default class Event {
     endTime: ""
   };
   eventType = ""; // Can be school wide, public, or private
-  eventImage = { uri: "url" };
+  eventImage = {
+    uri:
+      "http://aooevents.com/wp-content/themes/invictus_3.3/images/dummy-image.jpg"
+  };
   eventContact = "";
   eventID = ""; // Will be doc ID of the event
 
@@ -28,6 +32,7 @@ export default class Event {
     eventDescription,
     eventDate,
     eventHost,
+    eventCategories,
     eventCoordinates,
     eventLocation,
     eventTime,
@@ -40,6 +45,7 @@ export default class Event {
     this.eventDescription = eventDescription;
     this.eventDate = eventDate;
     this.eventHost = eventHost;
+    this.eventCategories = eventCategories;
     this.eventCoordinates = eventCoordinates;
     this.eventLocation = eventLocation;
     this.eventTime = eventTime;
@@ -64,6 +70,9 @@ export default class Event {
   }
   getEventHost() {
     return this.eventHost;
+  }
+  getEventCategories() {
+    return this.eventCategories;
   }
   getEventLocation() {
     return this.eventLocation;
@@ -105,6 +114,9 @@ export default class Event {
   }
   setEventHost(eventHost) {
     this.eventHost = eventHost;
+  }
+  setEventCategories(eventCategories) {
+    this.eventCategories = eventCategories;
   }
   setEventLocation(eventLocation) {
     this.eventLocation = eventLocation;

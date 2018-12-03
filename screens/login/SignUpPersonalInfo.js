@@ -102,7 +102,7 @@ class SignUpPersonalInfo extends Component {
             <Picker.Item label="Freshman" value="Freshman" />
             <Picker.Item label="Sophomore" value="Sophomore" />
             <Picker.Item label="Junior" value="Junior" />
-            <Picker.Item label="Thursday" value="Senior" />
+            <Picker.Item label="Senior" value="Senior" />
           </Picker>
         </View>
 

@@ -5,9 +5,11 @@ import {
   Modal,
   TouchableOpacity,
   Dimensions,
-  SafeAreaView
+  SafeAreaView,
+  Button
 } from "react-native";
 import { Calendar, CalendarList, Agenda } from "react-native-calendars";
+import DateTimePicker from "react-native-modal-datetime-picker";
 import { Icon } from "react-native-elements";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -32,7 +34,13 @@ const months = [
 ];
 
 class DateTimeModal extends Component {
-  state = {};
+  state = {
+    startTime: "Start Time",
+    endTime: "End Time",
+    selected: "",
+    isStartTimePickerVisible: false,
+    isEndTimePickerVisible: false
+  };
 
   onDayPress(date) {
     this.setState({ selected: date.dateString });
@@ -48,6 +56,61 @@ class DateTimeModal extends Component {
     };
     this.props.updateEventInfo({ prop: "eventDate", value: eventDate });
   }
+
+  showStartTimePicker = () => this.setState({ isStartTimePickerVisible: true });
+
+  hideStartTimePicker = () =>
+    this.setState({ isStartTimePickerVisible: false });
+
+  handleStartTimePicked = time => {
+    let timeOfDay = "AM";
+    let hour = time.getHours();
+    if (hour > 12) {
+      hour = hour - 12;
+      timeOfDay = "PM";
+    }
+    if (hour == 0) {
+      hour = 12;
+    }
+    let minutes = time.getMinutes();
+    if (minutes < 10) {
+      minutes = `0${minutes}`;
+    }
+    let startTime = `${hour}:${minutes} ${timeOfDay}`;
+    this.props.updateEventInfo({
+      prop: "eventTime",
+      value: { startTime: startTime, endTime: this.state.endTime }
+    });
+    this.setState({ startTime: startTime });
+    this.hideStartTimePicker();
+  };
+
+  showEndTimePicker = () => this.setState({ isEndTimePickerVisible: true });
+
+  hideEndTimePicker = () => this.setState({ isEndTimePickerVisible: false });
+
+  handleEndTimePicked = time => {
+    let timeOfDay = "AM";
+    let hour = time.getHours();
+    if (hour > 12) {
+      hour = hour - 12;
+      timeOfDay = "PM";
+    }
+    if (hour == 0) {
+      hour = 12;
+    }
+    let minutes = time.getMinutes();
+    if (minutes < 10) {
+      minutes = `0${minutes}`;
+    }
+    let endTime = `${hour}:${minutes} ${timeOfDay}`;
+    this.props.updateEventInfo({
+      prop: "eventTime",
+      value: { startTime: this.state.startTime, endTime: endTime }
+    });
+    this.setState({ endTime: endTime });
+    this.hideEndTimePicker();
+  };
 
   render() {
     return (
@@ -66,18 +129,74 @@ class DateTimeModal extends Component {
           >
             <Icon name="close" color="navy" />
           </TouchableOpacity>
-          <View style={styles.calendarContainer}>
-            <CalendarList
-              markedDates={{
-                [this.state.selected]: {
-                  selected: true,
-                  disableTouchEvent: true,
-                  selectedDotColor: "orange"
-                }
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              width: screenWidth,
+              height: screenHeight * 0.1,
+              backgroundColor: "white",
+              borderBottomWidth: 3,
+              borderBottomColor: "#F7F7F7"
+            }}
+          >
+            <View
+              style={{
+                width: "50%",
+                borderRightWidth: 0.5,
+                borderRightColor: "grey",
+                padding: 10
               }}
-              onDayPress={this.onDayPress.bind(this)}
-            />
+            >
+              <Button
+                title={this.state.startTime}
+                onPress={this.showStartTimePicker.bind(this)}
+              />
+            </View>
+            <View
+              style={{
+                width: "50%",
+                borderLefttWidth: 0.5,
+                borderLeftColor: "grey",
+                padding: 10
+              }}
+            >
+              <Button
+                title={this.state.endTime}
+                onPress={this.showEndTimePicker.bind(this)}
+              />
+            </View>
           </View>
+          <View style={{ backgroundColor: "#F7F7F7" }}>
+            <View style={styles.calendarContainer}>
+              <CalendarList
+                markedDates={{
+                  [this.state.selected]: {
+                    selected: true,
+                    disableTouchEvent: true,
+                    selectedDotColor: "orange"
+                  }
+                }}
+                onDayPress={this.onDayPress.bind(this)}
+              />
+            </View>
+          </View>
+          <DateTimePicker
+            isVisible={this.state.isStartTimePickerVisible}
+            onConfirm={this.handleStartTimePicked}
+            onCancel={this.hideStartTimePicker}
+            mode="time"
+            titleIOS="Select Time"
+            is24Hour={false}
+          />
+          <DateTimePicker
+            isVisible={this.state.isEndTimePickerVisible}
+            onConfirm={this.handleEndTimePicked}
+            onCancel={this.hideEndTimePicker}
+            mode="time"
+            titleIOS="Select Time"
+            is24Hour={false}
+          />
         </SafeAreaView>
       </Modal>
     );

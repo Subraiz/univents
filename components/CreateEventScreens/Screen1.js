@@ -6,10 +6,15 @@ import {
   TouchableOpacity,
   Switch,
   TextInput,
-  Alert
+  Alert,
+  KeyboardAvoidingView,
+  Modal,
+  Picker
 } from "react-native";
 import * as Animatable from "react-native-animatable";
 import DateTimeModal from "./DateTimeModal";
+import LocationModal from "./LocationModal";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { updateEventInfo } from "../../redux/actions/EventActions";
@@ -24,7 +29,8 @@ const CardSection = props => {
 class Screen1 extends Component {
   state = {
     switchValue: true,
-    showDateTimeModal: false
+    showDateTimeModal: false,
+    showLocationModal: false
   };
 
   onSwitchValueChange() {
@@ -54,12 +60,13 @@ class Screen1 extends Component {
         </TouchableOpacity>
       );
     } else {
-      let dateString = `${this.props.eventDate.month} ${
-        this.props.eventDate.day
-      }, ${this.props.eventDate.year}`;
-      let timeString =
-        "Start Time - End Time" ||
-        `${this.props.eventTime.startTime} - ${this.props.eventTime.endTime}`;
+      let dateString = `${this.props.eventDate.month} ${this.props.eventDate
+        .day || "Event Date"}, ${this.props.eventDate.year}`;
+
+      let timeString = `${this.props.eventTime.startTime} - ${
+        this.props.eventTime.endTime
+      }`;
+
       return (
         <TouchableOpacity onPress={this.onShowDateTimeModal.bind(this)}>
           <Text style={{ color: "black" }}>{dateString}</Text>
@@ -72,8 +79,16 @@ class Screen1 extends Component {
   renderLocationAddress() {
     if (this.props.eventLocation.locationAddress == "") {
       return (
-        <TouchableOpacity>
+        <TouchableOpacity onPress={this.onShowLocationModal.bind(this)}>
           <Text style={{ color: "blue" }}>Location Address</Text>
+        </TouchableOpacity>
+      );
+    } else {
+      return (
+        <TouchableOpacity onPress={this.onShowLocationModal.bind(this)}>
+          <Text style={{ color: "black" }}>
+            {this.props.eventLocation.locationAddress}
+          </Text>
         </TouchableOpacity>
       );
     }
@@ -94,6 +109,14 @@ class Screen1 extends Component {
 
   onCloseDateTimeModal() {
     this.setState({ showDateTimeModal: false });
+  }
+
+  onShowLocationModal() {
+    this.setState({ showLocationModal: true });
+  }
+
+  onCloseLocationModal() {
+    this.setState({ showLocationModal: false });
   }
 
   onButtonPress() {
@@ -130,75 +153,81 @@ class Screen1 extends Component {
     return (
       <Animatable.View animation={animation} duration={300}>
         <View style={{ alignItems: "center" }}>
-          <CardSection>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center"
-              }}
-            >
-              <Text>{this.props.eventType}</Text>
-              <Switch
-                value={this.state.switchValue}
-                onValueChange={this.onSwitchValueChange.bind(this)}
+          <KeyboardAwareScrollView>
+            <CardSection>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center"
+                }}
+              >
+                <Text>{this.props.eventType}</Text>
+                <Switch
+                  value={this.state.switchValue}
+                  onValueChange={this.onSwitchValueChange.bind(this)}
+                />
+              </View>
+            </CardSection>
+            <CardSection>
+              <TextInput
+                placeholder="Event Name"
+                value={this.props.eventName}
+                onChange={this.onChangeText.bind(this)}
               />
-            </View>
-          </CardSection>
-          <CardSection>
-            <TextInput
-              placeholder="Event Name"
-              value={this.props.eventName}
-              onChange={this.onChangeText.bind(this)}
-            />
-          </CardSection>
-          <CardSection>
-            <TextInput
-              value={this.props.eventLocation.locationName}
-              placeholder="Location Name (ex: Vandy Cabaret Hall)"
-              onChange={this.onLocationNameChange.bind(this)}
-              spellCheck={false}
-            />
-          </CardSection>
-          <CardSection>{this.renderLocationAddress()}</CardSection>
-          <CardSection>{this.renderDateTime()}</CardSection>
-          <CardSection>
-            <TextInput
-              placeholder="Host Name"
-              value={this.props.eventHost}
-              spellCheck={false}
-              onChange={text =>
-                this.props.updateEventInfo({
-                  prop: "eventHost",
-                  value: text.nativeEvent.text
-                })
-              }
-            />
-          </CardSection>
-          <CardSection>
-            <TextInput
-              placeholder="Contact Info (Email or Phone Number)"
-              value={this.props.eventContact}
-              spellCheck={false}
-              onChange={text =>
-                this.props.updateEventInfo({
-                  prop: "eventContact",
-                  value: text.nativeEvent.text
-                })
-              }
-            />
-          </CardSection>
+            </CardSection>
+            <CardSection>
+              <TextInput
+                value={this.props.eventLocation.locationName}
+                placeholder="Location Name (ex: Vandy Cabaret Hall)"
+                onChange={this.onLocationNameChange.bind(this)}
+                spellCheck={false}
+              />
+            </CardSection>
+            <CardSection>{this.renderLocationAddress()}</CardSection>
+            <CardSection>{this.renderDateTime()}</CardSection>
+            <CardSection>
+              <TextInput
+                placeholder="Host Name"
+                value={this.props.eventHost}
+                spellCheck={false}
+                onChange={text =>
+                  this.props.updateEventInfo({
+                    prop: "eventHost",
+                    value: text.nativeEvent.text
+                  })
+                }
+              />
+            </CardSection>
+            <CardSection>
+              <TextInput
+                placeholder="Contact Info (Email or Phone Number)"
+                value={this.props.eventContact}
+                spellCheck={false}
+                onChange={text =>
+                  this.props.updateEventInfo({
+                    prop: "eventContact",
+                    value: text.nativeEvent.text
+                  })
+                }
+              />
+            </CardSection>
+          </KeyboardAwareScrollView>
         </View>
 
         <TouchableOpacity
           style={styles.buttonStyle}
-          onPress={this.renderButtonFunction.bind(this)}
+          onPress={this.props.onPress}
         >
           <Text style={{ color: "white", fontSize: 18 }}>Next</Text>
         </TouchableOpacity>
         <DateTimeModal
           visible={this.state.showDateTimeModal}
           onClose={this.onCloseDateTimeModal.bind(this)}
+        />
+        <LocationModal
+          visible={this.state.showLocationModal}
+          onClose={this.onCloseLocationModal.bind(this)}
         />
       </Animatable.View>
     );

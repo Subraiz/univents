@@ -93,7 +93,7 @@ export const saveUser = user => {
       race: "",
       events: {
         attendingEvents: [],
-        hostingEvents: [],
+        createdEvents: [],
         bookmarkedEvents: [],
         pastHostedEvents: [],
         pastAttendedEvents: []

@@ -5,12 +5,13 @@ let event1 = new Event(
   "Some good music",
   { month: "November", day: "29", year: "2018" },
   "BSF",
+  ["Music"],
   {
     latitude: 42.33834229849836,
     longitude: -71.16716750431807
   },
   {
-    locationAddress: "140 Commontwealth Ave, Chestnut Hill, MA",
+    locationAddress: "140 Commontwealth Ave, Chestnut Hill, MA 02135",
     locationName: "Vandy"
   },
   {
@@ -31,12 +32,13 @@ let event2 = new Event(
   "Some good music",
   { month: "November", day: "29", year: "2018" },
   "BSF",
+  ["Music"],
   {
     latitude: 42.33834229849836,
     longitude: -71.16716750431807
   },
   {
-    locationAddress: "140 Commontwealth Ave, Chestnut Hill, MA",
+    locationAddress: "140 Commontwealth Ave, Chestnut Hill, MA 02135",
     locationName: "Vandy"
   },
   {
@@ -57,12 +59,13 @@ let event3 = new Event(
   "Some good music",
   { month: "November", day: "29", year: "2018" },
   "BSF",
+  ["Music"],
   {
     latitude: 42.33834229849836,
     longitude: -71.16716750431807
   },
   {
-    locationAddress: "140 Commontwealth Ave, Chestnut Hill, MA",
+    locationAddress: "140 Commontwealth Ave, Chestnut Hill, MA 02135",
     locationName: "Vandy"
   },
   {
