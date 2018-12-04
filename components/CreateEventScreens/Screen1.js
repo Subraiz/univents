@@ -217,7 +217,7 @@ class Screen1 extends Component {
 
         <TouchableOpacity
           style={styles.buttonStyle}
-          onPress={this.props.onPress}
+          onPress={this.renderButtonFunction.bind(this)}
         >
           <Text style={{ color: "white", fontSize: 18 }}>Next</Text>
         </TouchableOpacity>

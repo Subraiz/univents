@@ -28,14 +28,43 @@ export const updateEventInfo = ({ prop, value }) => {
 };
 
 export const publishEvent = event => {
+  let uid = event.eventID.substring(0, event.eventID.length - 5);
+  let user;
   return async dispatch => {
     await initializeFirebase();
     await firestore
+      .collection("Location")
+      .doc("MA")
       .collection("Events")
       .doc(event.eventID)
       .set(event)
       .then()
       .catch(error => console.log(error));
+
+    await firestore
+      .collection("Users")
+      .doc(uid)
+      .get()
+      .then(doc => {
+        user = doc.data();
+        user.events.createdEvents.push(event);
+
+        firestore
+          .collection("Users")
+          .doc(uid)
+          .set(user)
+          .then(() => {
+            dispatch({ type: T.SAVE_USER, payload: user });
+          });
+      });
+
+    dispatch({ type: T.CLEAR_EVENT_INFO });
+  };
+};
+
+export const clearEventInfo = () => {
+  return async dispatch => {
+    dispatch({ type: T.CLEAR_EVENT_INFO });
   };
 };
 

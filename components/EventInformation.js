@@ -49,6 +49,31 @@ class EventInformation extends Component {
     navigatable.navigate("AdminTools");
   }
 
+  renderAdminTools() {
+    let eventID = event.eventID.substring(0, event.eventID.length - 5);
+    if (this.props.uid == eventID) {
+      return (
+        <TouchableOpacity
+          style={styles.adminToolsContainer}
+          onPress={this.onAdminToolsPressed}
+        >
+          <View style={{ flexDirection: "row" }}>
+            <Text style={{ padding: 10, color: "grey" }}>Admin Tools</Text>
+            <View
+              style={{
+                flex: 1,
+                alignItems: "flex-end",
+                justifyContent: "center"
+              }}
+            >
+              <Icon name="settings" />
+            </View>
+          </View>
+        </TouchableOpacity>
+      );
+    }
+  }
+
   render() {
     let locationAddress = event.getEventLocation().locationAddress;
     locationAddress = locationAddress.split(",");
@@ -136,23 +161,7 @@ class EventInformation extends Component {
               </View>
             </View>
 
-            <TouchableOpacity
-              style={styles.adminToolsContainer}
-              onPress={this.onAdminToolsPressed}
-            >
-              <View style={{ flexDirection: "row" }}>
-                <Text style={{ padding: 10, color: "grey" }}>Admin Tools</Text>
-                <View
-                  style={{
-                    flex: 1,
-                    alignItems: "flex-end",
-                    justifyContent: "center"
-                  }}
-                >
-                  <Icon name="settings" />
-                </View>
-              </View>
-            </TouchableOpacity>
+            {this.renderAdminTools()}
 
             <View style={styles.section}>
               <View style={styles.headerTextContainer}>
@@ -196,7 +205,9 @@ class EventInformation extends Component {
 }
 
 const mapStateToProps = state => {
-  return {};
+  return {
+    uid: state.user.uid
+  };
 };
 
 const mapDispatchToProps = dispatch => {

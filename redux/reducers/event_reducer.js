@@ -42,6 +42,8 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         [action.payload.prop]: action.payload.value
       };
+    case T.CLEAR_EVENT_INFO:
+      return INITIAL_STATE;
     default:
       return state;
   }

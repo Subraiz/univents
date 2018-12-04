@@ -123,6 +123,14 @@ class DateTimeModal extends Component {
       >
         <SafeAreaView style={styles.container}>
           <TouchableOpacity
+            onPress={this.props.onClose}
+            activeOpacity={1}
+            style={{
+              width: screenWidth,
+              flex: 1
+            }}
+          />
+          <TouchableOpacity
             style={styles.buttonStyle}
             activeOpacity={0.8}
             onPress={this.props.onClose}

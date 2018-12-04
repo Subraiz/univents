@@ -7,12 +7,14 @@ import {
   StatusBar,
   Dimensions,
   UIManager,
-  LayoutAnimation
+  LayoutAnimation,
+  BackHandler
 } from "react-native";
 import { SearchBar } from "react-native-elements";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { signOutUser } from "../redux/actions/SettingsActions";
+import { fetchEvents } from "../redux/actions/EventsActions";
+import DummyData from "../constants/DummyData";
 import Deck from "../components/Deck";
 import Map from "../components/Map";
 
@@ -25,7 +27,13 @@ class Explore extends Component {
     gesturesEnabled: false
   };
 
+  handleBackPress() {
+    return true;
+  }
+
   componentWillMount() {
+    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
+
     UIManager.setLayoutAnimationEnabledExperimental &&
       UIManager.setLayoutAnimationEnabledExperimental(true);
     LayoutAnimation.easeInEaseOut();
@@ -42,7 +50,7 @@ class Explore extends Component {
           searchIcon={{ size: 24 }}
           placeholder="Search For an Event..."
         />
-        <Map navigation={this.props.navigation} />
+        <Map navigation={this.props.navigation} events={DummyData} />
         <Deck navigation={this.props.navigation} />
       </SafeAreaView>
     );
@@ -50,13 +58,16 @@ class Explore extends Component {
 }
 
 const mapStateToProps = state => {
-  return {};
+  return {
+    events: state.events,
+    allEvents: state.events.allEvents
+  };
 };
 
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
-      signOutUser: signOutUser
+      fetchEvents: fetchEvents
     },
     dispatch
   );

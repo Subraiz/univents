@@ -8,7 +8,8 @@ import {
   Picker,
   UIManager,
   LayoutAnimation,
-  Dimensions
+  Dimensions,
+  Keyboard
 } from "react-native";
 import ImagePicker from "react-native-image-picker";
 import { FormLabel, FormInput } from "react-native-elements";
@@ -79,59 +80,69 @@ class SignUpPersonalInfo extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.section}>
-          <FormLabel>Major</FormLabel>
-          <FormInput
-            containerStyle={{ borderBottomColor: "red" }}
-            autoCorrect={true}
-            onChangeText={text =>
-              this.props.updateUserInfo({ prop: "major", value: text })
-            }
-            value={this.props.major}
-          />
-        </View>
-        <View style={styles.section}>
-          <Text style={styles.headerText}>Class Year</Text>
-          <Picker
-            style={{ marginRight: 20, marginLeft: 20 }}
-            selectedValue={this.props.year}
-            onValueChange={value =>
-              this.props.updateUserInfo({ prop: "year", value })
-            }
-          >
-            <Picker.Item label="Freshman" value="Freshman" />
-            <Picker.Item label="Sophomore" value="Sophomore" />
-            <Picker.Item label="Junior" value="Junior" />
-            <Picker.Item label="Senior" value="Senior" />
-          </Picker>
-        </View>
-
-        <View style={styles.section}>
-          <Text style={styles.headerText}>Sex</Text>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "center"
-            }}
-          >
-            <TouchableOpacity
-              style={{ height: screenHeight * 0.1, width: 50, marginRight: 40 }}
-              onPress={this.onGenderSelect.bind(this, "male")}
-            >
-              <Image source={this.state.male} style={styles.imageStyle} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{ height: screenHeight * 0.1, width: 35, marginLeft: 40 }}
-              onPress={this.onGenderSelect.bind(this, "female")}
-            >
-              <Image source={this.state.female} style={styles.imageStyle} />
-            </TouchableOpacity>
+        <TouchableOpacity activeOpacity={1} onPress={() => Keyboard.dismiss()}>
+          <View style={styles.section}>
+            <FormLabel>Major</FormLabel>
+            <FormInput
+              containerStyle={{ borderBottomColor: "red" }}
+              autoCorrect={true}
+              onChangeText={text =>
+                this.props.updateUserInfo({ prop: "major", value: text })
+              }
+              value={this.props.major}
+            />
           </View>
-        </View>
+          <View style={styles.section}>
+            <Text style={styles.headerText}>Class Year</Text>
+            <Picker
+              style={{ marginRight: 20, marginLeft: 20 }}
+              selectedValue={this.props.year}
+              onValueChange={value =>
+                this.props.updateUserInfo({ prop: "year", value })
+              }
+            >
+              <Picker.Item label="Freshman" value="Freshman" />
+              <Picker.Item label="Sophomore" value="Sophomore" />
+              <Picker.Item label="Junior" value="Junior" />
+              <Picker.Item label="Senior" value="Senior" />
+            </Picker>
+          </View>
 
-        <View style={{ alignItems: "center", marginTop: 25 }}>
-          {this.renderButton()}
-        </View>
+          <View style={styles.section}>
+            <Text style={styles.headerText}>Sex</Text>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "center"
+              }}
+            >
+              <TouchableOpacity
+                style={{
+                  height: screenHeight * 0.1,
+                  width: 50,
+                  marginRight: 40
+                }}
+                onPress={this.onGenderSelect.bind(this, "male")}
+              >
+                <Image source={this.state.male} style={styles.imageStyle} />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  height: screenHeight * 0.1,
+                  width: 35,
+                  marginLeft: 40
+                }}
+                onPress={this.onGenderSelect.bind(this, "female")}
+              >
+                <Image source={this.state.female} style={styles.imageStyle} />
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          <View style={{ alignItems: "center", marginTop: 25 }}>
+            {this.renderButton()}
+          </View>
+        </TouchableOpacity>
       </View>
     );
   }

@@ -14,6 +14,7 @@ import CreatedEvents from "../components/CreatedEvents";
 import CreateEvent from "./CreateEvent";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { clearEventInfo } from "../redux/actions/EventActions";
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
@@ -118,7 +119,12 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({}, dispatch);
+  return bindActionCreators(
+    {
+      clearEventInfo: clearEventInfo
+    },
+    dispatch
+  );
 };
 
 const styles = {
@@ -156,7 +162,8 @@ const styles = {
     backgroundColor: "#05B7EC",
     position: "absolute",
     marginLeft: screenWidth * 0.75,
-    alignItems: "center"
+    alignItems: "center",
+    justifyContent: "center"
   },
   headerContainer: { paddingTop: 10, paddingLeft: 10, backgroundColor: "white" }
 };

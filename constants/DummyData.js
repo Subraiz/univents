@@ -24,7 +24,7 @@ let event1 = new Event(
       "http://2.bp.blogspot.com/-_Pt34rSuAG4/UVTJVmFingI/AAAAAAAAADM/sfeHZt-8jtk/s1600/neo+soul.jpg"
   },
   "862-273-2073",
-  1998
+  "KEMmFXY6lqZAjbvIfLle9YvmF222qz82a"
 );
 
 let event2 = new Event(
@@ -34,8 +34,8 @@ let event2 = new Event(
   "BSF",
   ["Music"],
   {
-    latitude: 42.33834229849836,
-    longitude: -71.16716750431807
+    latitude: 42.3383422984984,
+    longitude: -71.1671675043192
   },
   {
     locationAddress: "140 Commontwealth Ave, Chestnut Hill, MA 02135",
@@ -51,7 +51,7 @@ let event2 = new Event(
       "http://2.bp.blogspot.com/-_Pt34rSuAG4/UVTJVmFingI/AAAAAAAAADM/sfeHZt-8jtk/s1600/neo+soul.jpg"
   },
   "862-273-2073",
-  1998
+  "KEMmFXY6lqZAjbvIfLle9YvmF222qz824"
 );
 
 let event3 = new Event(
@@ -78,7 +78,7 @@ let event3 = new Event(
       "http://2.bp.blogspot.com/-_Pt34rSuAG4/UVTJVmFingI/AAAAAAAAADM/sfeHZt-8jtk/s1600/neo+soul.jpg"
   },
   "862-273-2073",
-  1998
+  "KEMmFXY6lqZAjbvIfLle9YvmF222qz825"
 );
 
 const DummyData = [event1, event2, event3];

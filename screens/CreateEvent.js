@@ -12,6 +12,9 @@ import Screen1 from "../components/CreateEventScreens/Screen1";
 import Screen2 from "../components/CreateEventScreens/Screen2";
 import Screen3 from "../components/CreateEventScreens/Screen3";
 import * as Animatable from "react-native-animatable";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { clearEventInfo } from "../redux/actions/EventActions";
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
@@ -19,17 +22,19 @@ const screenHeight = Dimensions.get("window").height;
 let screens = ["Screen1", "Screen2", "Screen3"];
 
 class CreateEvent extends Component {
-  static navigationOptions = ({ navigation, props }) => {
+  static navigationOptions = ({ navigation }) => {
     return {
       title: "Create An Event",
       gesturesEnabled: false,
       headerLeft: (
-        <Button
-          title="Cancel"
+        <TouchableOpacity
           onPress={() => {
             navigation.navigate("Events");
           }}
-        />
+          style={{ padding: 3, marginLeft: 4 }}
+        >
+          <Text style={{ color: "#007AFF" }}>Cancel</Text>
+        </TouchableOpacity>
       )
     };
   };
@@ -44,6 +49,10 @@ class CreateEvent extends Component {
     UIManager.setLayoutAnimationEnabledExperimental &&
       UIManager.setLayoutAnimationEnabledExperimental(true);
     LayoutAnimation.easeInEaseOut();
+  }
+
+  componentWillMount() {
+    this.props.clearEventInfo();
   }
 
   renderScreen() {
@@ -131,6 +140,19 @@ class CreateEvent extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {};
+};
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      clearEventInfo: clearEventInfo
+    },
+    dispatch
+  );
+};
+
 const styles = {
   container: {
     backgroundColor: "#F7F7F7",
@@ -153,4 +175,7 @@ const styles = {
   }
 };
 
-export default CreateEvent;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CreateEvent);

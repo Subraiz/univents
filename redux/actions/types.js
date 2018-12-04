@@ -9,3 +9,6 @@ export const START_LOGIN = "START_LOGIN";
 export const CLEAR_USER = "CLEAR_USER";
 
 export const UPDATE_EVENT_INFO = "UPDATE_EVENT_INFO";
+export const CLEAR_EVENT_INFO = "CLEAR_EVENT_INFO";
+
+export const FETCH_EVENTS = "FETCH_EVENTS";

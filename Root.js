@@ -88,7 +88,7 @@ const HomeStack = createStackNavigator(
   }
 );
 
-class App extends React.Component {
+class Root extends React.Component {
   state = {
     authenticated: false,
     loading: true
@@ -153,4 +153,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default App;
+export default Root;

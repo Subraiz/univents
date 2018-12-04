@@ -7,7 +7,8 @@ import {
   LayoutAnimation,
   TouchableOpacity,
   Dimensions,
-  Button
+  Button,
+  Platform
 } from "react-native";
 import { Marker, Callout } from "react-native-maps";
 import * as Animatable from "react-native-animatable";
@@ -18,53 +19,153 @@ const screenHeight = Dimensions.get("window").height;
 const entrance = "bounceIn";
 const exit = "bounceOut";
 
-const CircleMarker = props => {
+const AndroidSquareMarker = props => {
+  let eventDate = `${props.event.eventDate.month} ${
+    props.event.eventDate.day
+  }, ${props.event.eventDate.year}`;
+
+  let locationName = `${props.event.eventLocation.locationName}`;
+  let locationAddress = `${props.event.eventLocation.locationAddress}`;
+
   return (
-    <Animatable.View style={styles.container} animation="bounceIn">
-      <View style={styles.outerCircle} />
-      <View style={styles.circles}>
-        <View style={styles.innerCircle}>
-          <Image
-            style={styles.logoStyle}
-            source={require("../assets/images/bostonCollegeLogo.png")}
-          />
-        </View>
+    <View
+      style={{
+        width: screenWidth * 0.5,
+        height: screenHeight * 0.19,
+        borderRadius: 20,
+        backgroundColor: "black"
+      }}
+    >
+      <View style={{ alignItems: "center" }}>
+        <Text
+          style={{
+            color: "white",
+            fontSize: 18,
+            fontWeight: "800",
+            marginTop: 4,
+            marginBottom: 4
+          }}
+        >
+          {props.event.getEventName()}
+        </Text>
+        <Text
+          style={{
+            color: "lightgrey",
+            fontSize: 16,
+            marginBottom: 4,
+            fontWeight: "600"
+          }}
+        >
+          {eventDate}
+        </Text>
+        <Text
+          style={{
+            color: "lightgrey",
+            fontSize: 16,
+            marginBottom: 4,
+            fontWeight: "600"
+          }}
+        >
+          {locationName}
+        </Text>
       </View>
-      <View style={styles.triangleContainer}>
-        <View style={styles.triangle} />
+      <TouchableOpacity
+        onPress={props.onPress}
+        style={{
+          padding: 8,
+          width: "90%",
+          marginTop: 4,
+          borderRadius: 10,
+          backgroundColor: "white",
+          alignItems: "center",
+          alignSelf: "center"
+        }}
+      >
+        <Text style={{ color: "blue" }}>View More Info</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
+
+const SquareMarker = props => {
+  let eventDate = `${props.event.eventDate.month} ${
+    props.event.eventDate.day
+  }, ${props.event.eventDate.year}`;
+
+  let locationName = `${props.event.eventLocation.locationName}`;
+  let locationAddress = `${props.event.eventLocation.locationAddress}`;
+
+  return (
+    <Animatable.View
+      animation="bounceIn"
+      style={{
+        width: screenWidth * 0.5,
+        height: screenHeight * 0.17,
+        borderRadius: 20,
+        backgroundColor: "black",
+        justifyContent: "space-around"
+      }}
+    >
+      <Image
+        source={props.event.getEventImage()}
+        style={styles.imageStyle}
+        borderRadius={20}
+      />
+      <View style={{ alignItems: "center" }}>
+        <Text
+          style={{
+            color: "white",
+            fontSize: 18,
+            fontWeight: "800",
+            marginTop: 4,
+            marginBottom: 4
+          }}
+        >
+          {props.event.getEventName()}
+        </Text>
+        <Text
+          style={{
+            color: "lightgrey",
+            fontSize: 16,
+            marginBottom: 4,
+            fontWeight: "600"
+          }}
+        >
+          {eventDate}
+        </Text>
+        <Text
+          style={{
+            color: "lightgrey",
+            fontSize: 16,
+            marginBottom: 4,
+            fontWeight: "600"
+          }}
+        >
+          {locationName}
+        </Text>
       </View>
+      <TouchableOpacity
+        onPress={props.onPress}
+        style={{
+          padding: 8,
+          width: "90%",
+          marginTop: 4,
+          borderRadius: 10,
+          backgroundColor: "white",
+          alignItems: "center",
+          alignSelf: "center"
+        }}
+      >
+        <Text style={{ color: "blue" }}>View More Info</Text>
+      </TouchableOpacity>
     </Animatable.View>
   );
 };
 
-class SquareMarker extends Component {
-  componentWillUnmount() {
-    UIManager.setLayoutAnimationEnabledExperimental &&
-      UIManager.setLayoutAnimationEnabledExperimental(true);
-    LayoutAnimation.easeInEaseOut();
-  }
-
-  render() {
-    return (
-      <Animatable.View style={styles.squareContainer} animation="bounceIn">
-        <Image
-          source={this.props.event.getEventImage()}
-          style={styles.imageStyle}
-          borderRadius={30}
-        />
-        <View style={styles.opacityContainer} />
-        <View style={styles.contentContainer}>
-          <Text>{this.props.event.getEventName()}</Text>
-          <Button title={"View More Info"} onPress={this.props.onPress} />
-        </View>
-      </Animatable.View>
-    );
-  }
-}
-
 export default class CustomMarker extends Component {
   state = {
-    hidden: true
+    hidden: true,
+    image: require("../assets/images/bostonCollegePin.png")
   };
 
   onMoreInfoPress() {
@@ -74,40 +175,71 @@ export default class CustomMarker extends Component {
     });
   }
 
+  componentWillUpdate() {
+    if (Platform.OS === "ios") {
+      UIManager.setLayoutAnimationEnabledExperimental &&
+        UIManager.setLayoutAnimationEnabledExperimental(true);
+      LayoutAnimation.spring();
+    }
+  }
+
+  switchMarker() {
+    this.setState({ hidden: !this.state.hidden });
+  }
+
   renderMarker() {
     if (this.state.hidden) {
-      return <CircleMarker />;
+      return (
+        <View
+          style={{
+            width: 40,
+            height: 40
+          }}
+        >
+          <Image source={this.state.image} style={styles.logoStyle} />
+        </View>
+      );
     } else {
       return (
         <SquareMarker
-          onPress={this.onMoreInfoPress.bind(this)}
           event={this.props.event}
+          onPress={this.onMoreInfoPress.bind(this)}
         />
       );
     }
   }
 
-  changeMarker() {
-    this.setState({ hidden: !this.state.hidden });
+  renderAndroidMarker() {
+    if (this.state.hidden) {
+      return (
+        <Marker
+          coordinate={this.props.coordinate}
+          tooltip={false}
+          onPress={this.onMoreInfoPress.bind(this)}
+          image={this.state.image}
+        />
+      );
+    }
+  }
+
+  renderPlatformMarker() {
+    if (Platform.OS === "ios") {
+      return (
+        <Marker
+          coordinate={this.props.coordinate}
+          tooltip={false}
+          onPress={this.switchMarker.bind(this)}
+        >
+          {this.renderMarker()}
+        </Marker>
+      );
+    } else {
+      return <View>{this.renderAndroidMarker()}</View>;
+    }
   }
 
   render() {
-    return (
-      <Marker
-        coordinate={this.props.coordinate}
-        title={this.props.title}
-        description={this.props.description}
-        ref={marker => {
-          this.marker = marker;
-        }}
-        onPress={this.changeMarker.bind(this)}
-      >
-        {this.renderMarker()}
-        <Callout tooltip={true}>
-          <View />
-        </Callout>
-      </Marker>
-    );
+    return <View>{this.renderPlatformMarker()}</View>;
   }
 }
 
@@ -178,7 +310,7 @@ const styles = {
     position: "absolute",
     width: "100%",
     height: "100%",
-    opacity: 0.6
+    opacity: 0.75
   },
   opacityContainer: {
     position: "absolute",
@@ -190,6 +322,5 @@ const styles = {
   },
   contentContainer: {
     alignItems: "center"
-  },
-  eventTitleStyle: {}
+  }
 };

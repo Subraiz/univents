@@ -9,7 +9,7 @@ import {
   Button,
   Keyboard
 } from "react-native";
-import allInterests from "../../constants/Interests";
+import allCategories from "../../constants/Categories";
 import InterestContainer from "../../components/InterestContainer";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -20,7 +20,7 @@ const screenHeight = Dimensions.get("window").height;
 
 class CategoriesModal extends Component {
   state = {
-    categories: allInterests,
+    categories: allCategories,
     selectedCategories: []
   };
 

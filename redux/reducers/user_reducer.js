@@ -2,6 +2,8 @@ import * as T from "../actions/types";
 import { NavigationActions } from "react-navigation";
 
 const INITIAL_STATE = {
+  firstName: "",
+  lastName: "",
   name: "",
   email: "",
   password: "",
