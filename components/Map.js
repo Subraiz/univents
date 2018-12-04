@@ -88,9 +88,11 @@ class Map extends Component {
   }
 
   hideMarkers() {
-    this.props.events.map((event, i) => {
-      this["marker" + i].hideMarker();
-    });
+    if (Platform.OS == "ios") {
+      this.props.events.map((event, i) => {
+        this["marker" + i].hideMarker();
+      });
+    }
   }
 
   createMarkers(event, i) {
@@ -120,10 +122,10 @@ class Map extends Component {
       >
         <MapView
           style={styles.mapStyle}
-          region={this.state.mapRegion}
-          // showsUserLocation={true}
-          followUserLocation={true}
-          onRegionChange={this.onRegionChange.bind(this)}
+          // region={this.state.mapRegion}
+          // // showsUserLocation={true}
+          // followUserLocation={true}
+          // onRegionChange={this.onRegionChange.bind(this)}
           onPress={this.hideMarkers.bind(this)}
           initialRegion={{
             latitude: 42.3355488,

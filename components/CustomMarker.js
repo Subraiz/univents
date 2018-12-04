@@ -28,71 +28,90 @@ const SquareMarker = props => {
   let locationName = `${props.event.eventLocation.locationName}`;
   let locationAddress = `${props.event.eventLocation.locationAddress}`;
 
+  let eventTimeString = `${props.event.eventTime.startTime} - ${
+    props.event.eventTime.endTime
+  }`;
+
   console.log(props.event.getEventImage());
 
   return (
-    <Animatable.View
+    <TouchableOpacity
+      onPress={props.onPress}
       style={{
         width: screenWidth * 0.5,
         height: screenHeight * 0.17,
         borderRadius: 20,
-        backgroundColor: "black",
-        justifyContent: "space-around"
+        backgroundColor: "black"
       }}
     >
+      <View
+        style={{
+          width: "100%",
+          height: "100%",
+          position: "absolute",
+          backgroundColor: "black",
+          opacity: 0.85,
+          borderRadius: 20
+        }}
+      />
       <Image
         source={props.event.getEventImage()}
         style={styles.imageStyle}
         borderRadius={20}
       />
-      <View style={{ alignItems: "center" }}>
-        <Text
-          style={{
-            color: "white",
-            fontSize: 18,
-            fontWeight: "800",
-            marginTop: 4,
-            marginBottom: 4
-          }}
-        >
-          {props.event.getEventName()}
-        </Text>
-        <Text
-          style={{
-            color: "lightgrey",
-            fontSize: 16,
-            marginBottom: 4,
-            fontWeight: "600"
-          }}
-        >
-          {eventDate}
-        </Text>
-        <Text
-          style={{
-            color: "lightgrey",
-            fontSize: 16,
-            marginBottom: 4,
-            fontWeight: "600"
-          }}
-        >
-          {locationName}
-        </Text>
-      </View>
-      <TouchableOpacity
-        onPress={props.onPress}
+      <View
         style={{
-          padding: 8,
-          width: "90%",
-          marginTop: 4,
-          borderRadius: 10,
-          backgroundColor: "white",
-          alignItems: "center",
-          alignSelf: "center"
+          width: "100%",
+          height: "100%",
+          justifyContent: "space-between"
         }}
       >
-        <Text style={{ color: "blue" }}>View More Info</Text>
-      </TouchableOpacity>
-    </Animatable.View>
+        <View style={{ alignItems: "center", marginTop: 10 }}>
+          <Text
+            style={{
+              color: "white",
+              fontSize: 18,
+              fontWeight: "800",
+              marginTop: 4,
+              marginBottom: 4
+            }}
+          >
+            {props.event.getEventName()}
+          </Text>
+          <Text
+            style={{
+              color: "white",
+              fontSize: 16,
+              marginBottom: 4,
+              fontWeight: "600"
+            }}
+          >
+            {eventDate}
+          </Text>
+        </View>
+        <View style={{ alignItems: "center" }}>
+          <Text
+            style={{
+              color: "white",
+              fontSize: 16,
+              fontWeight: "600"
+            }}
+          >
+            {locationName}
+          </Text>
+          <Text
+            style={{
+              color: "white",
+              fontSize: 16,
+              marginBottom: 4,
+              fontWeight: "600"
+            }}
+          >
+            {eventTimeString}
+          </Text>
+        </View>
+      </View>
+    </TouchableOpacity>
   );
 };
 
@@ -131,6 +150,7 @@ export default class CustomMarker extends Component {
     if (this.state.hidden) {
       return (
         <Animatable.View
+          animation="fadeInDown"
           style={{
             width: 40,
             height: 40
