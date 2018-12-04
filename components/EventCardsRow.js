@@ -17,6 +17,26 @@ import {
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
 
+const NoEventCard = () => {
+  return (
+    <TouchableOpacity activeOpacity={0.8} style={styles.container}>
+      <Image
+        style={styles.imageStyle}
+        borderRadius={10}
+        source={{
+          uri:
+            "http://aooevents.com/wp-content/themes/invictus_3.3/images/dummy-image.jpg"
+        }}
+      />
+      <View style={styles.opacityContainer} />
+
+      <View style={styles.textContainer}>
+        <Text style={styles.eventNameStyle}>Check Back Soon</Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
+
 const EventCard = ({ event, onPress }) => {
   let { month, day, year } = event.getEventDate();
   let eventDate = `${month} ${day}, ${year}`;
@@ -127,14 +147,18 @@ class EventCardsRow extends Component {
   }
 
   renderEvent(item) {
-    return (
-      <EventCard
-        key={item.item.getEventName()}
-        event={item.item}
-        navigation={this.props.navigation}
-        onPress={this.onPress.bind(this, item.item)}
-      />
-    );
+    if (item.item.name == "EmptyEvent") {
+      return <NoEventCard />;
+    } else {
+      return (
+        <EventCard
+          key={item.item.getEventName()}
+          event={item.item}
+          navigation={this.props.navigation}
+          onPress={this.onPress.bind(this, item.item)}
+        />
+      );
+    }
   }
 
   render() {

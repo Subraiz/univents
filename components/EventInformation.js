@@ -95,14 +95,20 @@ class EventInformation extends Component {
               />
               <TouchableOpacity
                 onPress={this.onReturn}
-                style={{ position: "absolute", paddingTop: 5, paddingLeft: 5 }}
+                style={{
+                  position: "absolute",
+                  paddingTop: 5,
+                  paddingLeft: 10,
+                  paddingTop: 5,
+                  paddingBottom: 5,
+                  paddingRight: 10,
+                  borderRadius: 10,
+                  marginLeft: 5,
+                  marginTop: 5,
+                  backgroundColor: "black"
+                }}
               >
-                <View style={styles.iconContainerStyle}>
-                  <Image
-                    style={styles.iconStyle}
-                    source={require("../assets/images/returnIcon.png")}
-                  />
-                </View>
+                <Text style={{ color: "white" }}>Return</Text>
               </TouchableOpacity>
             </View>
 

@@ -11,8 +11,12 @@ import {
   LayoutAnimation,
   ScrollView,
   PanResponder,
-  FlatList
+  FlatList,
+  ActivityIndicator
 } from "react-native";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { fetchEvents } from "../redux/actions/EventsActions";
 import EventCardsRow from "./EventCardsRow";
 import FilterButtonGroup from "./FilterButtonGroup";
 import DummyData from "../constants/DummyData";
@@ -21,6 +25,10 @@ const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
 
 const swipeThreshold = 0.32 * screenHeight;
+
+let emptyEvent = {
+  name: "EmptyEvent"
+};
 
 class Deck extends Component {
   state = {
@@ -58,6 +66,9 @@ class Deck extends Component {
             position.setValue({ x: 0, y: gesture.dy });
           } else {
             position.setValue({ x: 0, y: gesture.dy - gesture.dy * 0.65 });
+            if (gesture.dy > screenHeight * 0.08) {
+              this.props.fetchEvents("MA", "update", this.props.user);
+            }
           }
         }
       },
@@ -87,6 +98,17 @@ class Deck extends Component {
     LayoutAnimation.spring();
   }
 
+  renderSpinner() {
+    if (this.props.loading) {
+      return (
+        <View style={{ padding: 10 }}>
+          <ActivityIndicator size="small" color="grey" />
+        </View>
+      );
+    } else {
+      return;
+    }
+  }
   animate(direction) {
     if (direction == "up") {
       Animated.spring(this.state.position, {
@@ -123,9 +145,76 @@ class Deck extends Component {
     this.setState({ scroll: false, activated: false });
   }
 
+  renderPopularRow() {
+    if (this.props.events.popularEvents.length != 0) {
+      return (
+        <EventCardsRow
+          scroll={this.state.scroll}
+          data={this.props.events.popularEvents}
+          title={"Popular Near You"}
+          navigation={this.props.navigation}
+        />
+      );
+    } else {
+      return (
+        <EventCardsRow
+          scroll={this.state.scroll}
+          data={[emptyEvent]}
+          title={"Popular Near You"}
+          navigation={this.props.navigation}
+        />
+      );
+    }
+  }
+
+  renderSuggestionsRow() {
+    if (this.props.events.suggestionEvents.length != 0) {
+      return (
+        <EventCardsRow
+          scroll={this.state.scroll}
+          data={this.props.events.suggestionEvents}
+          title={"Suggestions"}
+          navigation={this.props.navigation}
+        />
+      );
+    } else {
+      return (
+        <EventCardsRow
+          scroll={this.state.scroll}
+          data={[emptyEvent]}
+          title={"Suggestions"}
+          navigation={this.props.navigation}
+        />
+      );
+    }
+  }
+
+  renderSchoolRow() {
+    if (this.props.events.school.length != 0) {
+      return (
+        <EventCardsRow
+          scroll={this.state.scroll}
+          data={this.props.events.schoolEvents}
+          title={"School"}
+          navigation={this.props.navigation}
+        />
+      );
+    } else {
+      return (
+        <EventCardsRow
+          scroll={this.state.scroll}
+          data={[emptyEvent]}
+          title={"School"}
+          navigation={this.props.navigation}
+        />
+      );
+    }
+  }
+
   render() {
     return (
       <View>
+        {this.renderSpinner()}
         <Animated.View
           style={[this.state.position.getLayout()]}
           {...this.state.panResponder.panHandlers}
@@ -154,12 +243,9 @@ class Deck extends Component {
                 ref="scrollView"
               >
                 <View style={styles.container}>
-                  <EventCardsRow
-                    scroll={this.state.scroll}
-                    data={DummyData}
-                    title={"Popular Near You"}
-                    navigation={this.props.navigation}
-                  />
+                  {this.renderPopularRow()}
+                  {this.renderSuggestionsRow()}
+                  {this.renderSchoolRow()}
                 </View>
               </ScrollView>
             </View>
@@ -169,6 +255,17 @@ class Deck extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    loading: state.events.loading,
+    user: state.user
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({ fetchEvents: fetchEvents }, dispatch);
+};
 
 const styles = {
   container: {
@@ -187,10 +284,10 @@ const styles = {
   shadowView: {
     height: 2,
     backgroundColor: "#F7F7F7",
-    shadowOffset: { width: 0, height: -2 },
+    shadowOffset: { width: 0, height: -1 },
     shadowColor: "black",
     shadowRadius: 8,
-    shadowOpacity: 1
+    shadowOpacity: 0.7
   },
   titleStyle: {
     fontWeight: "500",
@@ -231,4 +328,7 @@ const styles = {
   }
 };
 
-export default Deck;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Deck);

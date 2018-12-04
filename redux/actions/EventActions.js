@@ -68,7 +68,20 @@ export const clearEventInfo = () => {
   };
 };
 
+function makeid() {
+  var text = "";
+  var possible =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  for (var i = 0; i < 5; i++)
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+  return text;
+}
+
 export const uploadImage = (uri, mime, name, uid) => {
+  let randomString = makeid();
+  uid = uid + randomString;
   return async dispatch => {
     await initializeFirebase();
     const originalXMLHttpRequest = window.XMLHttpRequest;
@@ -78,7 +91,7 @@ export const uploadImage = (uri, mime, name, uid) => {
       let uploadBlob = null;
       const uploadUri =
         Platform.OS === "ios" ? imgUri.replace("file://", "") : imgUri;
-      const imageRef = storage.ref(uid);
+      const imageRef = storage.ref(`EventPictures/${uid}`);
       fs.readFile(uploadUri, "base64")
         .then(data => {
           return Blob.build(data, { type: `${mime};BASE64` });

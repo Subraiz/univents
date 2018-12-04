@@ -8,7 +8,8 @@ import {
   TouchableOpacity,
   Dimensions,
   Button,
-  Platform
+  Platform,
+  Alert
 } from "react-native";
 import { Marker, Callout } from "react-native-maps";
 import * as Animatable from "react-native-animatable";
@@ -19,74 +20,6 @@ const screenHeight = Dimensions.get("window").height;
 const entrance = "bounceIn";
 const exit = "bounceOut";
 
-const AndroidSquareMarker = props => {
-  let eventDate = `${props.event.eventDate.month} ${
-    props.event.eventDate.day
-  }, ${props.event.eventDate.year}`;
-
-  let locationName = `${props.event.eventLocation.locationName}`;
-  let locationAddress = `${props.event.eventLocation.locationAddress}`;
-
-  return (
-    <View
-      style={{
-        width: screenWidth * 0.5,
-        height: screenHeight * 0.19,
-        borderRadius: 20,
-        backgroundColor: "black"
-      }}
-    >
-      <View style={{ alignItems: "center" }}>
-        <Text
-          style={{
-            color: "white",
-            fontSize: 18,
-            fontWeight: "800",
-            marginTop: 4,
-            marginBottom: 4
-          }}
-        >
-          {props.event.getEventName()}
-        </Text>
-        <Text
-          style={{
-            color: "lightgrey",
-            fontSize: 16,
-            marginBottom: 4,
-            fontWeight: "600"
-          }}
-        >
-          {eventDate}
-        </Text>
-        <Text
-          style={{
-            color: "lightgrey",
-            fontSize: 16,
-            marginBottom: 4,
-            fontWeight: "600"
-          }}
-        >
-          {locationName}
-        </Text>
-      </View>
-      <TouchableOpacity
-        onPress={props.onPress}
-        style={{
-          padding: 8,
-          width: "90%",
-          marginTop: 4,
-          borderRadius: 10,
-          backgroundColor: "white",
-          alignItems: "center",
-          alignSelf: "center"
-        }}
-      >
-        <Text style={{ color: "blue" }}>View More Info</Text>
-      </TouchableOpacity>
-    </View>
-  );
-};
-
 const SquareMarker = props => {
   let eventDate = `${props.event.eventDate.month} ${
     props.event.eventDate.day
@@ -95,9 +28,10 @@ const SquareMarker = props => {
   let locationName = `${props.event.eventLocation.locationName}`;
   let locationAddress = `${props.event.eventLocation.locationAddress}`;
 
+  console.log(props.event.getEventImage());
+
   return (
     <Animatable.View
-      animation="bounceIn"
       style={{
         width: screenWidth * 0.5,
         height: screenHeight * 0.17,
@@ -179,7 +113,13 @@ export default class CustomMarker extends Component {
     if (Platform.OS === "ios") {
       UIManager.setLayoutAnimationEnabledExperimental &&
         UIManager.setLayoutAnimationEnabledExperimental(true);
-      LayoutAnimation.spring();
+      LayoutAnimation.easeInEaseOut();
+    }
+  }
+
+  hideMarker() {
+    if (!this.state.hidden) {
+      this.setState({ hidden: true });
     }
   }
 
@@ -190,14 +130,14 @@ export default class CustomMarker extends Component {
   renderMarker() {
     if (this.state.hidden) {
       return (
-        <View
+        <Animatable.View
           style={{
             width: 40,
             height: 40
           }}
         >
           <Image source={this.state.image} style={styles.logoStyle} />
-        </View>
+        </Animatable.View>
       );
     } else {
       return (

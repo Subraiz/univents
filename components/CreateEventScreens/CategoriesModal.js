@@ -24,6 +24,12 @@ class CategoriesModal extends Component {
     selectedCategories: []
   };
 
+  componentWillUnmount() {
+    allCategories.forEach(category => {
+      category.selected = false;
+    });
+  }
+
   onCategoryPress(category) {
     Keyboard.dismiss();
     category.selected = !category.selected;
@@ -48,15 +54,31 @@ class CategoriesModal extends Component {
 
   renderCategories() {
     return this.state.categories.map(category => {
-      return (
-        <InterestContainer
-          onPress={this.onCategoryPress.bind(this, category)}
-          interest={category}
-          key={category.item}
-          title={category.item}
-          colors={category.colors}
-        />
-      );
+      if (category.item == "Popular") {
+        if (this.props.endorsed) {
+          return (
+            <InterestContainer
+              onPress={this.onCategoryPress.bind(this, category)}
+              interest={category}
+              key={category.item}
+              title={category.item}
+              colors={category.colors}
+            />
+          );
+        } else {
+          return;
+        }
+      } else {
+        return (
+          <InterestContainer
+            onPress={this.onCategoryPress.bind(this, category)}
+            interest={category}
+            key={category.item}
+            title={category.item}
+            colors={category.colors}
+          />
+        );
+      }
     });
   }
 
@@ -98,7 +120,8 @@ const mapStateToProps = state => {
   let { eventCategories } = state.event;
   return {
     event: state.event,
-    eventCategories: eventCategories
+    eventCategories: eventCategories,
+    endorsed: state.user.endorsed
   };
 };
 

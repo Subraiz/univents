@@ -20,6 +20,7 @@ import { Button } from "../../components/common";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { updateLoginInfo, loginUser } from "../../redux/actions/LoginActions";
+import { fetchEvents } from "../../redux/actions/EventsActions";
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
@@ -38,6 +39,7 @@ class LoginForm extends Component {
   async onPress() {
     if (this.props.email && this.props.password) {
       await this.props.loginUser(this.props.email, this.props.password);
+      await this.props.fetchEvents("MA", null, this.props.user);
       if (this.props.authorized) {
         this.props.navigation.navigate("AppNavigator");
       }
@@ -105,7 +107,8 @@ const mapStateToProps = state => {
     password: state.auth.password,
     loading: state.auth.loading,
     error: state.auth.error,
-    authorized: state.auth.authorized
+    authorized: state.auth.authorized,
+    user: state.user
   };
 };
 
@@ -113,7 +116,8 @@ const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
       updateLoginInfo: updateLoginInfo,
-      loginUser: loginUser
+      loginUser: loginUser,
+      fetchEvents: fetchEvents
     },
     dispatch
   );

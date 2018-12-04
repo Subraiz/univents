@@ -9,6 +9,7 @@ import {
   updateEventInfo,
   publishEvent
 } from "../../redux/actions/EventActions";
+import { fetchEvents } from "../../redux/actions/EventsActions";
 import { withNavigation } from "react-navigation";
 
 const screenWidth = Dimensions.get("window").width;
@@ -39,6 +40,7 @@ class Screen3 extends Component {
 
   async onPublish() {
     await this.props.publishEvent(this.props.event);
+    await this.props.fetchEvents("MA", null, this.props.user);
     this.props.navigation.navigate("Explore");
   }
 
@@ -91,7 +93,11 @@ class Screen3 extends Component {
 
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
-    { updateEventInfo: updateEventInfo, publishEvent: publishEvent },
+    {
+      updateEventInfo: updateEventInfo,
+      publishEvent: publishEvent,
+      fetchEvents: fetchEvents
+    },
     dispatch
   );
 };
@@ -127,7 +133,8 @@ const mapStateToProps = state => {
     eventContact,
     eventID,
     uid: state.user.uid,
-    tempEventImage
+    tempEventImage,
+    user: state.user
   };
 };
 

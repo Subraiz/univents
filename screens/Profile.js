@@ -42,12 +42,6 @@ class Profile extends Component {
   };
   static router = ProfileNavigator.router;
 
-  componentWillUpdate() {
-    UIManager.setLayoutAnimationEnabledExperimental &&
-      UIManager.setLayoutAnimationEnabledExperimental(true);
-    //LayoutAnimation.spring();
-  }
-
   state = {
     showModal: false
   };

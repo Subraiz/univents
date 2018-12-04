@@ -27,6 +27,12 @@ export const updateUserInfo = ({ prop, value }) => {
   };
 };
 
+export const clearUser = () => {
+  return dispatch => {
+    dispatch({ type: T.CLEAR_USER });
+  };
+};
+
 export const checkForSignUpErrors = user => {
   initializeFirebase();
   if (!validEmail(user.email)) {
@@ -64,6 +70,23 @@ export const signUpUser = (email, password) => {
   };
 };
 
+export const fetchUser = uid => {
+  return async dispatch => {
+    await initializeFirebase();
+    await firestore
+      .collection("Users")
+      .doc(uid)
+      .get()
+      .then(doc => {
+        let user = doc.data();
+        dispatch({ type: T.SAVE_USER, payload: user });
+      })
+      .catch(error => {
+        console.log("Fix fetch user");
+      });
+  };
+};
+
 export const saveUser = user => {
   initializeFirebase();
   return async dispatch => {
@@ -77,7 +100,8 @@ export const saveUser = user => {
       major,
       year,
       sex,
-      school
+      school,
+      endorsed
     } = user;
     let updatedUser = {
       firstName,
@@ -97,7 +121,8 @@ export const saveUser = user => {
         bookmarkedEvents: [],
         pastHostedEvents: [],
         pastAttendedEvents: []
-      }
+      },
+      endorsed
     };
     await firestore
       .collection("Users")
@@ -151,7 +176,7 @@ export const uploadImage = (uri, mime, name) => {
       const uploadUri =
         Platform.OS === "ios" ? imgUri.replace("file://", "") : imgUri;
       let user = auth.currentUser;
-      const imageRef = storage.ref(`${user.uid}`);
+      const imageRef = storage.ref(`ProfilePictures/${user.uid}`);
 
       fs.readFile(uploadUri, "base64")
         .then(data => {

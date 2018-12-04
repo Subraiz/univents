@@ -12,3 +12,4 @@ export const UPDATE_EVENT_INFO = "UPDATE_EVENT_INFO";
 export const CLEAR_EVENT_INFO = "CLEAR_EVENT_INFO";
 
 export const FETCH_EVENTS = "FETCH_EVENTS";
+export const START_FETCH = "START_FETCH";

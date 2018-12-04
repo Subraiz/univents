@@ -18,7 +18,8 @@ const INITIAL_STATE = {
   year: "Junior",
   sex: "",
   school: "",
-  uid: ""
+  uid: "",
+  endorsed: false
 };
 
 export default (state = INITIAL_STATE, action) => {
