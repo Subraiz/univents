@@ -17,33 +17,44 @@ class CreatedEvents extends Component {
   }
 
   renderEvents() {
+    let delay = 0;
+
     return this.props.createdEvents.map(event => {
+      delay += 100;
       return (
-        <TouchableOpacity
-          key={event.eventID + "1"}
-          activeOpacity={0.8}
-          onPress={this.onEventPress.bind(this, event)}
+        <Animatable.View
+          animation="fadeInRight"
+          duration={500}
+          delay={delay}
+          key={event.eventID + "2"}
         >
-          <EventCard event={event} key={event.eventID} />
-        </TouchableOpacity>
+          <TouchableOpacity
+            key={event.eventID + "1"}
+            activeOpacity={0.8}
+            onPress={this.onEventPress.bind(this, event)}
+            style={{ marginTop: 5 }}
+          >
+            <EventCard event={event} key={event.eventID} />
+          </TouchableOpacity>
+        </Animatable.View>
       );
     });
   }
 
   render() {
     return (
-      <Animatable.View animation="bounceIn">
+      <View>
         <ScrollView>
           <View style={styles.eventsContainer}>{this.renderEvents()}</View>
         </ScrollView>
-      </Animatable.View>
+      </View>
     );
   }
 }
 
 const styles = {
   eventsContainer: {
-    marginTop: 5
+    marginTop: 8
   }
 };
 

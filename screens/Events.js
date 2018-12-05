@@ -42,7 +42,7 @@ class Events extends Component {
 
   renderScreen() {
     if (this.state.screen == "Saved") {
-      return <SavedEvents savedEvents={this.props.userEvets.savedEvents} />;
+      return <SavedEvents savedEvents={this.props.userEvents.savedEvents} />;
     } else {
       return (
         <CreatedEvents createdEvents={this.props.userEvents.createdEvents} />
