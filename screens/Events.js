@@ -98,7 +98,7 @@ class Events extends Component {
 
   render() {
     return (
-      <View>
+      <View style={{ flex: 1 }}>
         <View style={styles.headerContainer}>
           <SafeAreaView style={{ marginLeft: screenWidth * 0.03 }}>
             <View style={{ flexDirection: "row" }}>

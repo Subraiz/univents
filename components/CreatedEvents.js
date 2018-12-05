@@ -43,18 +43,17 @@ class CreatedEvents extends Component {
 
   render() {
     return (
-      <View>
-        <ScrollView>
-          <View style={styles.eventsContainer}>{this.renderEvents()}</View>
-        </ScrollView>
-      </View>
+      <ScrollView>
+        <View style={styles.eventsContainer}>{this.renderEvents()}</View>
+      </ScrollView>
     );
   }
 }
 
 const styles = {
   eventsContainer: {
-    marginTop: 8
+    marginTop: 8,
+    marginBottom: 8
   }
 };
 
