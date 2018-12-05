@@ -39,7 +39,7 @@ class Explore extends Component {
       UIManager.setLayoutAnimationEnabledExperimental &&
         UIManager.setLayoutAnimationEnabledExperimental(true);
       LayoutAnimation.easeInEaseOut();
-      count = 1;
+      count++;
     }
   }
 

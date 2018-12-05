@@ -50,7 +50,8 @@ class SignUpForm extends Component {
         style={{
           width: 35,
           height: 42,
-          padding: 8
+          padding: 8,
+          marginRight: 8
         }}
       >
         <Image

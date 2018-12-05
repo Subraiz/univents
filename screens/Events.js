@@ -15,6 +15,7 @@ import CreateEvent from "./CreateEvent";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { clearEventInfo } from "../redux/actions/EventActions";
+import { getUserEvents } from "../redux/actions/EventsActions";
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
@@ -29,6 +30,10 @@ class Events extends Component {
     screen: "Saved"
   };
 
+  componentWillMount() {
+    this.props.getUserEvents(this.props.uid);
+  }
+
   onButtonPress() {
     this.props.navigation.navigate("CreateEvent", {
       navigation: this.props.navigation
@@ -37,9 +42,11 @@ class Events extends Component {
 
   renderScreen() {
     if (this.state.screen == "Saved") {
-      return <SavedEvents />;
+      return <SavedEvents savedEvents={this.props.userEvets.savedEvents} />;
     } else {
-      return <CreatedEvents />;
+      return (
+        <CreatedEvents createdEvents={this.props.userEvents.createdEvents} />
+      );
     }
   }
 
@@ -115,13 +122,19 @@ class Events extends Component {
 }
 
 const mapStateToProps = state => {
-  return {};
+  return {
+    userEvents: state.userEvents,
+    createdEvents: state.userEvents.createdEvents,
+    savedEvents: state.userEvents.savedEvents,
+    uid: state.user.uid
+  };
 };
 
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
-      clearEventInfo: clearEventInfo
+      clearEventInfo: clearEventInfo,
+      getUserEvents: getUserEvents
     },
     dispatch
   );

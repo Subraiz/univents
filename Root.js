@@ -15,7 +15,7 @@ import {
 import SplashScreen from "./screens/SplashScreen";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { fetchEvents } from "./redux/actions/EventsActions";
+import { fetchEvents, getUserEvents } from "./redux/actions/EventsActions";
 import { fetchUser, clearUser } from "./redux/actions/LoginActions";
 import firebase from "@firebase/app";
 require("@firebase/auth");
@@ -110,16 +110,18 @@ class Root extends React.Component {
     };
     firebase.initializeApp(config);
 
+    firebase.firestore().settings({ timestampsInSnapshots: true });
+
     firebase.auth().onAuthStateChanged(async user => {
       if (user && count == 0) {
         this.setState({ authenticated: true });
         await this.props.fetchUser(this.props.user.uid);
         await this.props.fetchEvents("MA", null, this.props.user);
+        await this.props.getUserEvents(this.props.user.uid);
         setTimeout(() => this.setState({ loading: false }), 200);
         count++;
       } else if (!user && count == 0) {
         this.setState({ authenticated: false });
-        await this.props.fetchEvents("MA", null, null);
         await this.props.clearUser();
         this.setState({ loading: false });
         count++;
@@ -145,7 +147,8 @@ const mapDispatchToProps = dispatch => {
     {
       fetchEvents: fetchEvents,
       fetchUser: fetchUser,
-      clearUser: clearUser
+      clearUser: clearUser,
+      getUserEvents: getUserEvents
     },
     dispatch
   );

@@ -26,6 +26,8 @@ const screenHeight = Dimensions.get("window").height;
 
 const swipeThreshold = 0.32 * screenHeight;
 
+let fetchEventsCount = 0;
+
 let emptyEvent = {
   name: "EmptyEvent"
 };
@@ -60,14 +62,17 @@ class Deck extends Component {
           return true;
         }
       },
-      onPanResponderMove: (e, gesture) => {
+      onPanResponderMove: async (e, gesture) => {
         if (!this.state.activated) {
           if (gesture.dy < 0) {
             position.setValue({ x: 0, y: gesture.dy });
           } else {
             position.setValue({ x: 0, y: gesture.dy - gesture.dy * 0.65 });
             if (gesture.dy > screenHeight * 0.08) {
-              this.props.fetchEvents("MA", "update", this.props.user);
+              if (fetchEventsCount == 0) {
+                fetchEventsCount++;
+                await this.props.fetchEvents("MA", "update", this.props.user);
+              }
             }
           }
         }
@@ -106,6 +111,7 @@ class Deck extends Component {
         </View>
       );
     } else {
+      fetchEventsCount = 0;
       return;
     }
   }

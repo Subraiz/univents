@@ -90,43 +90,24 @@ export const fetchUser = uid => {
 export const saveUser = user => {
   initializeFirebase();
   return async dispatch => {
-    let {
-      email,
-      uid,
-      interests,
-      firstName,
-      lastName,
-      avatarSource,
-      major,
-      year,
-      sex,
-      school,
-      endorsed
-    } = user;
     let updatedUser = {
-      firstName,
-      lastName,
-      email,
-      uid,
-      interests,
-      avatarSource,
-      major,
-      year,
-      sex,
-      school,
-      race: "",
-      events: {
-        attendingEvents: [],
-        createdEvents: [],
-        bookmarkedEvents: [],
-        pastHostedEvents: [],
-        pastAttendedEvents: []
-      },
-      endorsed
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      interests: user.interests,
+      avatarSource: user.avatarSource,
+      major: user.major,
+      year: user.year,
+      sex: user.sex,
+      school: user.school,
+      uid: user.uid,
+      endorsed: user.endorsed,
+      ethnicity: user.ethnicity,
+      events: user.events
     };
     await firestore
       .collection("Users")
-      .doc(uid)
+      .doc(user.uid)
       .set(updatedUser);
     dispatch({ type: T.SAVE_USER, payload: updatedUser });
   };
@@ -165,9 +146,21 @@ export const updateLoginInfo = ({ prop, value }) => {
   };
 };
 
+function makeid() {
+  var text = "";
+  var possible =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  for (var i = 0; i < 5; i++)
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+  return text;
+}
+
 export const uploadImage = (uri, mime, name) => {
-  initializeFirebase();
-  return dispatch => {
+  let randomString = makeid();
+  return async dispatch => {
+    await initializeFirebase();
     const originalXMLHttpRequest = window.XMLHttpRequest;
     window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest;
     return new Promise((resolve, reject) => {
@@ -192,7 +185,6 @@ export const uploadImage = (uri, mime, name) => {
           return imageRef.getDownloadURL();
         })
         .then(url => {
-          console.log(url);
           let source = { uri: url };
           dispatch({
             type: T.UPDATE_USER_INFO,

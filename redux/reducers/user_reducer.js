@@ -4,7 +4,6 @@ import { NavigationActions } from "react-navigation";
 const INITIAL_STATE = {
   firstName: "",
   lastName: "",
-  name: "",
   email: "",
   password: "",
   confirmPassword: "",
@@ -17,9 +16,17 @@ const INITIAL_STATE = {
   major: "",
   year: "Junior",
   sex: "",
-  school: "",
+  school: "Boston College",
   uid: "",
-  endorsed: false
+  endorsed: false,
+  ethnicity: "",
+  events: {
+    attendingEvents: [],
+    createdEvents: [],
+    bookmarkedEvents: [],
+    pastHostedEvents: [],
+    pastAttendedEvents: []
+  }
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -41,7 +48,6 @@ export default (state = INITIAL_STATE, action) => {
         confirmPassword: ""
       };
     case T.SAVE_USER:
-      console.log(action.payload);
       return action.payload;
     case T.CLEAR_USER:
       return INITIAL_STATE;

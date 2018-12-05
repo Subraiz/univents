@@ -41,13 +41,19 @@ export const publishEvent = event => {
       .then()
       .catch(error => console.log(error));
 
+    let eventRefrence = firestore
+      .collection("Location")
+      .doc("MA")
+      .collection("Events")
+      .doc(event.eventID);
+
     await firestore
       .collection("Users")
       .doc(uid)
       .get()
       .then(doc => {
         user = doc.data();
-        user.events.createdEvents.push(event);
+        user.events.createdEvents.push(eventRefrence);
 
         firestore
           .collection("Users")
@@ -98,6 +104,7 @@ export const uploadImage = (uri, mime, name, uid) => {
         })
         .then(blob => {
           uploadBlob = blob;
+          console.log(blob);
           return imageRef.put(blob, { contentType: mime, name: name });
         })
         .then(() => {

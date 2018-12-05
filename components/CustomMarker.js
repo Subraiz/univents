@@ -149,22 +149,30 @@ export default class CustomMarker extends Component {
   renderMarker() {
     if (this.state.hidden) {
       return (
-        <Animatable.View
-          animation="fadeInDown"
-          style={{
-            width: 40,
-            height: 40
-          }}
+        <Marker
+          coordinate={this.props.coordinate}
+          tooltip={false}
+          onPress={this.switchMarker.bind(this)}
         >
-          <Image source={this.state.image} style={styles.logoStyle} />
-        </Animatable.View>
+          <Animatable.View
+            animation="fadeInDown"
+            style={{
+              width: 40,
+              height: 40
+            }}
+          >
+            <Image source={this.state.image} style={styles.logoStyle} />
+          </Animatable.View>
+        </Marker>
       );
     } else {
       return (
-        <SquareMarker
-          event={this.props.event}
-          onPress={this.onMoreInfoPress.bind(this)}
-        />
+        <Marker coordinate={this.props.coordinate} tooltip={false}>
+          <SquareMarker
+            event={this.props.event}
+            onPress={this.onMoreInfoPress.bind(this)}
+          />
+        </Marker>
       );
     }
   }
@@ -184,15 +192,7 @@ export default class CustomMarker extends Component {
 
   renderPlatformMarker() {
     if (Platform.OS === "ios") {
-      return (
-        <Marker
-          coordinate={this.props.coordinate}
-          tooltip={false}
-          onPress={this.switchMarker.bind(this)}
-        >
-          {this.renderMarker()}
-        </Marker>
-      );
+      return <View>{this.renderMarker()}</View>;
     } else {
       return <View>{this.renderAndroidMarker()}</View>;
     }

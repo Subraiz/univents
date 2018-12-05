@@ -30,6 +30,47 @@ const initializeFirebase = async () => {
   firestore.settings({ timestampsInSnapshots: true });
 };
 
+export const getUserEvents = uid => {
+  let user;
+  let createdEvents = [];
+  let savedEvents = [];
+  return async dispatch => {
+    await initializeFirebase();
+    firestore
+      .collection("Users")
+      .doc(uid)
+      .get()
+      .then(doc => {
+        user = doc.data();
+        user.events.createdEvents.forEach(event => {
+          event.get().then(doc => {
+            let event = doc.data();
+            let eventClass = new Event(
+              event.eventName,
+              event.eventDescription,
+              event.eventDate,
+              event.eventHost,
+              event.eventCategories,
+              event.eventCoordinates,
+              event.eventLocation,
+              event.eventTime,
+              event.eventType,
+              event.eventImage,
+              event.eventContact,
+              event.eventID,
+              event.eventData
+            );
+            createdEvents.push(eventClass);
+          });
+        });
+        dispatch({
+          type: T.FETCH_USER_EVENTS,
+          payload: { prop: "createdEvents", value: createdEvents }
+        });
+      });
+  };
+};
+
 export const fetchEvents = (state, type, user) => {
   // Get current date
   let currentDate = new Date();
@@ -94,7 +135,8 @@ export const fetchEvents = (state, type, user) => {
             event.eventType,
             event.eventImage,
             event.eventContact,
-            event.eventID
+            event.eventID,
+            event.eventData
           );
           // Sort events so most recent events are first in the array
           allEvents.unshift(eventClass);
@@ -114,32 +156,31 @@ export const fetchEvents = (state, type, user) => {
         });
 
         // Check if we should add a delay or not
-        let delay = 0;
-        if (type == "update") {
-          delay = 2000;
-        }
-
-        setTimeout(() => {
-          dispatch({
-            type: T.FETCH_EVENTS,
-            payload: { prop: "allEvents", value: allEvents }
-          });
-          dispatch({
-            type: T.FETCH_EVENTS,
-            payload: { prop: "popularEvents", value: popularEvents }
-          });
-          dispatch({
-            type: T.FETCH_EVENTS,
-            payload: { prop: "suggestionEvents", value: suggestionEvents }
-          });
-          dispatch({
-            type: T.FETCH_EVENTS,
-            payload: { prop: "schoolEvents", value: schoolEvents }
-          });
-        }, delay);
       })
       .catch(error => {
         console.log(error);
       });
+    let delay = 0;
+    if (type == "update") {
+      delay = 2000;
+    }
+    setTimeout(() => {
+      dispatch({
+        type: T.FETCH_EVENTS,
+        payload: { prop: "allEvents", value: allEvents }
+      });
+      dispatch({
+        type: T.FETCH_EVENTS,
+        payload: { prop: "popularEvents", value: popularEvents }
+      });
+      dispatch({
+        type: T.FETCH_EVENTS,
+        payload: { prop: "suggestionEvents", value: suggestionEvents }
+      });
+      dispatch({
+        type: T.FETCH_EVENTS,
+        payload: { prop: "schoolEvents", value: schoolEvents }
+      });
+    }, delay);
   };
 };

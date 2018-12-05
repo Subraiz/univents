@@ -21,6 +21,7 @@ import ProfileTabNavigator from "../navigation/ProfileTabNavigator";
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
+let userStringInfo;
 
 const ProfileNavigator = createStackNavigator(
   {
@@ -51,6 +52,31 @@ class Profile extends Component {
     this.setState({ showModal: !this.state.showModal });
   }
 
+  componentWillMount() {
+    let {
+      firstName,
+      lastName,
+      email,
+      interests,
+      major,
+      year,
+      school,
+      sex,
+      uid,
+      ethnicity
+    } = this.props;
+
+    let interestString = "";
+    interests.forEach((interest, i) => {
+      if (i == 0) {
+        interestString += interest;
+      } else {
+        interestString += `,${interest}`;
+      }
+    });
+    userStringInfo = `${firstName} ${lastName} ${email} ${major} ${year} ${sex} ${ethnicity} ${uid} ${interestString}`;
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -74,7 +100,7 @@ class Profile extends Component {
             onPress={() => this.setSize()}
           >
             <QRCode
-              value={this.props.uid}
+              value={userStringInfo}
               size={50}
               bgColor="black"
               fgColor="white"
@@ -83,7 +109,7 @@ class Profile extends Component {
         </View>
         <ProfileNavigator navigation={this.props.navigation} />
         <QRCodeModal
-          value={this.props.uid}
+          value={userStringInfo}
           visible={this.state.showModal}
           onPress={this.setSize.bind(this)}
         />
@@ -93,11 +119,31 @@ class Profile extends Component {
 }
 
 const mapStateToProps = state => {
+  let {
+    firstName,
+    lastName,
+    email,
+    interests,
+    major,
+    year,
+    school,
+    sex,
+    uid,
+    ethnicity,
+    avatarSource
+  } = state.user;
   return {
-    uid: state.user.uid,
-    firstName: state.user.firstName,
-    lastName: state.user.lastName,
-    avatarSource: state.user.avatarSource
+    firstName,
+    lastName,
+    email,
+    interests,
+    major,
+    year,
+    school,
+    sex,
+    ethnicity,
+    uid,
+    avatarSource
   };
 };
 

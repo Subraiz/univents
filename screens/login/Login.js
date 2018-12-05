@@ -5,8 +5,11 @@ import {
   Image,
   Dimensions,
   SafeAreaView,
-  TouchableOpacity
+  TouchableOpacity,
+  UIManager,
+  LayoutAnimation
 } from "react-native";
+import * as Animatable from "react-native-animatable";
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
@@ -14,27 +17,42 @@ const screenHeight = Dimensions.get("window").height;
 const Button = props => {
   return (
     <TouchableOpacity activeOpacity={0.8} onPress={props.onPress}>
-      <View
+      <Animatable.View
+        animation={props.animation}
         style={{
           width: screenWidth * 0.9,
           backgroundColor: props.color,
           alignItems: "center",
           marginTop: 10,
-          borderRadius: 7
+          borderRadius: 30
         }}
       >
-        <Text style={{ color: "white", padding: 20, fontSize: 18 }}>
+        <Text
+          style={{
+            color: "white",
+            padding: 20,
+            fontSize: 18,
+            fontWeight: "700"
+          }}
+        >
           {props.name}
         </Text>
-      </View>
+      </Animatable.View>
     </TouchableOpacity>
   );
 };
 
 class Login extends Component {
   static navigationOptions = {
-    header: null
+    header: null,
+    gesturesEnabled: false
   };
+
+  componentWillMount() {
+    UIManager.setLayoutAnimationEnabledExperimental &&
+      UIManager.setLayoutAnimationEnabledExperimental(true);
+    LayoutAnimation.easeInEaseOut();
+  }
 
   onButtonPress = login => {
     if (login) {
@@ -51,17 +69,23 @@ class Login extends Component {
           style={styles.imageStyle}
           source={require("../../assets/images/loginBackgroundImage.png")}
         />
-        <View style={styles.headerLogoContainer}>
+        <Animatable.View
+          style={styles.headerLogoContainer}
+          animation="slideInDown"
+          duration={750}
+        >
           <Text style={styles.headerStyle}>UNIVENTS</Text>
-        </View>
+        </Animatable.View>
         <View style={styles.buttonsViewContainer}>
           <View style={styles.buttonsContainer}>
             <Button
+              animation={"fadeInDown"}
               name={"Sign Up"}
               color={"rgba(230, 59, 59, 1)"}
               onPress={this.onButtonPress.bind(this, false)}
             />
             <Button
+              animation={"fadeInUp"}
               name={"Login"}
               color={"rgba(224, 116, 116, .9)"}
               onPress={this.onButtonPress.bind(this, true)}
@@ -88,7 +112,7 @@ const styles = {
   headerStyle: {
     fontSize: 62,
     color: "white",
-    fontWeight: "500"
+    fontWeight: "600"
   },
   imageStyle: {
     width: "100%",

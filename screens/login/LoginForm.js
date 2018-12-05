@@ -9,7 +9,8 @@ import {
   KeyboardAvoidingView,
   Keyboard,
   UIManager,
-  LayoutAnimation
+  LayoutAnimation,
+  ActivityIndicator
 } from "react-native";
 import {
   FormLabel,
@@ -26,6 +27,31 @@ const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
 
 class LoginForm extends Component {
+  static navigationOptions = {
+    title: "Log In",
+    gesturesEnabled: false,
+    headerRight: (
+      <View
+        style={{
+          width: 35,
+          height: 42,
+          padding: 8,
+          marginRight: 8
+        }}
+      >
+        <Image
+          style={{
+            flex: 1,
+            width: null,
+            height: null,
+            resizeMode: "contain"
+          }}
+          source={require("../../assets/images/UniventsLogo.png")}
+        />
+      </View>
+    )
+  };
+
   renderErrorMessage() {
     if (this.props.error != "") {
       return (
@@ -48,7 +74,11 @@ class LoginForm extends Component {
 
   renderButton() {
     if (this.props.loading) {
-      return <Text>Loading</Text>;
+      return (
+        <View style={{ padding: 10 }}>
+          <ActivityIndicator size="small" color="grey" />
+        </View>
+      );
     }
     return <Button onPress={this.onPress.bind(this)} title="Login" />;
   }
@@ -57,15 +87,6 @@ class LoginForm extends Component {
     return (
       <View style={styles.container}>
         <TouchableOpacity activeOpacity={1} onPress={() => Keyboard.dismiss()}>
-          <View style={styles.headerContainer}>
-            <View style={styles.logoContainer}>
-              <Image
-                style={styles.logoStyle}
-                source={require("../../assets/images/UniventsLogo.png")}
-              />
-            </View>
-            <Text>Login</Text>
-          </View>
           <KeyboardAvoidingView>
             <FormLabel>Email</FormLabel>
             <FormInput
