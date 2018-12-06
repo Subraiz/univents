@@ -26,9 +26,11 @@ let event = {};
 let navigatable = {};
 
 class EventInformation extends Component {
-  static navigationOptions = {
-    header: null,
-    gesturesEnabled: false
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: navigation.getParam("data").eventName,
+      gesturesEnabled: true
+    };
   };
 
   componentWillMount() {
@@ -75,13 +77,13 @@ class EventInformation extends Component {
   }
 
   render() {
-    let locationAddress = event.getEventLocation().locationAddress;
+    let locationAddress = event.eventLocation.locationAddress;
     locationAddress = locationAddress.split(",");
 
-    let { month, day, year } = event.getEventDate();
+    let { month, day, year } = event.eventDate;
     let eventDate = `${month} ${day}, ${year}`;
 
-    let { startTime, endTime } = event.getEventTime();
+    let { startTime, endTime } = event.eventTime;
     let eventTime = `${startTime} - ${endTime}`;
 
     return (
@@ -89,27 +91,13 @@ class EventInformation extends Component {
         <ScrollView>
           <View style={styles.firstSection}>
             <View style={styles.headerImageContainer}>
-              <Image
-                style={styles.headerImage}
-                source={event.getEventImage()}
-              />
-              <TouchableOpacity
-                onPress={this.onReturn}
-                style={{ position: "absolute", paddingTop: 5, paddingLeft: 5 }}
-              >
-                <View style={styles.iconContainerStyle}>
-                  <Image
-                    style={styles.iconStyle}
-                    source={require("../assets/images/returnIcon.png")}
-                  />
-                </View>
-              </TouchableOpacity>
+              <Image style={styles.headerImage} source={event.eventImage} />
             </View>
 
             <View style={styles.informationContainer}>
-              <Text style={styles.eventNameStyle}>{event.getEventName()}</Text>
+              <Text style={styles.eventNameStyle}>{event.eventName}</Text>
               <Text style={styles.eventHostTextStyle}>
-                {event.getEventType()} • {event.getEventHost()}
+                {event.eventType} • {event.eventHost}
               </Text>
               <View style={styles.dateStyle}>
                 <View style={styles.dateIcon}>
@@ -150,7 +138,7 @@ class EventInformation extends Component {
                 </View>
                 <View style={styles.locationInformation}>
                   <Text style={{ fontSize: 19, color: "black" }}>
-                    {event.getEventLocation().locationName}
+                    {event.eventLocation.locationName}
                   </Text>
                   <Text>{locationAddress[0]}</Text>
                   <Text>
@@ -167,9 +155,7 @@ class EventInformation extends Component {
               <View style={styles.headerTextContainer}>
                 <Text style={styles.headerText}>Details</Text>
               </View>
-              <Text style={styles.detailsText}>
-                {event.getEventDescription()}
-              </Text>
+              <Text style={styles.detailsText}>{event.eventDescription}</Text>
             </View>
 
             <View style={styles.section}>

@@ -8,7 +8,8 @@ import {
   Dimensions,
   UIManager,
   LayoutAnimation,
-  BackHandler
+  BackHandler,
+  StyleSheet
 } from "react-native";
 import { SearchBar } from "react-native-elements";
 import { connect } from "react-redux";
@@ -42,16 +43,12 @@ class Explore extends Component {
   render() {
     return (
       <SafeAreaView style={styles.container}>
-        <SearchBar
-          containerStyle={styles.searchBar}
-          round
-          lightTheme
-          showLoading
-          searchIcon={{ size: 24 }}
-          placeholder="Search For an Event..."
+        <View style={styles.headerContainer} />
+        <Map
+          navigation={this.props.navigation}
+          events={this.props.todaysEvents}
         />
-        <Map navigation={this.props.navigation} events={DummyData} />
-        <Deck navigation={this.props.navigation} />
+        <Deck navigation={this.props.navigation} events={this.props.events} />
       </SafeAreaView>
     );
   }
@@ -60,7 +57,7 @@ class Explore extends Component {
 const mapStateToProps = state => {
   return {
     events: state.events,
-    allEvents: state.events.allEvents
+    todaysEvents: state.events.todaysEvents
   };
 };
 
@@ -73,16 +70,17 @@ const mapDispatchToProps = dispatch => {
   );
 };
 
-const styles = {
+const styles = StyleSheet.create({
   container: {
     height: screenHeight,
     backgroundColor: "#FFFFFF"
   },
-  searchBar: {
-    backgroundColor: "rgba(0,0,0,0)",
-    borderTopColor: "rgba(0,0,0,0)"
+  headerContainer: {
+    width: screenWidth,
+    height: screenHeight * 0.03,
+    backgroundColor: "white"
   }
-};
+});
 
 export default connect(
   mapStateToProps,

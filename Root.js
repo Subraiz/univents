@@ -12,10 +12,9 @@ import {
   Animated,
   BackHandler
 } from "react-native";
-import { Provider } from "react-redux";
-import store from "./store";
 import firebase from "@firebase/app";
 require("@firebase/auth");
+import SplashScreen from "./screens/SplashScreen";
 
 import Login from "./screens/login/Login";
 import SignUpForm from "./screens/login/SignUpForm";
@@ -36,6 +35,7 @@ import { createStackNavigator } from "react-navigation";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { getUser } from "./redux/actions/LoginActions";
+import { fetchEvents, fetchUserEvents } from "./redux/actions/EventsActions";
 
 let count = 0;
 
@@ -115,11 +115,12 @@ class Root extends React.Component {
       if (user && count == 0) {
         console.log(user.uid);
         await this.props.getUser(user.uid);
-
-        this.setState({ loading: false, authenticated: true });
+        this.setState({ authenticated: true });
+        setTimeout(() => this.setState({ loading: false }), 1500);
         count++;
       } else if (!user && count == 0) {
-        this.setState({ loading: false, authenticated: false });
+        this.setState({ authenticated: false });
+        setTimeout(() => this.setState({ loading: false }), 1500);
         count++;
       }
     });
@@ -127,18 +128,16 @@ class Root extends React.Component {
 
   render() {
     if (this.state.loading) {
-      return (
-        <SafeAreaView>
-          <Text>Splash Screen</Text>
-        </SafeAreaView>
-      );
+      return <SplashScreen />;
     }
-
+    {
+      this.props.fetchEvents("MA", this.props.user);
+      this.props.fetchUserEvents(this.props.user);
+    }
     if (this.state.authenticated) {
       return <HomeStack />;
     } else {
       {
-        console.log("loading");
       }
       return <LoginStack />;
     }
@@ -146,11 +145,20 @@ class Root extends React.Component {
 }
 
 const mapStateToProps = state => {
-  return {};
+  return {
+    user: state.user
+  };
 };
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ getUser: getUser }, dispatch);
+  return bindActionCreators(
+    {
+      getUser: getUser,
+      fetchEvents: fetchEvents,
+      fetchUserEvents: fetchUserEvents
+    },
+    dispatch
+  );
 };
 
 const styles = StyleSheet.create({

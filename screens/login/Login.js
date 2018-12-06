@@ -5,8 +5,11 @@ import {
   Image,
   Dimensions,
   SafeAreaView,
-  TouchableOpacity
+  TouchableOpacity,
+  UIManager,
+  LayoutAnimation
 } from "react-native";
+import * as Animatable from "react-native-animatable";
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
@@ -14,24 +17,38 @@ const screenHeight = Dimensions.get("window").height;
 const Button = props => {
   return (
     <TouchableOpacity activeOpacity={0.8} onPress={props.onPress}>
-      <View
+      <Animatable.View
+        animation={props.animation}
         style={{
           width: screenWidth * 0.9,
           backgroundColor: props.color,
           alignItems: "center",
           marginTop: 10,
-          borderRadius: 7
+          borderRadius: 30
         }}
       >
-        <Text style={{ color: "white", padding: 20, fontSize: 18 }}>
+        <Text
+          style={{
+            color: "white",
+            padding: 20,
+            fontSize: 18,
+            fontWeight: "700"
+          }}
+        >
           {props.name}
         </Text>
-      </View>
+      </Animatable.View>
     </TouchableOpacity>
   );
 };
 
 class Login extends Component {
+  componentWillMount() {
+    UIManager.setLayoutAnimationEnabledExperimental &&
+      UIManager.setLayoutAnimationEnabledExperimental(true);
+    LayoutAnimation.easeInEaseOut();
+  }
+
   static navigationOptions = {
     header: null
   };
@@ -60,11 +77,13 @@ class Login extends Component {
               name={"Sign Up"}
               color={"rgba(230, 59, 59, 1)"}
               onPress={this.onButtonPress.bind(this, false)}
+              animation="fadeInDown"
             />
             <Button
               name={"Login"}
               color={"rgba(224, 116, 116, .9)"}
               onPress={this.onButtonPress.bind(this, true)}
+              animation="fadeInUp"
             />
           </View>
         </View>

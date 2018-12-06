@@ -27,14 +27,14 @@ export const updateEventInfo = ({ prop, value }) => {
   };
 };
 
-export const publishEvent = event => {
+export const publishEvent = (event, state) => {
   let uid = event.eventID.substring(0, event.eventID.length - 5);
   let user;
   return async dispatch => {
     await initializeFirebase();
     await firestore
       .collection("Location")
-      .doc("MA")
+      .doc(state)
       .collection("Events")
       .doc(event.eventID)
       .set(event)
@@ -47,7 +47,8 @@ export const publishEvent = event => {
       .get()
       .then(doc => {
         user = doc.data();
-        user.events.createdEvents.push(event);
+        let refrenceString = `Location/${state}/Events/${event.eventID}`;
+        user.events.createdEvents.push(refrenceString);
 
         firestore
           .collection("Users")

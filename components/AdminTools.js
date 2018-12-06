@@ -23,7 +23,7 @@ class AdminTools extends Component {
     return (
       <View style={{ flex: 1, backgroundColor: "#F7F7F7" }}>
         <TouchableOpacity
-          style={styles.buttonContainerA}
+          style={styles.buttonContainer}
           onPress={this.onPress.bind(this)}
         >
           <Text style={{ color: "navy" }}>Track Attendance</Text>

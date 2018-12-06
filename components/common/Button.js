@@ -16,12 +16,19 @@ const Button = props => {
             width: screenWidth * 0.7,
             backgroundColor: "red",
             alignItems: "center",
-            borderRadius: 2
+            borderRadius: 35
           },
           props.style
         ]}
       >
-        <Text style={{ color: "white", padding: 20, fontSize: 18 }}>
+        <Text
+          style={{
+            color: "white",
+            padding: 20,
+            fontSize: 18,
+            fontWeight: "600"
+          }}
+        >
           {props.title}
         </Text>
       </View>

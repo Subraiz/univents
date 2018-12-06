@@ -16,6 +16,7 @@ import QRCodeModal from "../components/QRCodeModal";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { signOutUser } from "../redux/actions/SettingsActions";
+import { fetchUserEvents } from "../redux/actions/EventsActions";
 import { createStackNavigator } from "react-navigation";
 import ProfileTabNavigator from "../navigation/ProfileTabNavigator";
 
@@ -42,10 +43,12 @@ class Profile extends Component {
   };
   static router = ProfileNavigator.router;
 
+  componentWillMount() {}
+
   componentWillUpdate() {
-    UIManager.setLayoutAnimationEnabledExperimental &&
-      UIManager.setLayoutAnimationEnabledExperimental(true);
-    //LayoutAnimation.spring();
+    // UIManager.setLayoutAnimationEnabledExperimental &&
+    //   UIManager.setLayoutAnimationEnabledExperimental(true);
+    // //LayoutAnimation.spring();
   }
 
   state = {
@@ -100,6 +103,7 @@ class Profile extends Component {
 
 const mapStateToProps = state => {
   return {
+    user: state.user,
     uid: state.user.uid,
     firstName: state.user.firstName,
     lastName: state.user.lastName,
@@ -110,7 +114,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
-      signOutUser: signOutUser
+      signOutUser: signOutUser,
+      fetchUserEvents: fetchUserEvents
     },
     dispatch
   );

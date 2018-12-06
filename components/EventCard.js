@@ -11,15 +11,15 @@ const EventCard = ({ event }) => {
   let { locationAddress, locationName } = event.getEventLocation();
   let eventLocation = `${locationName} - ${locationAddress}`;
 
-  let eventName = event.getEventName();
-  let hostName = event.getEventHost();
+  let eventName = event.eventName;
+  let hostName = event.eventHost;
 
   return (
     <View style={styles.container}>
       <Image
         style={styles.imageStyle}
         borderRadius={10}
-        source={event.getEventImage()}
+        source={event.eventImage}
       />
       <View style={styles.opacityContainer} />
 

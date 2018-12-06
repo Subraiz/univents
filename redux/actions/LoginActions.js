@@ -92,7 +92,8 @@ export const saveUser = user => {
       major,
       year,
       sex,
-      school
+      school,
+      endorsed
     } = user;
     let updatedUser = {
       firstName,
@@ -109,10 +110,9 @@ export const saveUser = user => {
       events: {
         attendingEvents: [],
         createdEvents: [],
-        bookmarkedEvents: [],
-        pastHostedEvents: [],
-        pastAttendedEvents: []
-      }
+        bookmarkedEvents: []
+      },
+      endorsed
     };
     await firestore
       .collection("Users")

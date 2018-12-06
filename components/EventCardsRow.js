@@ -17,15 +17,35 @@ import {
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
 
+const NoEventCard = () => {
+  return (
+    <TouchableOpacity activeOpacity={0.8} style={styles.container}>
+      <Image
+        style={styles.imageStyle}
+        borderRadius={10}
+        source={{
+          uri:
+            "http://aooevents.com/wp-content/themes/invictus_3.3/images/dummy-image.jpg"
+        }}
+      />
+      <View style={styles.opacityContainer} />
+
+      <View style={styles.textContainer}>
+        <Text style={styles.eventNameStyle}>Check Back Soon</Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
+
 const EventCard = ({ event, onPress }) => {
-  let { month, day, year } = event.getEventDate();
+  let { month, day, year } = event.eventDate;
   let eventDate = `${month} ${day}, ${year}`;
 
-  let { locationAddress, locationName } = event.getEventLocation();
+  let { locationAddress, locationName } = event.eventLocation;
   let eventLocation = `${locationName} - ${locationAddress}`;
 
-  let eventName = event.getEventName();
-  let hostName = event.getEventHost();
+  let eventName = event.eventName;
+  let hostName = event.eventHost;
 
   return (
     <TouchableOpacity
@@ -36,7 +56,8 @@ const EventCard = ({ event, onPress }) => {
       <Image
         style={styles.imageStyle}
         borderRadius={10}
-        source={event.getEventImage()}
+        source={event.eventImage}
+        defaultSource={require("../assets/images/UniventsSplashLogo.png")}
       />
       <View style={styles.opacityContainer} />
 
@@ -65,7 +86,6 @@ class EventCardsRow extends Component {
       },
       onPanResponderMove: (e, gesture) => {},
       onPanResponderRelease: (e, gesture) => {
-        console.log(gesture.vx);
         if (gesture.vx < -2) {
           this.refs.flatList.scrollToEnd();
           this.state.cardIndex = this.props.data.length - 1;
@@ -127,14 +147,18 @@ class EventCardsRow extends Component {
   }
 
   renderEvent(item) {
-    return (
-      <EventCard
-        key={item.item.getEventName()}
-        event={item.item}
-        navigation={this.props.navigation}
-        onPress={this.onPress.bind(this, item.item)}
-      />
-    );
+    if (item.item.name == "EmptyEvent") {
+      return <NoEventCard />;
+    } else {
+      return (
+        <EventCard
+          key={item.item.eventName}
+          event={item.item}
+          navigation={this.props.navigation}
+          onPress={this.onPress.bind(this, item.item)}
+        />
+      );
+    }
   }
 
   render() {

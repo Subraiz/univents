@@ -19,7 +19,8 @@ const INITIAL_STATE = {
   year: "Junior",
   sex: "",
   school: "",
-  uid: ""
+  uid: "",
+  endorsed: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -41,7 +42,6 @@ export default (state = INITIAL_STATE, action) => {
         confirmPassword: ""
       };
     case T.SAVE_USER:
-      console.log(action.payload);
       return action.payload;
     case T.CLEAR_USER:
       return INITIAL_STATE;
