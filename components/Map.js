@@ -6,8 +6,7 @@ import {
   Dimensions,
   Image,
   PermissionsAndroid,
-  Platform,
-  Button
+  Platform
 } from "react-native";
 import MapView, { Marker, Callout } from "react-native-maps";
 import Event from "../classes/Event";
@@ -17,22 +16,10 @@ const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
 
 class Map extends Component {
-  constructor(props) {
-    super(props);
-    // make sure this method gets the right scope, no matter how it's called
-    this.createMarkers = this.createMarkers.bind(this);
-  }
-
   state = {
-    mapRegion: {
-      latitude: 42.3355488,
-      longitude: -71.16849450000001,
-      latitudeDelta: 0.00922 * 3,
-      longitudeDelta: 0.00421 * 3
-    },
+    mapRegion: null,
     lastLat: null,
-    lastLong: null,
-    markerIndex: 1
+    lastLong: null
   };
 
   onRegionChange(mapRegion, lastLat, lastLong) {
@@ -66,10 +53,8 @@ class Map extends Component {
             let region = {
               latitude,
               longitude,
-              // latitude: 42.3355488,
-              // longitude: -71.16849450000001
-              latitudeDelta: 0.00922 * 1.4,
-              longitudeDelta: 0.00421 * 1.4
+              latitudeDelta: 0.00922 * 3,
+              longitudeDelta: 0.00421 * 3
             };
             this.onRegionChange(region, region.latitude, region.longitude);
           },
@@ -87,56 +72,42 @@ class Map extends Component {
     navigator.geolocation.clearWatch(this.watchId);
   }
 
-  hideMarkers() {
-    if (Platform.OS == "ios") {
-      this.props.events.map((event, i) => {
-        this["marker" + i].hideMarker();
-      });
-    }
+  onCalloutPress() {
+    this.marker.hideCallout();
   }
 
-  createMarkers(event, i) {
-    return (
-      <CustomMarker
-        ref={marker => {
-          this["marker" + i] = marker;
-        }}
-        key={event.getEventID()}
-        navigation={this.props.navigation}
-        event={event}
-        coordinate={event.getEventCoordinates()}
-        title={event.getEventName()}
-        description={event.getEventDescription()}
-      />
-    );
+  renderMarkers() {
+    return this.props.events.map(event => {
+      return (
+        <CustomMarker
+          key={event.getEventID()}
+          navigation={this.props.navigation}
+          event={event}
+          coordinate={event.getEventCoordinates()}
+          title={event.getEventName()}
+          description={event.getEventDescription()}
+        />
+      );
+    });
   }
 
   render() {
     return (
-      <View
-        onMoveShouldSetResponder={() => {
-          this.hideMarkers();
-          return true;
+      <MapView
+        style={styles.mapStyle}
+        // region={this.state.mapRegion}
+        // showsUserLocation={true}
+        // followUserLocation={true}
+        // onRegionChange={this.onRegionChange.bind(this)}
+        initialRegion={{
+          latitude: 42.3355488,
+          longitude: -71.16849450000001,
+          latitudeDelta: 0.00922 * 3,
+          longitudeDelta: 0.00421 * 3
         }}
-        onResponderRelease={this.onPanDragStop}
       >
-        <MapView
-          style={styles.mapStyle}
-          // region={this.state.mapRegion}
-          // // showsUserLocation={true}
-          // followUserLocation={true}
-          // onRegionChange={this.onRegionChange.bind(this)}
-          onPress={this.hideMarkers.bind(this)}
-          initialRegion={{
-            latitude: 42.3355488,
-            longitude: -71.16849450000001,
-            latitudeDelta: 0.00922 * 1.4,
-            longitudeDelta: 0.00421 * 1.4
-          }}
-        >
-          {this.props.events.map(this.createMarkers)}
-        </MapView>
-      </View>
+        {this.renderMarkers()}
+      </MapView>
     );
   }
 }

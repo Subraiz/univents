@@ -9,8 +9,7 @@ import {
   KeyboardAvoidingView,
   Keyboard,
   UIManager,
-  LayoutAnimation,
-  ActivityIndicator
+  LayoutAnimation
 } from "react-native";
 import {
   FormLabel,
@@ -21,37 +20,11 @@ import { Button } from "../../components/common";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { updateLoginInfo, loginUser } from "../../redux/actions/LoginActions";
-import { fetchEvents } from "../../redux/actions/EventsActions";
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
 
 class LoginForm extends Component {
-  static navigationOptions = {
-    title: "Log In",
-    gesturesEnabled: false,
-    headerRight: (
-      <View
-        style={{
-          width: 35,
-          height: 42,
-          padding: 8,
-          marginRight: 8
-        }}
-      >
-        <Image
-          style={{
-            flex: 1,
-            width: null,
-            height: null,
-            resizeMode: "contain"
-          }}
-          source={require("../../assets/images/UniventsLogo.png")}
-        />
-      </View>
-    )
-  };
-
   renderErrorMessage() {
     if (this.props.error != "") {
       return (
@@ -65,7 +38,6 @@ class LoginForm extends Component {
   async onPress() {
     if (this.props.email && this.props.password) {
       await this.props.loginUser(this.props.email, this.props.password);
-      await this.props.fetchEvents("MA", null, this.props.user);
       if (this.props.authorized) {
         this.props.navigation.navigate("AppNavigator");
       }
@@ -74,11 +46,7 @@ class LoginForm extends Component {
 
   renderButton() {
     if (this.props.loading) {
-      return (
-        <View style={{ padding: 10 }}>
-          <ActivityIndicator size="small" color="grey" />
-        </View>
-      );
+      return <Text>Loading</Text>;
     }
     return <Button onPress={this.onPress.bind(this)} title="Login" />;
   }
@@ -87,6 +55,15 @@ class LoginForm extends Component {
     return (
       <View style={styles.container}>
         <TouchableOpacity activeOpacity={1} onPress={() => Keyboard.dismiss()}>
+          <View style={styles.headerContainer}>
+            <View style={styles.logoContainer}>
+              <Image
+                style={styles.logoStyle}
+                source={require("../../assets/images/UniventsLogo.png")}
+              />
+            </View>
+            <Text>Login</Text>
+          </View>
           <KeyboardAvoidingView>
             <FormLabel>Email</FormLabel>
             <FormInput
@@ -128,8 +105,7 @@ const mapStateToProps = state => {
     password: state.auth.password,
     loading: state.auth.loading,
     error: state.auth.error,
-    authorized: state.auth.authorized,
-    user: state.user
+    authorized: state.auth.authorized
   };
 };
 
@@ -137,8 +113,7 @@ const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
       updateLoginInfo: updateLoginInfo,
-      loginUser: loginUser,
-      fetchEvents: fetchEvents
+      loginUser: loginUser
     },
     dispatch
   );

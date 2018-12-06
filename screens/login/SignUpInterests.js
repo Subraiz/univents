@@ -20,7 +20,6 @@ import allInterests from "../../constants/Interests";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { updateUserInfo, saveUser } from "../../redux/actions/LoginActions";
-import { fetchEvents } from "../../redux/actions/EventsActions";
 import firebase from "@firebase/app";
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
@@ -39,7 +38,6 @@ class SignUpInterests extends Component {
 
   async onPress() {
     await this.props.saveUser(this.props.user);
-    await this.props.fetchEvents("MA", null, this.props.user);
     this.props.navigation.navigate("AppNavigator");
   }
 
@@ -211,8 +209,7 @@ const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
       updateUserInfo: updateUserInfo,
-      saveUser: saveUser,
-      fetchEvents: fetchEvents
+      saveUser: saveUser
     },
     dispatch
   );

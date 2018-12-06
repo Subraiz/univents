@@ -42,48 +42,46 @@ class LocationModal extends Component {
         transparent={true}
       >
         <SafeAreaView style={styles.container}>
-          <View style={{ height: screenHeight * 0.6, width: screenWidth }}>
-            <GooglePlacesAutocomplete
-              placeholder="Search"
-              minLength={2} // minimum length of text to search
-              autoFocus={false}
-              returnKeyType={"search"} // Can be left out for default return key https://facebook.github.io/react-native/docs/textinput.html#returnkeytype
-              listViewDisplayed="auto" // true/false/undefined
-              fetchDetails={true}
-              renderDescription={row => row.description} // custom description render
-              onPress={(data, details = null) => {
-                this.handleSelectedLocation(details);
-              }}
-              getDefaultValue={() => ""}
-              query={{
-                // available options: https://developers.google.com/places/web-service/autocomplete
-                key: "AIzaSyD9TguYtWagQaPpe7rL3NrVjcZpXE_KvI0",
-                language: "en" // language of the results
-              }}
-              styles={{
-                textInputContainer: {
-                  width: "100%"
-                },
-                description: {
-                  fontWeight: "bold"
-                },
-                predefinedPlacesDescription: {
-                  color: "#1faadb"
-                }
-              }}
-              nearbyPlacesAPI="GooglePlacesSearch" // Which API to use: GoogleReverseGeocoding or GooglePlacesSearch
-              GoogleReverseGeocodingQuery={
-                {
-                  // available options for GoogleReverseGeocoding API : https://developers.google.com/maps/documentation/geocoding/intro
-                }
+          <GooglePlacesAutocomplete
+            placeholder="Search"
+            minLength={2} // minimum length of text to search
+            autoFocus={false}
+            returnKeyType={"search"} // Can be left out for default return key https://facebook.github.io/react-native/docs/textinput.html#returnkeytype
+            listViewDisplayed="auto" // true/false/undefined
+            fetchDetails={true}
+            renderDescription={row => row.description} // custom description render
+            onPress={(data, details = null) => {
+              this.handleSelectedLocation(details);
+            }}
+            getDefaultValue={() => ""}
+            query={{
+              // available options: https://developers.google.com/places/web-service/autocomplete
+              key: "AIzaSyD9TguYtWagQaPpe7rL3NrVjcZpXE_KvI0",
+              language: "en" // language of the results
+            }}
+            styles={{
+              textInputContainer: {
+                width: "100%"
+              },
+              description: {
+                fontWeight: "bold"
+              },
+              predefinedPlacesDescription: {
+                color: "#1faadb"
               }
-              GooglePlacesSearchQuery={{
-                // available options for GooglePlacesSearch API : https://developers.google.com/places/web-service/search
-                rankby: "distance"
-              }}
-              filterReverseGeocodingByTypes={["locality"]}
-            />
-          </View>
+            }}
+            nearbyPlacesAPI="GooglePlacesSearch" // Which API to use: GoogleReverseGeocoding or GooglePlacesSearch
+            GoogleReverseGeocodingQuery={
+              {
+                // available options for GoogleReverseGeocoding API : https://developers.google.com/maps/documentation/geocoding/intro
+              }
+            }
+            GooglePlacesSearchQuery={{
+              // available options for GooglePlacesSearch API : https://developers.google.com/places/web-service/search
+              rankby: "distance"
+            }}
+            filterReverseGeocodingByTypes={["locality"]}
+          />
         </SafeAreaView>
         <View
           style={{
@@ -94,7 +92,6 @@ class LocationModal extends Component {
         >
           <Button title="Cancel" onPress={this.props.onClose} />
         </View>
-        <View style={{ height: 100, width: screenWidth }} />
       </Modal>
     );
   }
@@ -118,7 +115,7 @@ const styles = {
   container: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "flex-start",
+    justifyContent: "flex-end",
     backgroundColor: "white"
   }
 };

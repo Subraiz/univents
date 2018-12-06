@@ -14,13 +14,12 @@ import { SearchBar } from "react-native-elements";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { fetchEvents } from "../redux/actions/EventsActions";
+import DummyData from "../constants/DummyData";
 import Deck from "../components/Deck";
 import Map from "../components/Map";
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
-
-let count = 0;
 
 class Explore extends Component {
   static navigationOptions = {
@@ -35,12 +34,9 @@ class Explore extends Component {
   componentWillMount() {
     BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
 
-    if (count == 0) {
-      UIManager.setLayoutAnimationEnabledExperimental &&
-        UIManager.setLayoutAnimationEnabledExperimental(true);
-      LayoutAnimation.easeInEaseOut();
-      count++;
-    }
+    UIManager.setLayoutAnimationEnabledExperimental &&
+      UIManager.setLayoutAnimationEnabledExperimental(true);
+    LayoutAnimation.easeInEaseOut();
   }
 
   render() {
@@ -54,8 +50,8 @@ class Explore extends Component {
           searchIcon={{ size: 24 }}
           placeholder="Search For an Event..."
         />
-        <Map navigation={this.props.navigation} events={this.props.allEvents} />
-        <Deck navigation={this.props.navigation} events={this.props.events} />
+        <Map navigation={this.props.navigation} events={DummyData} />
+        <Deck navigation={this.props.navigation} />
       </SafeAreaView>
     );
   }

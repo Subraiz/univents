@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { Text, View } from "react-native";
-import { Provider } from "react-redux";
-import store from "./store";
+import { View } from "react-native";
 import Root from "./Root";
+import store from "./store";
+import { Provider } from "react-redux";
 
-export default class App extends Component {
+class App extends Component {
   render() {
     return (
       <Provider store={store}>
@@ -13,3 +13,5 @@ export default class App extends Component {
     );
   }
 }
+
+export default App;

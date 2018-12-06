@@ -11,7 +11,6 @@ import {
 import Screen1 from "../components/CreateEventScreens/Screen1";
 import Screen2 from "../components/CreateEventScreens/Screen2";
 import Screen3 from "../components/CreateEventScreens/Screen3";
-import { withNavigation } from "react-navigation";
 import * as Animatable from "react-native-animatable";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -179,4 +178,4 @@ const styles = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withNavigation(CreateEvent));
+)(CreateEvent);

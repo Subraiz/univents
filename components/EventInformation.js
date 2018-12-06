@@ -26,11 +26,9 @@ let event = {};
 let navigatable = {};
 
 class EventInformation extends Component {
-  static navigationOptions = ({ navigation }) => {
-    return {
-      title: navigation.getParam("data").eventName,
-      gesturesEnabled: false
-    };
+  static navigationOptions = {
+    header: null,
+    gesturesEnabled: false
   };
 
   componentWillMount() {
@@ -48,9 +46,7 @@ class EventInformation extends Component {
   }
 
   onAdminToolsPressed() {
-    navigatable.navigate("AdminTools", {
-      data: event
-    });
+    navigatable.navigate("AdminTools");
   }
 
   renderAdminTools() {
@@ -62,9 +58,7 @@ class EventInformation extends Component {
           onPress={this.onAdminToolsPressed}
         >
           <View style={{ flexDirection: "row" }}>
-            <Text style={{ padding: 10, color: "grey" }} event={event}>
-              Admin Tools
-            </Text>
+            <Text style={{ padding: 10, color: "grey" }}>Admin Tools</Text>
             <View
               style={{
                 flex: 1,
@@ -99,6 +93,17 @@ class EventInformation extends Component {
                 style={styles.headerImage}
                 source={event.getEventImage()}
               />
+              <TouchableOpacity
+                onPress={this.onReturn}
+                style={{ position: "absolute", paddingTop: 5, paddingLeft: 5 }}
+              >
+                <View style={styles.iconContainerStyle}>
+                  <Image
+                    style={styles.iconStyle}
+                    source={require("../assets/images/returnIcon.png")}
+                  />
+                </View>
+              </TouchableOpacity>
             </View>
 
             <View style={styles.informationContainer}>

@@ -32,10 +32,6 @@ const INITIAL_STATE = {
   tempEventImage: {
     uri:
       "http://aooevents.com/wp-content/themes/invictus_3.3/images/dummy-image.jpg"
-  },
-  eventData: {
-    currentAttendance: 0,
-    usersAttended: []
   }
 };
 

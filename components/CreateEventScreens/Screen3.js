@@ -9,7 +9,6 @@ import {
   updateEventInfo,
   publishEvent
 } from "../../redux/actions/EventActions";
-import { fetchEvents, getUserEvents } from "../../redux/actions/EventsActions";
 import { withNavigation } from "react-navigation";
 
 const screenWidth = Dimensions.get("window").width;
@@ -39,24 +38,7 @@ class Screen3 extends Component {
   }
 
   async onPublish() {
-    let event = new Event(
-      this.props.eventName,
-      this.props.eventDescription,
-      this.props.eventDate,
-      this.props.eventHost,
-      this.props.eventCategories,
-      this.props.eventCoordinates,
-      this.props.eventLocation,
-      this.props.eventTime,
-      this.props.eventType,
-      this.props.eventImage,
-      this.props.eventContact,
-      this.props.eventID,
-      this.props.eventData
-    );
-    await this.props.publishEvent(event.getEventObject());
-    await this.props.getUserEvents(this.props.user.uid);
-    await this.props.fetchEvents("MA", null, this.props.user);
+    await this.props.publishEvent(this.props.event);
     this.props.navigation.navigate("Explore");
   }
 
@@ -109,12 +91,7 @@ class Screen3 extends Component {
 
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
-    {
-      updateEventInfo: updateEventInfo,
-      publishEvent: publishEvent,
-      fetchEvents: fetchEvents,
-      getUserEvents: getUserEvents
-    },
+    { updateEventInfo: updateEventInfo, publishEvent: publishEvent },
     dispatch
   );
 };
@@ -133,8 +110,7 @@ const mapStateToProps = state => {
     eventImage,
     eventContact,
     eventID,
-    tempEventImage,
-    eventData
+    tempEventImage
   } = state.event;
   return {
     event: state.event,
@@ -150,10 +126,8 @@ const mapStateToProps = state => {
     eventImage,
     eventContact,
     eventID,
-    eventData,
     uid: state.user.uid,
-    tempEventImage,
-    user: state.user
+    tempEventImage
   };
 };
 

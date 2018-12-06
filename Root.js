@@ -12,11 +12,8 @@ import {
   Animated,
   BackHandler
 } from "react-native";
-import SplashScreen from "./screens/SplashScreen";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { fetchEvents, getUserEvents } from "./redux/actions/EventsActions";
-import { fetchUser, clearUser } from "./redux/actions/LoginActions";
+import { Provider } from "react-redux";
+import store from "./store";
 import firebase from "@firebase/app";
 require("@firebase/auth");
 
@@ -35,6 +32,10 @@ import EventCardsRow from "./components/EventCardsRow";
 import AdminTools from "./components/AdminTools";
 import { AppNavigator, ProfileNavigator } from "./navigation/AppNavigator";
 import { createStackNavigator } from "react-navigation";
+
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { getUser } from "./redux/actions/LoginActions";
 
 let count = 0;
 
@@ -110,20 +111,15 @@ class Root extends React.Component {
     };
     firebase.initializeApp(config);
 
-    firebase.firestore().settings({ timestampsInSnapshots: true });
-
     firebase.auth().onAuthStateChanged(async user => {
       if (user && count == 0) {
-        this.setState({ authenticated: true });
-        await this.props.fetchUser(this.props.user.uid);
-        await this.props.fetchEvents("MA", null, this.props.user);
-        await this.props.getUserEvents(this.props.user.uid);
-        setTimeout(() => this.setState({ loading: false }), 200);
+        console.log(user.uid);
+        await this.props.getUser(user.uid);
+
+        this.setState({ loading: false, authenticated: true });
         count++;
       } else if (!user && count == 0) {
-        this.setState({ authenticated: false });
-        await this.props.clearUser();
-        this.setState({ loading: false });
+        this.setState({ loading: false, authenticated: false });
         count++;
       }
     });
@@ -131,34 +127,30 @@ class Root extends React.Component {
 
   render() {
     if (this.state.loading) {
-      return <SplashScreen />;
+      return (
+        <SafeAreaView>
+          <Text>Splash Screen</Text>
+        </SafeAreaView>
+      );
     }
 
     if (this.state.authenticated) {
       return <HomeStack />;
     } else {
+      {
+        console.log("loading");
+      }
       return <LoginStack />;
     }
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return bindActionCreators(
-    {
-      fetchEvents: fetchEvents,
-      fetchUser: fetchUser,
-      clearUser: clearUser,
-      getUserEvents: getUserEvents
-    },
-    dispatch
-  );
+const mapStateToProps = state => {
+  return {};
 };
 
-const mapStateToProps = state => {
-  return {
-    events: state.events,
-    user: state.user
-  };
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({ getUser: getUser }, dispatch);
 };
 
 const styles = StyleSheet.create({

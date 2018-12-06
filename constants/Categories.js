@@ -38,11 +38,6 @@ const allCategories = [
     item: "Food",
     selected: false,
     colors: { mainColor: "#B4388F", secondaryColor: "#FFB8EA" }
-  },
-  {
-    item: "Popular",
-    selected: false,
-    colors: { mainColor: "#7C9AFF", secondaryColor: "#03296D" }
   }
 ];
 

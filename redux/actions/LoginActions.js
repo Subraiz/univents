@@ -27,9 +27,18 @@ export const updateUserInfo = ({ prop, value }) => {
   };
 };
 
-export const clearUser = () => {
-  return dispatch => {
-    dispatch({ type: T.CLEAR_USER });
+export const getUser = uid => {
+  console.log(uid);
+  return async dispatch => {
+    await initializeFirebase();
+    firestore
+      .collection("Users")
+      .doc(uid)
+      .get()
+      .then(doc => {
+        let user = doc.data();
+        dispatch({ type: T.SAVE_USER, payload: user });
+      });
   };
 };
 
@@ -70,44 +79,44 @@ export const signUpUser = (email, password) => {
   };
 };
 
-export const fetchUser = uid => {
-  return async dispatch => {
-    await initializeFirebase();
-    await firestore
-      .collection("Users")
-      .doc(uid)
-      .get()
-      .then(doc => {
-        let user = doc.data();
-        dispatch({ type: T.SAVE_USER, payload: user });
-      })
-      .catch(error => {
-        console.log("Fix fetch user");
-      });
-  };
-};
-
 export const saveUser = user => {
   initializeFirebase();
   return async dispatch => {
+    let {
+      email,
+      uid,
+      interests,
+      firstName,
+      lastName,
+      avatarSource,
+      major,
+      year,
+      sex,
+      school
+    } = user;
     let updatedUser = {
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      interests: user.interests,
-      avatarSource: user.avatarSource,
-      major: user.major,
-      year: user.year,
-      sex: user.sex,
-      school: user.school,
-      uid: user.uid,
-      endorsed: user.endorsed,
-      ethnicity: user.ethnicity,
-      events: user.events
+      firstName,
+      lastName,
+      email,
+      uid,
+      interests,
+      avatarSource,
+      major,
+      year,
+      sex,
+      school,
+      race: "",
+      events: {
+        attendingEvents: [],
+        createdEvents: [],
+        bookmarkedEvents: [],
+        pastHostedEvents: [],
+        pastAttendedEvents: []
+      }
     };
     await firestore
       .collection("Users")
-      .doc(user.uid)
+      .doc(uid)
       .set(updatedUser);
     dispatch({ type: T.SAVE_USER, payload: updatedUser });
   };
@@ -146,21 +155,9 @@ export const updateLoginInfo = ({ prop, value }) => {
   };
 };
 
-function makeid() {
-  var text = "";
-  var possible =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-  for (var i = 0; i < 5; i++)
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-  return text;
-}
-
 export const uploadImage = (uri, mime, name) => {
-  let randomString = makeid();
-  return async dispatch => {
-    await initializeFirebase();
+  initializeFirebase();
+  return dispatch => {
     const originalXMLHttpRequest = window.XMLHttpRequest;
     window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest;
     return new Promise((resolve, reject) => {
@@ -169,7 +166,7 @@ export const uploadImage = (uri, mime, name) => {
       const uploadUri =
         Platform.OS === "ios" ? imgUri.replace("file://", "") : imgUri;
       let user = auth.currentUser;
-      const imageRef = storage.ref(`ProfilePictures/${user.uid}`);
+      const imageRef = storage.ref(`${user.uid}`);
 
       fs.readFile(uploadUri, "base64")
         .then(data => {
@@ -185,6 +182,7 @@ export const uploadImage = (uri, mime, name) => {
           return imageRef.getDownloadURL();
         })
         .then(url => {
+          console.log(url);
           let source = { uri: url };
           dispatch({
             type: T.UPDATE_USER_INFO,

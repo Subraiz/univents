@@ -1,9 +1,11 @@
 import * as T from "../actions/types";
+import { REHYDRATE } from "redux-persist/constants";
 import { NavigationActions } from "react-navigation";
 
 const INITIAL_STATE = {
   firstName: "",
   lastName: "",
+  name: "",
   email: "",
   password: "",
   confirmPassword: "",
@@ -16,17 +18,8 @@ const INITIAL_STATE = {
   major: "",
   year: "Junior",
   sex: "",
-  school: "Boston College",
-  uid: "",
-  endorsed: false,
-  ethnicity: "",
-  events: {
-    attendingEvents: [],
-    createdEvents: [],
-    bookmarkedEvents: [],
-    pastHostedEvents: [],
-    pastAttendedEvents: []
-  }
+  school: "",
+  uid: ""
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -48,6 +41,7 @@ export default (state = INITIAL_STATE, action) => {
         confirmPassword: ""
       };
     case T.SAVE_USER:
+      console.log(action.payload);
       return action.payload;
     case T.CLEAR_USER:
       return INITIAL_STATE;

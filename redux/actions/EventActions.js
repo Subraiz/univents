@@ -41,19 +41,13 @@ export const publishEvent = event => {
       .then()
       .catch(error => console.log(error));
 
-    let eventRefrence = firestore
-      .collection("Location")
-      .doc("MA")
-      .collection("Events")
-      .doc(event.eventID);
-
     await firestore
       .collection("Users")
       .doc(uid)
       .get()
       .then(doc => {
         user = doc.data();
-        user.events.createdEvents.push(eventRefrence);
+        user.events.createdEvents.push(event);
 
         firestore
           .collection("Users")
@@ -74,20 +68,7 @@ export const clearEventInfo = () => {
   };
 };
 
-function makeid() {
-  var text = "";
-  var possible =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-  for (var i = 0; i < 5; i++)
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-  return text;
-}
-
 export const uploadImage = (uri, mime, name, uid) => {
-  let randomString = makeid();
-  uid = uid + randomString;
   return async dispatch => {
     await initializeFirebase();
     const originalXMLHttpRequest = window.XMLHttpRequest;
@@ -97,14 +78,13 @@ export const uploadImage = (uri, mime, name, uid) => {
       let uploadBlob = null;
       const uploadUri =
         Platform.OS === "ios" ? imgUri.replace("file://", "") : imgUri;
-      const imageRef = storage.ref(`EventPictures/${uid}`);
+      const imageRef = storage.ref(uid);
       fs.readFile(uploadUri, "base64")
         .then(data => {
           return Blob.build(data, { type: `${mime};BASE64` });
         })
         .then(blob => {
           uploadBlob = blob;
-          console.log(blob);
           return imageRef.put(blob, { contentType: mime, name: name });
         })
         .then(() => {

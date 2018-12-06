@@ -13,9 +13,6 @@ const store = createStore(
   )
 );
 
-persistStore(store, {
-  storage: AsyncStorage,
-  whitelist: ["user", "userEvents"]
-});
+// persistStore(store, { storage: AsyncStorage, whitelist: ["user"] });
 
 export default store;

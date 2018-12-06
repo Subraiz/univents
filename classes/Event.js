@@ -26,10 +26,6 @@ export default class Event {
   };
   eventContact = "";
   eventID = ""; // Will be doc ID of the event
-  eventData: {
-    currentAttendance: 0,
-    usersAttended: []
-  };
 
   constructor(
     eventName,
@@ -43,8 +39,7 @@ export default class Event {
     eventType,
     eventImage,
     eventContact,
-    eventID,
-    eventData
+    eventID
   ) {
     this.eventName = eventName;
     this.eventDescription = eventDescription;
@@ -58,7 +53,9 @@ export default class Event {
     this.eventImage = eventImage;
     this.eventContact = eventContact;
     this.eventID = eventID;
-    this.eventData = eventData;
+
+    this.usersAttended = [];
+    this.totalAttendance = 0;
   }
 
   // Getters
@@ -102,10 +99,10 @@ export default class Event {
     return this.eventID;
   }
   getUsersAttended() {
-    return this.eventData.usersAttended;
+    return this.usersAttended;
   }
   getTotalAttendance() {
-    return this.eventData.currentAttendance;
+    return this.totalAttendance;
   }
 
   // Setters
@@ -121,9 +118,6 @@ export default class Event {
   setEventCategories(eventCategories) {
     this.eventCategories = eventCategories;
   }
-  setEventCoordinates(eventCoordinates) {
-    this.eventCoordinates = eventCoordinates;
-  }
   setEventLocation(eventLocation) {
     this.eventLocation = eventLocation;
   }
@@ -133,83 +127,10 @@ export default class Event {
   setEventType(eventType) {
     this.eventType = eventType;
   }
-  setEventDescription(eventDescription) {
-    this.eventDescription = eventDescription;
-  }
-  setEventImage(eventImage) {
-    this.eventImage = eventImage;
-  }
-  setEventID(eventID) {
-    this.eventID = eventID;
-  }
-  setEventData(eventData) {
-    this.eventData = eventData;
-  }
-  setEventContact(eventContact) {
-    this.eventContact = eventContact;
-  }
 
   // Helper Functions
   addUserAttended(user) {
-    let date = new Date();
-    let hour = date.getHours();
-    let minute = date.getMinutes();
-
-    let time = {
-      hour: hour,
-      minute: minute
-    };
-
-    user.time = time;
-
-    this.eventData.usersAttended.push(user);
-    this.eventData.currentAttendance++;
-  }
-
-  // Data functions
-  getSexData() {
-    let sexData = {
-      males: [],
-      females: [],
-      other: []
-    };
-
-    this.eventData.usersAttended.forEach(user => {
-      if (user.sex.toLowerCase() == "female") {
-        genderData.females.push(user);
-      } else if (user.sex.toLowerCase() == "male") {
-        genderData.males.push(user);
-      } else {
-        genderData.other.push(user);
-      }
-    });
-    return sexData;
-  }
-
-  getYearData() {
-    let yearData = {
-      freshman: [],
-      sophomore: [],
-      junior: [],
-      senior: []
-    };
-
-    this.eventData.usersAttended.forEach(user => {
-      if (user.year.toLowerCase() == "freshman") {
-        yearData.freshman.push(user);
-      } else if (user.year.toLowerCase() == "sophomore") {
-        yearData.sophomore.push(user);
-      } else if (user.year.toLowerCase() == "junior") {
-        yearData.junior.push(user);
-      } else if (user.year.toLowerCase() == "senior") {
-        yearData.junior.push(user);
-      }
-    });
-    return yearData;
-  }
-
-  // Function used to make class serilizable
-  getEventObject() {
-    return JSON.parse(JSON.stringify(this));
+    this.usersAttended.push(user);
+    this.numberOfAtendees++;
   }
 }
