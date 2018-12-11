@@ -10,6 +10,7 @@ import {
   LayoutAnimation
 } from "react-native";
 import * as Animatable from "react-native-animatable";
+import Swiper from "react-native-swiper";
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
@@ -64,10 +65,27 @@ class Login extends Component {
   render() {
     return (
       <SafeAreaView style={styles.container}>
-        <Image
-          style={styles.imageStyle}
-          source={require("../../assets/images/loginBackgroundImage.png")}
-        />
+        <View style={{ position: "absolute" }}>
+          <Swiper
+            autoplay={true}
+            width={screenWidth}
+            height={screenHeight}
+            autoplayTimeout={1.75}
+          >
+            <View style={styles.slide1}>
+              <Image
+                source={require("../../assets/images/loginBackgroundImage.png")}
+                style={styles.imageStyle}
+              />
+            </View>
+            <View style={styles.slide2}>
+              <Text style={styles.text}>Beautiful</Text>
+            </View>
+            <View style={styles.slide3}>
+              <Text style={styles.text}>And simple</Text>
+            </View>
+          </Swiper>
+        </View>
         <View style={styles.headerLogoContainer}>
           <Text style={styles.headerStyle}>UNIVENTS</Text>
         </View>
@@ -125,6 +143,30 @@ const styles = {
     height: "100%",
     width: screenWidth,
     justifyContent: "flex-end"
+  },
+  wrapper: {},
+  slide1: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#9DD6EB"
+  },
+  slide2: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#97CAE5"
+  },
+  slide3: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#92BBD9"
+  },
+  text: {
+    color: "#fff",
+    fontSize: 30,
+    fontWeight: "bold"
   }
 };
 

@@ -27,8 +27,21 @@ export const updateEventInfo = ({ prop, value }) => {
   };
 };
 
+export const updateEventData = (event, state) => {
+  return async dispatch => {
+    await initializeFirebase();
+    firestore
+      .collection("Location")
+      .doc(state)
+      .collection("Events")
+      .doc(event.eventID)
+      .set(event);
+  };
+};
+
 export const publishEvent = (event, state) => {
   let uid = event.eventID.substring(0, event.eventID.length - 5);
+  let createdEvents = [];
   let user;
   return async dispatch => {
     await initializeFirebase();
@@ -59,6 +72,24 @@ export const publishEvent = (event, state) => {
           });
       });
 
+    user.events.createdEvents.forEach(async event => {
+      let refrenceArray = event.split("/");
+
+      await firestore
+        .collection(refrenceArray[0])
+        .doc(refrenceArray[1])
+        .collection(refrenceArray[2])
+        .doc(refrenceArray[3])
+        .get()
+        .then(doc => {
+          createdEvents.unshift(doc.data());
+        });
+    });
+    dispatch({
+      type: T.FETCH_USER_EVENTS,
+      payload: { prop: "createdEvents", value: createdEvents }
+    });
+
     dispatch({ type: T.CLEAR_EVENT_INFO });
   };
 };
@@ -69,17 +100,29 @@ export const clearEventInfo = () => {
   };
 };
 
+function makeid() {
+  var text = "";
+  var possible =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  for (var i = 0; i < 5; i++)
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+  return text;
+}
+
 export const uploadImage = (uri, mime, name, uid) => {
   return async dispatch => {
     await initializeFirebase();
     const originalXMLHttpRequest = window.XMLHttpRequest;
     window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest;
     return new Promise((resolve, reject) => {
+      uid = uid + makeid();
       let imgUri = uri;
       let uploadBlob = null;
       const uploadUri =
         Platform.OS === "ios" ? imgUri.replace("file://", "") : imgUri;
-      const imageRef = storage.ref(uid);
+      const imageRef = storage.ref(`EventPictures/${uid}`);
       fs.readFile(uploadUri, "base64")
         .then(data => {
           return Blob.build(data, { type: `${mime};BASE64` });

@@ -29,6 +29,15 @@ const initializeFirebase = async () => {
   firestore.settings({ timestampsInSnapshots: true });
 };
 
+export const storeLocalEvents = (eventArray, type) => {
+  return dispatch => {
+    dispatch({
+      type: T.STORE_LOCAL_EVENT,
+      payload: { prop: type, value: eventArray }
+    });
+  };
+};
+
 export const fetchEvents = (state, user, type) => {
   // Create event categories
   let allEvents = [];
@@ -158,6 +167,7 @@ export const fetchEvents = (state, user, type) => {
 
 export const fetchUserEvents = (user, type) => {
   let createdEvents = [];
+  let favoritedEvents = [];
   return async dispatch => {
     await initializeFirebase();
     user.events.createdEvents.forEach(async event => {
@@ -173,9 +183,35 @@ export const fetchUserEvents = (user, type) => {
           createdEvents.unshift(doc.data());
         });
     });
-    dispatch({
+
+    user.events.favoritedEvents.forEach(async event => {
+      let refrenceArray = event.split("/");
+
+      await firestore
+        .collection(refrenceArray[0])
+        .doc(refrenceArray[1])
+        .collection(refrenceArray[2])
+        .doc(refrenceArray[3])
+        .get()
+        .then(doc => {
+          favoritedEvents.unshift(doc.data());
+        });
+    });
+    await dispatch({
       type: T.FETCH_USER_EVENTS,
       payload: { prop: "createdEvents", value: createdEvents }
+    });
+    dispatch({
+      type: T.FETCH_USER_EVENTS,
+      payload: { prop: "favoritedEvents", value: favoritedEvents }
+    });
+    dispatch({
+      type: T.STORE_LOCAL_EVENT,
+      payload: { prop: "createdEvents", value: createdEvents }
+    });
+    dispatch({
+      type: T.STORE_LOCAL_EVENT,
+      payload: { prop: "favoritedEvents", value: favoritedEvents }
     });
   };
 };

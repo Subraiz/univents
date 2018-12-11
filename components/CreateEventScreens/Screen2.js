@@ -36,7 +36,7 @@ class Screen2 extends Component {
   };
 
   renderCharacterCounter() {
-    let countString = `${this.props.eventDescription.length}/500`;
+    let countString = `${this.props.eventDescription.length}/300`;
     return <Text style={{ color: "lightgrey" }}>{countString}</Text>;
   }
 
@@ -126,12 +126,12 @@ class Screen2 extends Component {
             </TouchableOpacity>
             <View style={styles.infoContainer}>
               <TextInput
-                style={{ height: "100%" }}
+                style={{ height: "25%" }}
                 placeholder="Event Description"
                 value={this.props.eventDescription}
                 spellCheck={true}
                 multiline={true}
-                maxLength={500}
+                maxLength={300}
                 onChange={text =>
                   this.props.updateEventInfo({
                     prop: "eventDescription",
@@ -249,7 +249,7 @@ const styles = {
   infoContainer: {
     width: screenWidth * 0.95,
     paddingTop: 10,
-    height: screenHeight * 0.3,
+    height: screenHeight * 0.2,
     backgroundColor: "white",
     paddingLeft: 10
   },

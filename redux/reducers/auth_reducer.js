@@ -17,11 +17,17 @@ export default (state = INITIAL_STATE, action) => {
         error: ""
       };
     case T.START_LOGIN:
-      return { ...state, loading: true, error: "" };
+      return { ...state, loading: true, error: "", authorized: false };
     case T.LOGIN_FAILED:
-      return { ...state, error: "failed", loading: false, password: "" };
+      return {
+        ...state,
+        error: "failed",
+        loading: false,
+        password: "",
+        authorized: false
+      };
     case T.LOGIN_SUCCESS:
-      return { ...INITIAL_STATE, authorized: true };
+      return { ...INITIAL_STATE, authorized: true, loading: false };
     default:
       return state;
   }

@@ -44,6 +44,7 @@
 		4455371FC1644D26A882437F /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 043EFBC829EE4A35BB5761E6 /* SimpleLineIcons.ttf */; };
 		5D090F6B21A52E7D00CE4E13 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D090F6A21A52E6900CE4E13 /* libRNImagePicker.a */; };
 		5D0B3320219BF79300A3A903 /* libRNCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D0B331F219BF78800A3A903 /* libRNCamera.a */; };
+		5D25210621BF735000A1D397 /* libRNSVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D25210321BF733D00A1D397 /* libRNSVG.a */; };
 		5D56E23A21AF76B5008E0167 /* libRNFetchBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D56E23921AF76AE008E0167 /* libRNFetchBlob.a */; };
 		5D5FCEF521A0CB5300BBE725 /* libReactNativePermissions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D5FCEF321A0CB4500BBE725 /* libReactNativePermissions.a */; };
 		5D7C037A21945C8200A982E9 /* AIRGoogleMapUrlTile.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7C035521945C8200A982E9 /* AIRGoogleMapUrlTile.m */; };
@@ -349,6 +350,20 @@
 			remoteGlobalIDString = 4107012F1ACB723B00C6AA39;
 			remoteInfo = RNCamera;
 		};
+		5D25210221BF733D00A1D397 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5D2520D221BF733C00A1D397 /* RNSVG.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0CF68AC11AF0540F00FF9E5C;
+			remoteInfo = RNSVG;
+		};
+		5D25210421BF733D00A1D397 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5D2520D221BF733C00A1D397 /* RNSVG.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 94DDAC5C1F3D024300EED511;
+			remoteInfo = "RNSVG-tvOS";
+		};
 		5D56E23821AF76AE008E0167 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5D56E23421AF76AE008E0167 /* RNFetchBlob.xcodeproj */;
@@ -458,6 +473,7 @@
 		39B1DF2EEC65436BB2AA845D /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		5D090F3C21A52E6900CE4E13 /* RNImagePicker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNImagePicker.xcodeproj; path = "../node_modules/react-native-image-picker/ios/RNImagePicker.xcodeproj"; sourceTree = "<group>"; };
 		5D0B32F4219BF78800A3A903 /* RNCamera.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNCamera.xcodeproj; path = "../node_modules/react-native-camera/ios/RNCamera.xcodeproj"; sourceTree = "<group>"; };
+		5D2520D221BF733C00A1D397 /* RNSVG.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSVG.xcodeproj; path = "../node_modules/react-native-svg/ios/RNSVG.xcodeproj"; sourceTree = "<group>"; };
 		5D56E23421AF76AE008E0167 /* RNFetchBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNFetchBlob.xcodeproj; path = "../node_modules/rn-fetch-blob/ios/RNFetchBlob.xcodeproj"; sourceTree = "<group>"; };
 		5D5FCEC821A0CB4500BBE725 /* ReactNativePermissions.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativePermissions.xcodeproj; path = "../node_modules/react-native-permissions/ios/ReactNativePermissions.xcodeproj"; sourceTree = "<group>"; };
 		5D7C035421945C8200A982E9 /* AIRGoogleMapPolyline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIRGoogleMapPolyline.h; sourceTree = "<group>"; };
@@ -564,6 +580,7 @@
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				5DC955B121A49F5700969920 /* libRCTCameraRoll.a in Frameworks */,
+				5D25210621BF735000A1D397 /* libRNSVG.a in Frameworks */,
 				601933D42F6B3803C592FB61 /* libPods-univents.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -744,6 +761,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		5D2520D321BF733C00A1D397 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5D25210321BF733D00A1D397 /* libRNSVG.a */,
+				5D25210521BF733D00A1D397 /* libRNSVG-tvOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		5D56E23521AF76AE008E0167 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -894,6 +920,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				5D2520D221BF733C00A1D397 /* RNSVG.xcodeproj */,
 				5D56E23421AF76AE008E0167 /* RNFetchBlob.xcodeproj */,
 				5D090F3C21A52E6900CE4E13 /* RNImagePicker.xcodeproj */,
 				5DC9558321A49F4D00969920 /* RCTCameraRoll.xcodeproj */,
@@ -1157,6 +1184,10 @@
 					ProductGroup = 5D090F3D21A52E6900CE4E13 /* Products */;
 					ProjectRef = 5D090F3C21A52E6900CE4E13 /* RNImagePicker.xcodeproj */;
 				},
+				{
+					ProductGroup = 5D2520D321BF733C00A1D397 /* Products */;
+					ProjectRef = 5D2520D221BF733C00A1D397 /* RNSVG.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -1405,6 +1436,20 @@
 			fileType = archive.ar;
 			path = libRNCamera.a;
 			remoteRef = 5D0B331E219BF78800A3A903 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5D25210321BF733D00A1D397 /* libRNSVG.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNSVG.a;
+			remoteRef = 5D25210221BF733D00A1D397 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5D25210521BF733D00A1D397 /* libRNSVG-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libRNSVG-tvOS.a";
+			remoteRef = 5D25210421BF733D00A1D397 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		5D56E23921AF76AE008E0167 /* libRNFetchBlob.a */ = {
@@ -1777,7 +1822,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.univents;
 				PRODUCT_NAME = univents;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1805,7 +1850,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.univents;
 				PRODUCT_NAME = univents;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";

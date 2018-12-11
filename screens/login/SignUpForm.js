@@ -23,7 +23,8 @@ import { bindActionCreators } from "redux";
 import {
   updateUserInfo,
   checkForSignUpErrors,
-  signUpUser
+  signUpUser,
+  saveUser
 } from "../../redux/actions/LoginActions";
 
 const screenWidth = Dimensions.get("window").width;
@@ -37,6 +38,7 @@ class SignUpForm extends Component {
     if (this.props.error == "No Error") {
       await this.props.signUpUser(this.props.email, this.props.password);
       if (this.props.uid) {
+        this.props.saveUser(this.props.user);
         this.props.navigation.navigate("SignUpPersonalInfo");
       }
     }
@@ -114,6 +116,7 @@ class SignUpForm extends Component {
             <View style={{ marginTop: 10 }}>
               <FormLabel>First Name</FormLabel>
               <FormInput
+                placeholder={"F. Name"}
                 autoCorrect={false}
                 containerStyle={styles.inputStyle}
                 onChangeText={text =>
@@ -123,6 +126,7 @@ class SignUpForm extends Component {
               />
               <FormLabel>Last Name</FormLabel>
               <FormInput
+                placeholder={"L. Name"}
                 autoCorrect={false}
                 containerStyle={styles.inputStyle}
                 onChangeText={text =>
@@ -132,6 +136,7 @@ class SignUpForm extends Component {
               />
               <FormLabel>Email</FormLabel>
               <FormInput
+                placeholder={"student@bc.edu"}
                 containerStyle={styles.inputStyle}
                 onChangeText={text =>
                   this.props.updateUserInfo({ prop: "email", value: text })
@@ -142,6 +147,7 @@ class SignUpForm extends Component {
 
               <FormLabel>Password</FormLabel>
               <FormInput
+                placeholder={"••••••"}
                 secureTextEntry
                 containerStyle={styles.inputStyle}
                 value={this.props.password}
@@ -152,6 +158,7 @@ class SignUpForm extends Component {
 
               <FormLabel>Confirm Password</FormLabel>
               <FormInput
+                placeholder={"••••••"}
                 secureTextEntry
                 containerStyle={styles.inputStyle}
                 value={this.props.confirmPassword}
@@ -204,7 +211,8 @@ const mapDispatchToProps = dispatch => {
     {
       updateUserInfo: updateUserInfo,
       checkForSignUpErrors: checkForSignUpErrors,
-      signUpUser: signUpUser
+      signUpUser: signUpUser,
+      saveUser: saveUser
     },
     dispatch
   );

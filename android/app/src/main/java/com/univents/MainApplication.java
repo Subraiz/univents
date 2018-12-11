@@ -1,7 +1,7 @@
 package com.univents;
 
 import android.app.Application;
-
+import com.horcrux.svg.SvgPackage;
 import com.facebook.react.ReactApplication;
 import com.imagepicker.ImagePickerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -15,6 +15,7 @@ import com.facebook.soloader.SoLoader;
 import java.util.Arrays;
 import java.util.List;
 import com.RNFetchBlob.RNFetchBlobPackage;
+
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -32,7 +33,8 @@ public class MainApplication extends Application implements ReactApplication {
             new VectorIconsPackage(),
             new MapsPackage(),
             new RNCameraPackage(),
-              new RNFetchBlobPackage()
+            new RNFetchBlobPackage(),
+            new SvgPackage()
       );
     }
 

@@ -196,7 +196,7 @@ const styles = {
     width: screenWidth * 0.7,
     backgroundColor: "red",
     alignItems: "center",
-    borderRadius: 7,
+    borderRadius: 35,
     opacity: 0.5
   },
   selectedButtonStyle: {

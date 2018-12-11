@@ -27,6 +27,20 @@ export const updateUserInfo = ({ prop, value }) => {
   };
 };
 
+export const uploadUser = user => {
+  return async dispatch => {
+    await initializeFirebase();
+    await firestore
+      .collection("Users")
+      .doc(user.uid)
+      .set(user)
+      .then(() => {
+        dispatch({ type: T.SAVE_USER, payload: user });
+      })
+      .catch(error => console.log(error));
+  };
+};
+
 export const getUser = uid => {
   console.log(uid);
   return async dispatch => {
@@ -110,7 +124,7 @@ export const saveUser = user => {
       events: {
         attendingEvents: [],
         createdEvents: [],
-        bookmarkedEvents: []
+        favoritedEvents: []
       },
       endorsed
     };
@@ -128,17 +142,17 @@ export const loginUser = (email, password) => {
     await dispatch({ type: T.START_LOGIN });
     await auth
       .signInWithEmailAndPassword(email, password)
-      .then(userObject => {
+      .then(async userObject => {
         uid = userObject.user.uid;
-        dispatch({ type: T.LOGIN_SUCCESS });
 
-        firestore
+        await firestore
           .collection("Users")
           .doc(uid)
           .get()
           .then(doc => {
             let user = doc.data();
             dispatch({ type: T.SAVE_USER, payload: user });
+            dispatch({ type: T.LOGIN_SUCCESS });
           });
       })
       .catch(error => {
@@ -155,6 +169,17 @@ export const updateLoginInfo = ({ prop, value }) => {
   };
 };
 
+function makeid() {
+  var text = "";
+  var possible =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  for (var i = 0; i < 5; i++)
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+  return text;
+}
+
 export const uploadImage = (uri, mime, name) => {
   initializeFirebase();
   return dispatch => {
@@ -166,7 +191,8 @@ export const uploadImage = (uri, mime, name) => {
       const uploadUri =
         Platform.OS === "ios" ? imgUri.replace("file://", "") : imgUri;
       let user = auth.currentUser;
-      const imageRef = storage.ref(`${user.uid}`);
+      let uid = user.uid + makeid();
+      const imageRef = storage.ref(`ProfilePictures/${uid}`);
 
       fs.readFile(uploadUri, "base64")
         .then(data => {

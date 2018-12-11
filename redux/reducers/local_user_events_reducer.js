@@ -8,7 +8,8 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case T.FETCH_USER_EVENTS:
+    case T.STORE_LOCAL_EVENT:
+      console.log(action.payload);
       return {
         ...state,
         [action.payload.prop]: action.payload.value

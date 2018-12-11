@@ -15,9 +15,8 @@ import {
   ActivityIndicator,
   StyleSheet
 } from "react-native";
+import Icon from "react-native-vector-icons/Ionicons";
 import EventCardsRow from "./EventCardsRow";
-import FilterButtonGroup from "./FilterButtonGroup";
-import DummyData from "../constants/DummyData";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { fetchEvents } from "../redux/actions/EventsActions";
@@ -30,6 +29,41 @@ const swipeThreshold = 0.32 * screenHeight;
 let emptyEvent = {
   name: "EmptyEvent"
 };
+
+let categories = [
+  {
+    name: "Food",
+    iconName: "md-restaurant"
+  },
+  {
+    name: "Music",
+    iconName: "ios-musical-notes"
+  },
+  {
+    name: "Sports",
+    iconName: "ios-basketball"
+  },
+  {
+    name: "Social",
+    iconName: "ios-wine"
+  },
+  {
+    name: "Fashion",
+    iconName: "ios-shirt"
+  },
+  {
+    name: "Art",
+    iconName: "ios-color-palette"
+  },
+  {
+    name: "Promotions",
+    iconName: "ios-pricetags"
+  },
+  {
+    name: "Technology",
+    iconName: "ios-desktop"
+  }
+];
 
 class Deck extends Component {
   state = {
@@ -93,17 +127,26 @@ class Deck extends Component {
     };
   }
 
-  componentWillUpdate() {}
+  componentWillUpdate() {
+    UIManager.setLayoutAnimationEnabledExperimental &&
+      UIManager.setLayoutAnimationEnabledExperimental(true);
+    LayoutAnimation.spring();
+  }
 
   renderSpinner() {
     if (this.props.loading) {
       return (
-        <View style={{ marginTop: 10, marginBottom: 10 }}>
+        <View style={{ marginTop: 5, marginBottom: 10 }}>
           <ActivityIndicator />
         </View>
       );
     } else {
-      return;
+      return (
+        <Image
+          source={require("../assets/images/ArrowUp.png")}
+          style={styles.iconStyle}
+        />
+      );
     }
   }
 
@@ -201,6 +244,10 @@ class Deck extends Component {
     };
   }
 
+  onExploreIconPress(text) {
+    this.props.onIconPress(text);
+  }
+
   resetPosition() {
     Animated.timing(this.state.position, {
       toValue: { x: 0, y: 0 }
@@ -208,47 +255,70 @@ class Deck extends Component {
     this.setState({ scroll: false, activated: false });
   }
 
+  renderIcons() {
+    return categories.map((category, i) => {
+      return (
+        <TouchableOpacity
+          onPress={this.onExploreIconPress.bind(this, category.name)}
+          key={category.iconName + i}
+          style={{
+            width: 55,
+            height: 50,
+            justifyContent: "center",
+            alignItems: "center",
+            borderRadius: 50,
+            marginLeft: 10,
+            marginBottom: 10,
+            marginRight: 10,
+            alignItems: "center"
+          }}
+        >
+          <Icon
+            name={category.iconName}
+            style={{ fontSize: 36, color: "#3f3f3f" }}
+          />
+          <Text style={{ fontSize: 9, fontWeight: "300" }}>
+            {category.name}
+          </Text>
+        </TouchableOpacity>
+      );
+    });
+  }
+
   render() {
     return (
-      <View>
-        {this.renderSpinner()}
-        <Animated.View
-          style={[this.state.position.getLayout()]}
-          {...this.state.panResponder.panHandlers}
+      <Animated.View
+        style={[
+          this.state.position.getLayout(),
+          {
+            width: screenWidth,
+            marginTop: screenHeight * 0.45,
+            height: "100%"
+          }
+        ]}
+        {...this.state.panResponder.panHandlers}
+      >
+        <View
+          style={styles.exploreContainer}
+          {...this.state.panResponderForBar.panHandlers}
         >
-          <View style={styles.shadowView} />
-          <View>
-            <View
-              style={styles.exploreContainer}
-              {...this.state.panResponderForBar.panHandlers}
-            >
-              <Animated.View style={[this.getBarStyle()]}>
-                <View style={styles.iconContainerStyle}>
-                  <Image
-                    source={require("../assets/images/ArrowUp.png")}
-                    style={styles.iconStyle}
-                  />
-                </View>
-              </Animated.View>
-              <Text style={styles.headerTextStyle}>Explore Events</Text>
-              <FilterButtonGroup />
-            </View>
-            <View style={styles.scrollViewContainer}>
-              <ScrollView
-                style={styles.scrollViewStyle}
-                scrollEnabled={this.state.scroll}
-                ref="scrollView"
-              >
-                <View style={styles.container}>
-                  {this.renderPopularRow()}
-                  {this.renderSuggestionsRow()}
-                  {this.renderSchoolRow()}
-                </View>
-              </ScrollView>
-            </View>
-          </View>
-        </Animated.View>
-      </View>
+          <Animated.View style={[this.getBarStyle()]}>
+            <View style={styles.arrowStyle}>{this.renderSpinner()}</View>
+          </Animated.View>
+          <Text style={styles.headerTextStyle}>Explore Events</Text>
+          <View style={styles.iconsContainer}>{this.renderIcons()}</View>
+        </View>
+
+        <ScrollView
+          scrollEnabled={this.state.scroll}
+          ref="scrollView"
+          style={styles.container}
+        >
+          {this.renderPopularRow()}
+          {this.renderSuggestionsRow()}
+          {this.renderSchoolRow()}
+        </ScrollView>
+      </Animated.View>
     );
   }
 }
@@ -271,25 +341,20 @@ const mapDispatchToProps = dispatch => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#F7F7F7",
-    height: screenHeight * 2.12
+    backgroundColor: "#F7F7F7"
   },
   exploreContainer: {
     backgroundColor: "white",
-    height: screenHeight * 0.21
+    borderTopRightRadius: 35,
+    borderTopLeftRadius: 35,
+    shadowOffset: { width: 0, height: 2 },
+    shadowColor: "black",
+    shadowRadius: 3,
+    shadowOpacity: 0.3
   },
   eventsContainer: {
     backgroundColor: "white",
-    height: screenHeight * 0.35,
     marginTop: 8
-  },
-  shadowView: {
-    height: 2,
-    backgroundColor: "#F7F7F7",
-    shadowOffset: { width: 0, height: -2 },
-    shadowColor: "black",
-    shadowRadius: 8,
-    shadowOpacity: 1
   },
   titleStyle: {
     fontWeight: "500",
@@ -313,7 +378,8 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     color: "black",
     fontSize: 22,
-    fontWeight: "500"
+    fontWeight: "300",
+    marginBottom: 2
   },
   iconStyle: {
     flex: 1,
@@ -321,12 +387,20 @@ const styles = StyleSheet.create({
     height: null,
     resizeMode: "contain"
   },
-  iconContainerStyle: {
+  arrowStyle: {
     width: 25,
     height: 25,
     alignSelf: "center",
     marginTop: 4,
     marginBottom: 4
+  },
+  iconsContainer: {
+    width: screenWidth,
+    flexDirection: "row",
+    justifyContent: "center",
+    paddingVertical: 10,
+    paddingHorizontal: screenWidth * 0.1,
+    flexWrap: "wrap"
   }
 });
 

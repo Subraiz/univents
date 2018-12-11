@@ -15,7 +15,7 @@ import { bindActionCreators } from "redux";
 import { fetchUserEvents } from "../redux/actions/EventsActions";
 import { withNavigation } from "react-navigation";
 
-class CreatedEvents extends Component {
+class AttendedEvents extends Component {
   onPress(data) {
     this.props.navigation.navigate("EventInformation", {
       data: data,
@@ -28,15 +28,12 @@ class CreatedEvents extends Component {
       rowHasChanged: (r1, r2) => r1 !== r2
     });
 
-    this.dataSource = ds.cloneWithRows(this.props.createdEvents);
+    this.dataSource = ds.cloneWithRows(this.props.attendedEvents);
   }
 
   renderEvent(item) {
     return (
-      <Animatable.View
-        style={{ marginTop: 5, marginLeft: 5, marginBottom: 5 }}
-        key={item.eventID + "1"}
-      >
+      <Animatable.View style={{ marginTop: 5 }} key={item.eventID + "1"}>
         <EventCard
           key={item.eventName}
           event={item}
@@ -48,8 +45,8 @@ class CreatedEvents extends Component {
   }
 
   renderCreatedEvents() {
-    console.log(this.props.createdEvents[0]);
-    if (this.props.createdEvents[0]) {
+    console.log(this.props.attendedEvents[0]);
+    if (this.props.attendedEvents.length > 0) {
       return (
         <ListView
           enableEmptySections={true}
@@ -79,11 +76,11 @@ class CreatedEvents extends Component {
               marginBottom: 25
             }}
           >
-            Looks like you haven't created any events yet. Hit the blue plus on
-            the top right to get started!
+            Looks like you haven't attended any events yet. Check out the
+            explore page!
           </Text>
           <Animatable.View animation="pulse" iterationCount="infinite">
-            <Icon name="ios-rocket" style={{ fontSize: 80, color: "grey" }} />
+            <Icon name="ios-alarm" style={{ fontSize: 80, color: "grey" }} />
           </Animatable.View>
         </Animatable.View>
       );
@@ -121,4 +118,4 @@ const styles = {
   }
 };
 
-export default connect(mapStateToProps)(withNavigation(CreatedEvents));
+export default connect(mapStateToProps)(withNavigation(AttendedEvents));

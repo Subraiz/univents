@@ -11,7 +11,8 @@ import {
 } from "../../redux/actions/EventActions";
 import {
   fetchEvents,
-  fetchUserEvents
+  fetchUserEvents,
+  storeLocalEvents
 } from "../../redux/actions/EventsActions";
 import { withNavigation } from "react-navigation";
 
@@ -42,9 +43,10 @@ class Screen3 extends Component {
   }
 
   async onPublish() {
-    await this.props.publishEvent(this.props.event, "MA");
     await this.props.fetchEvents("MA", this.props.user);
-    await this.props.fetchUserEvents(this.props.user);
+    await this.props.publishEvent(this.props.event, "MA");
+    this.props.localCreatedEvents.unshift(this.props.event);
+    this.props.storeLocalEvents(this.props.localCreatedEvents, "createdEvents");
     this.props.navigation.navigate("Explore");
   }
 
@@ -101,7 +103,8 @@ const mapDispatchToProps = dispatch => {
       updateEventInfo: updateEventInfo,
       publishEvent: publishEvent,
       fetchEvents: fetchEvents,
-      fetchUserEvents: fetchUserEvents
+      fetchUserEvents: fetchUserEvents,
+      storeLocalEvents: storeLocalEvents
     },
     dispatch
   );
@@ -139,7 +142,8 @@ const mapStateToProps = state => {
     eventID,
     uid: state.user.uid,
     tempEventImage,
-    user: state.user
+    user: state.user,
+    localCreatedEvents: state.localUserEvents.createdEvents
   };
 };
 

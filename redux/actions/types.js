@@ -15,3 +15,4 @@ export const FETCH_EVENTS = "FETCH_EVENTS";
 export const FETCH_START = "FETCH_START";
 
 export const FETCH_USER_EVENTS = "FETCH_USER_EVENTS";
+export const STORE_LOCAL_EVENT = "STORE_LOCAL_EVENT";

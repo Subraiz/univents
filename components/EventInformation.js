@@ -11,13 +11,18 @@ import {
   TouchableOpacity,
   ScrollView
 } from "react-native";
+import Icon from "react-native-vector-icons/Ionicons";
 import MapView from "react-native-maps";
 import { Marker } from "react-native-maps";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { signOutUser } from "../redux/actions/SettingsActions";
-import { Icon } from "react-native-elements";
+import { uploadUser } from "../redux/actions/LoginActions";
+import {
+  fetchUserEvents,
+  storeLocalEvents
+} from "../redux/actions/EventsActions";
 import InterestContainer from "../components/InterestContainer";
+import BarChart from "./DataCharts/BarChart";
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
@@ -33,7 +38,11 @@ class EventInformation extends Component {
     };
   };
 
-  componentWillMount() {
+  state = {
+    favorite: false
+  };
+
+  async componentWillMount() {
     UIManager.setLayoutAnimationEnabledExperimental &&
       UIManager.setLayoutAnimationEnabledExperimental(true);
     LayoutAnimation.easeInEaseOut();
@@ -41,14 +50,46 @@ class EventInformation extends Component {
     const { navigation } = this.props;
     event = navigation.getParam("data", "NO-DATA");
     navigatable = navigation.getParam("navigation", "NO-NAVIGATION");
+
+    this.props.user.events.favoritedEvents.some(e => {
+      let refrenceArray = e.split("/");
+      if (event.eventID === refrenceArray[3]) {
+        this.setState({ favorite: true });
+        return true;
+      }
+    });
   }
 
-  onReturn() {
+  onLikePress() {
+    this.setState({ favorite: !this.state.favorite });
+    let refrenceArray = `Location/MA/Events/${event.eventID}`;
+    if (!this.state.favorite) {
+      this.props.user.events.favoritedEvents.push(refrenceArray);
+      this.props.localFavoritedEvents.unshift(event);
+    } else {
+      let index = this.props.user.events.favoritedEvents.indexOf(refrenceArray);
+      let localIndex = this.props.localFavoritedEvents.indexOf(event);
+      this.props.user.events.favoritedEvents.splice(index, 1);
+      this.props.localFavoritedEvents.splice(localIndex, 1);
+    }
+  }
+
+  componentWillUpdate() {
+    this.props.uploadUser(this.props.user);
+    this.props.storeLocalEvents(
+      this.props.localFavoritedEvents,
+      "favoritedEvents"
+    );
+  }
+
+  async onReturn() {
     navigatable.pop();
   }
 
   onAdminToolsPressed() {
-    navigatable.navigate("AdminTools");
+    navigatable.navigate("AdminTools", {
+      data: event
+    });
   }
 
   renderAdminTools() {
@@ -59,17 +100,26 @@ class EventInformation extends Component {
           style={styles.adminToolsContainer}
           onPress={this.onAdminToolsPressed}
         >
-          <View style={{ flexDirection: "row" }}>
-            <Text style={{ padding: 10, color: "grey" }}>Admin Tools</Text>
-            <View
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+              paddingLeft: 10,
+              paddingRight: 10
+            }}
+          >
+            <Text
               style={{
-                flex: 1,
-                alignItems: "flex-end",
-                justifyContent: "center"
+                padding: 4,
+                fontWeight: "600",
+                fontSize: 18
               }}
             >
-              <Icon name="settings" />
-            </View>
+              Admin Tools
+            </Text>
+
+            <Icon name="md-arrow-forward" style={{ fontSize: 32 }} />
           </View>
         </TouchableOpacity>
       );
@@ -95,56 +145,82 @@ class EventInformation extends Component {
             </View>
 
             <View style={styles.informationContainer}>
-              <Text style={styles.eventNameStyle}>{event.eventName}</Text>
-              <Text style={styles.eventHostTextStyle}>
-                {event.eventType} • {event.eventHost}
-              </Text>
-              <View style={styles.dateStyle}>
-                <View style={styles.dateIcon}>
-                  <View style={[styles.iconContainerStyle]}>
-                    <Image
-                      style={[styles.iconStyle]}
-                      source={require("../assets/images/calendarIcon.png")}
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  paddingRight: 15
+                }}
+              >
+                <View style={{ flexDirection: "column" }}>
+                  <Text style={styles.eventNameStyle}>{event.eventName}</Text>
+                  <Text style={styles.eventHostTextStyle}>
+                    {event.eventType} • {event.eventHost}
+                  </Text>
+                </View>
+                <View>
+                  <TouchableOpacity onPress={this.onLikePress.bind(this)}>
+                    <Icon
+                      name={
+                        this.state.favorite ? "ios-heart" : "ios-heart-empty"
+                      }
+                      style={{
+                        fontSize: 34,
+                        fontWeight: "300",
+                        color: "red"
+                      }}
                     />
-                  </View>
+                  </TouchableOpacity>
+                </View>
+              </View>
+              <View style={styles.dateStyle}>
+                <View
+                  style={{ width: 30, marginRight: 10, alignItems: "center" }}
+                >
+                  <Icon
+                    name="ios-calendar"
+                    style={{ fontSize: 30, color: "grey" }}
+                  />
                 </View>
                 <View style={styles.dateInformation}>
-                  <Text style={{ fontSize: 19, color: "black" }}>
+                  <Text
+                    style={{ fontSize: 19, color: "black", fontWeight: "600" }}
+                  >
                     {eventDate}
                   </Text>
-                  <Text style={{ color: "black" }}>{eventTime}</Text>
+                  <Text style={{ color: "black", fontWeight: "300" }}>
+                    {eventTime}
+                  </Text>
                   <TouchableOpacity>
-                    <Text style={{ color: "blue" }}>Add to Calendar</Text>
+                    <Text style={{ color: "blue", fontWeight: "300" }}>
+                      Add to Calendar
+                    </Text>
                   </TouchableOpacity>
                 </View>
               </View>
 
               <View style={styles.locationStyle}>
-                <View style={styles.locationIcon}>
-                  <View
-                    style={[
-                      styles.iconContainerStyle,
-                      {
-                        width: screenWidth * 0.06,
-                        height: screenWidth * 0.06
-                      }
-                    ]}
-                  >
-                    <Image
-                      style={styles.iconStyle}
-                      source={require("../assets/images/locationIcon.png")}
-                    />
-                  </View>
+                <View
+                  style={{ width: 30, marginRight: 10, alignItems: "center" }}
+                >
+                  <Icon
+                    name="ios-pin"
+                    style={{ fontSize: 32, color: "grey" }}
+                  />
                 </View>
                 <View style={styles.locationInformation}>
-                  <Text style={{ fontSize: 19, color: "black" }}>
-                    {event.eventLocation.locationName}
+                  <Text
+                    style={{ fontSize: 19, color: "black", fontWeight: "600" }}
+                  >
+                    {event.eventLocation.locationName.trim()}
                   </Text>
-                  <Text>{locationAddress[0]}</Text>
-                  <Text>
-                    {locationAddress[1].trim()}, {locationAddress[2]}
+                  <Text style={{ color: "black", fontWeight: "300" }}>
+                    {locationAddress[0]}
                   </Text>
-                  <Text />
+                  <Text style={{ color: "black", fontWeight: "300" }}>
+                    {locationAddress[1].trim()},{locationAddress[2]}
+                  </Text>
                 </View>
               </View>
             </View>
@@ -168,18 +244,13 @@ class EventInformation extends Component {
                   scrollEnabled={false}
                   zoomEnabled={false}
                   initialRegion={{
-                    latitude: 42.3355488,
-                    longitude: -71.16849450000001,
-                    latitudeDelta: 0.00922 * 1.5,
-                    longitudeDelta: 0.00421 * 1.5
+                    latitude: event.eventCoordinates.latitude,
+                    longitude: event.eventCoordinates.longitude,
+                    latitudeDelta: 0.00922 * 0.9,
+                    longitudeDelta: 0.00421 * 0.9
                   }}
                 >
-                  <Marker
-                    coordinate={{
-                      latitude: 42.3355488,
-                      longitude: -71.16849450000001
-                    }}
-                  />
+                  <Marker coordinate={event.eventCoordinates} />
                 </MapView>
               </View>
             </View>
@@ -192,14 +263,19 @@ class EventInformation extends Component {
 
 const mapStateToProps = state => {
   return {
-    uid: state.user.uid
+    uid: state.user.uid,
+    user: state.user,
+    localFavoritedEvents: state.localUserEvents.favoritedEvents,
+    localAttendedEvents: state.localUserEvents.attendedEvents
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
-      signOutUser: signOutUser
+      uploadUser: uploadUser,
+      fetchUserEvents: fetchUserEvents,
+      storeLocalEvents: storeLocalEvents
     },
     dispatch
   );
@@ -213,7 +289,8 @@ const styles = {
     marginBottom: 15
   },
   section: {
-    marginBottom: 10,
+    marginTop: 15,
+
     paddingBottom: 10,
     backgroundColor: "white"
   },
@@ -232,17 +309,18 @@ const styles = {
     paddingLeft: 10
   },
   eventNameStyle: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: "700"
   },
   eventHostTextStyle: {
     color: "grey",
-    fontWeight: "500"
+    fontWeight: "400"
   },
   dateStyle: {
     flexDirection: "row",
     marginTop: 10,
-    marginLeft: 10
+    marginLeft: 10,
+    alignItems: "center"
   },
   dateIcon: {
     marginRight: 6,
@@ -253,7 +331,8 @@ const styles = {
     flexDirection: "row",
     marginTop: 10,
     marginLeft: 10,
-    marginBottom: 5
+    alignItems: "center",
+    paddingBottom: 10
   },
   locationIcon: {
     marginRight: 6,
@@ -262,26 +341,25 @@ const styles = {
   headerTextContainer: {
     borderBottomWidth: 0.25,
     borderBottomColor: "red",
-    paddingLeft: 10,
+    marginLeft: 10,
+    marginRight: 10,
     paddingTop: 10,
     paddingBottom: 6
   },
   headerText: {
-    color: "grey",
-    fontWeight: "500",
-    fontSize: 17
+    fontWeight: "600",
+    fontSize: 18
   },
   detailsText: {
     paddingLeft: 10,
     paddingTop: 10,
     paddingRight: 10,
-    color: "grey",
+    color: "darkgrey",
     fontWeight: "300"
   },
   adminToolsContainer: {
     backgroundColor: "white",
-    marginBottom: 15,
-    padding: 10,
+    padding: 8,
     marginTop: 10
   },
   mapStyle: {

@@ -7,6 +7,7 @@ import {
   Switch,
   TextInput,
   Alert,
+  Keyboard,
   KeyboardAvoidingView,
   Modal,
   Picker
@@ -154,7 +155,7 @@ class Screen1 extends Component {
     return (
       <Animatable.View animation={animation} duration={300}>
         <View style={{ alignItems: "center" }}>
-          <KeyboardAwareScrollView>
+          <KeyboardAwareScrollView keyboardShouldPersistTaps="handled">
             <View
               style={{
                 paddingTop: 5,

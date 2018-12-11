@@ -1,70 +1,85 @@
 import React from "react";
-import { Text, View, Image, Dimensions } from "react-native";
+import { Text, View, Image, Dimensions, TouchableOpacity } from "react-native";
+import { CachedImage } from "react-native-cached-image";
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
 
-const EventCard = ({ event }) => {
-  let { month, day, year } = event.getEventDate();
+const EventCard = ({ event, onPress }) => {
+  let { month, day, year } = event.eventDate;
   let eventDate = `${month} ${day}, ${year}`;
 
-  let { locationAddress, locationName } = event.getEventLocation();
-  let eventLocation = `${locationName} - ${locationAddress}`;
+  let { locationAddress, locationName } = event.eventLocation;
+  let eventLocation = `${locationName} ~ ${locationAddress}`;
 
   let eventName = event.eventName;
   let hostName = event.eventHost;
 
-  return (
-    <View style={styles.container}>
-      <Image
-        style={styles.imageStyle}
-        borderRadius={10}
-        source={event.eventImage}
-      />
-      <View style={styles.opacityContainer} />
+  let { startTime, endTime } = event.eventTime;
+  eventTime = `${startTime} - ${endTime}`;
 
-      <View style={styles.textContainer}>
-        <Text style={styles.dateStyle}>{eventDate}</Text>
-        <Text style={styles.eventNameStyle}>{eventName}</Text>
-        <Text style={styles.hostNameStyle}>{hostName}</Text>
-        <Text style={styles.locationStyle}>{eventLocation}</Text>
-      </View>
+  return (
+    <View
+      style={{
+        shadowOffset: { width: 2, height: 2 },
+        shadowColor: "lightgrey",
+        shadowOpacity: 0.7,
+        shadowRadius: 10
+      }}
+    >
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={onPress}
+        style={styles.container}
+      >
+        <Image
+          style={{
+            width: "100%",
+            height: "40%",
+            opacity: 0.7
+          }}
+          source={event.eventImage}
+        />
+        <View style={styles.opacityContainer} />
+
+        <View
+          style={{
+            width: "100%",
+            height: "60%",
+            backgroundColor: "white",
+            flexDirection: "column",
+            paddingTop: 10,
+            paddingBottom: 10,
+            paddingRight: 15,
+            paddingLeft: 15,
+            justifyContent: "space-between"
+          }}
+        >
+          <View>
+            <Text style={styles.eventNameStyle}>{eventName}</Text>
+            <Text style={styles.hostNameStyle}>{hostName}</Text>
+          </View>
+          <View>
+            <Text style={styles.dateStyle}>
+              {eventDate} • {eventTime}
+            </Text>
+
+            <Text style={styles.locationStyle}>{eventLocation}</Text>
+          </View>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 };
 
 const styles = {
-  titleStyle: {
-    fontWeight: "500",
-    marginLeft: 8,
-    marginTop: 5,
-    fontSize: 20,
-    paddingBottom: 5,
-    paddingTop: 2
-  },
-  eventsContainer: {
-    backgroundColor: "white",
-    height: screenHeight * 0.35,
-    marginTop: 8
-  },
   container: {
     height: screenHeight * 0.28,
     width: screenWidth * 0.85,
-    borderRadius: 10,
+    borderRadius: 15,
     marginLeft: 10,
-    marginTop: 4
-  },
-  textContainer: {
-    height: "100%",
-    justifyContent: "flex-end",
-    paddingBottom: 6,
-    marginLeft: 6
-  },
-  imageStyle: {
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-    opacity: 0.9
+    marginTop: 4,
+    overflow: "hidden"
   },
   opacityContainer: {
     position: "absolute",
@@ -76,21 +91,20 @@ const styles = {
   },
   dateStyle: {
     fontSize: 15,
-    color: "red",
-    fontWeight: "500"
+    fontWeight: "300"
   },
   eventNameStyle: {
-    fontSize: 19,
-    color: "white",
-    fontWeight: "600"
+    fontSize: 22,
+    fontWeight: "700"
   },
   hostNameStyle: {
     fontSize: 15,
-    color: "white"
+    fontWeight: "400"
   },
   locationStyle: {
     fontSize: 15,
-    color: "white"
+    fontWeight: "300",
+    color: "grey"
   }
 };
 

@@ -9,6 +9,7 @@ import TabBarIcon from "../components/TabBarIcon";
 import Explore from "../screens/Explore";
 import Events from "../screens/Events";
 import Profile from "../screens/Profile";
+import EventInformation from "../components/EventInformation";
 import BottomNavigation, {
   IconTab,
   Badge
@@ -38,7 +39,9 @@ ExploreScreen.navigationOptions = {
   header: null,
   gesturesEnabled: false,
   tabBarLabel: "Explore",
-  tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name={"explore"} />
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon focused={focused} name={"ios-send"} />
+  )
 };
 
 const EventsScreen = createStackNavigator({
@@ -49,7 +52,9 @@ EventsScreen.navigationOptions = {
   header: null,
   gesturesEnabled: false,
   tabBarLabel: "Events",
-  tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name={"event"} />
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon focused={focused} name={"ios-calendar"} />
+  )
 };
 
 const ProfileScreen = createStackNavigator({
@@ -60,10 +65,12 @@ ProfileScreen.navigationOptions = {
   header: null,
   gesturesEnabled: false,
   tabBarLabel: "Profile",
-  tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name={"people"} />
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon focused={focused} name={"md-contact"} />
+  )
 };
 
-export default createBottomTabNavigator(
+const TabNavigator = createBottomTabNavigator(
   {
     Events: { screen: EventsScreen },
     Explore: { screen: ExploreScreen },
@@ -73,7 +80,12 @@ export default createBottomTabNavigator(
     initialRouteName: "Explore",
     tabBarOptions: {
       activeTintColor: "red",
-      inactiveTintColor: "#4D4D4D"
-    }
+      inactiveTintColor: "#4D4D4D",
+      style: { paddingTop: 4, backgroundColor: "#F7F7F7" },
+      labelStyle: { fontWeight: "600" }
+    },
+    order: ["Events", "Explore", "Profile"]
   }
 );
+
+export default TabNavigator;

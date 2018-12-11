@@ -14,12 +14,20 @@ import {
   Image
 } from "react-native";
 
+import EventCard from "./EventCard";
+
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
 
 const NoEventCard = () => {
   return (
-    <TouchableOpacity activeOpacity={0.8} style={styles.container}>
+    <TouchableOpacity
+      activeOpacity={0.8}
+      style={[
+        styles.container,
+        { alignItems: "center", justifyContent: "center" }
+      ]}
+    >
       <Image
         style={styles.imageStyle}
         borderRadius={10}
@@ -28,44 +36,11 @@ const NoEventCard = () => {
             "http://aooevents.com/wp-content/themes/invictus_3.3/images/dummy-image.jpg"
         }}
       />
-      <View style={styles.opacityContainer} />
 
       <View style={styles.textContainer}>
-        <Text style={styles.eventNameStyle}>Check Back Soon</Text>
-      </View>
-    </TouchableOpacity>
-  );
-};
-
-const EventCard = ({ event, onPress }) => {
-  let { month, day, year } = event.eventDate;
-  let eventDate = `${month} ${day}, ${year}`;
-
-  let { locationAddress, locationName } = event.eventLocation;
-  let eventLocation = `${locationName} - ${locationAddress}`;
-
-  let eventName = event.eventName;
-  let hostName = event.eventHost;
-
-  return (
-    <TouchableOpacity
-      activeOpacity={0.8}
-      onPress={onPress}
-      style={styles.container}
-    >
-      <Image
-        style={styles.imageStyle}
-        borderRadius={10}
-        source={event.eventImage}
-        defaultSource={require("../assets/images/UniventsSplashLogo.png")}
-      />
-      <View style={styles.opacityContainer} />
-
-      <View style={styles.textContainer}>
-        <Text style={styles.dateStyle}>{eventDate}</Text>
-        <Text style={styles.eventNameStyle}>{eventName}</Text>
-        <Text style={styles.hostNameStyle}>{hostName}</Text>
-        <Text style={styles.locationStyle}>{eventLocation}</Text>
+        <Text style={{ color: "white", fontWeight: "600", fontSize: 24 }}>
+          Check Back Soon
+        </Text>
       </View>
     </TouchableOpacity>
   );
@@ -196,9 +171,10 @@ const styles = {
   container: {
     height: screenHeight * 0.28,
     width: screenWidth * 0.85,
-    borderRadius: 10,
+    borderRadius: 15,
     marginLeft: 10,
-    marginTop: 4
+    marginTop: 4,
+    overflow: "hidden"
   },
   textContainer: {
     height: "100%",
@@ -222,21 +198,20 @@ const styles = {
   },
   dateStyle: {
     fontSize: 15,
-    color: "red",
-    fontWeight: "500"
+    fontWeight: "300"
   },
   eventNameStyle: {
-    fontSize: 19,
-    color: "white",
-    fontWeight: "600"
+    fontSize: 22,
+    fontWeight: "700"
   },
   hostNameStyle: {
     fontSize: 15,
-    color: "white"
+    fontWeight: "400"
   },
   locationStyle: {
     fontSize: 15,
-    color: "white"
+    fontWeight: "300",
+    color: "grey"
   }
 };
 

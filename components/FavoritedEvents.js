@@ -15,7 +15,7 @@ import { bindActionCreators } from "redux";
 import { fetchUserEvents } from "../redux/actions/EventsActions";
 import { withNavigation } from "react-navigation";
 
-class CreatedEvents extends Component {
+class FavoritedEvents extends Component {
   onPress(data) {
     this.props.navigation.navigate("EventInformation", {
       data: data,
@@ -28,36 +28,11 @@ class CreatedEvents extends Component {
       rowHasChanged: (r1, r2) => r1 !== r2
     });
 
-    this.dataSource = ds.cloneWithRows(this.props.createdEvents);
+    this.dataSource = ds.cloneWithRows(this.props.favoritedEvents);
   }
 
-  renderEvent(item) {
-    return (
-      <Animatable.View
-        style={{ marginTop: 5, marginLeft: 5, marginBottom: 5 }}
-        key={item.eventID + "1"}
-      >
-        <EventCard
-          key={item.eventName}
-          event={item}
-          onPress={this.onPress.bind(this, item)}
-          navigation={this.props.navigation}
-        />
-      </Animatable.View>
-    );
-  }
-
-  renderCreatedEvents() {
-    console.log(this.props.createdEvents[0]);
-    if (this.props.createdEvents[0]) {
-      return (
-        <ListView
-          enableEmptySections={true}
-          dataSource={this.dataSource}
-          renderRow={this.renderEvent.bind(this)}
-        />
-      );
-    } else {
+  renderFavoritedEvents() {
+    if (this.props.favoritedEvents.length == 0) {
       return (
         <Animatable.View
           duration={600}
@@ -79,28 +54,47 @@ class CreatedEvents extends Component {
               marginBottom: 25
             }}
           >
-            Looks like you haven't created any events yet. Hit the blue plus on
-            the top right to get started!
+            Looks like you don't have any favorited events yet. Go check out
+            some events to favorite them!
           </Text>
           <Animatable.View animation="pulse" iterationCount="infinite">
-            <Icon name="ios-rocket" style={{ fontSize: 80, color: "grey" }} />
+            <Icon name="ios-star" style={{ fontSize: 80, color: "grey" }} />
           </Animatable.View>
         </Animatable.View>
       );
     }
+    return (
+      <ListView
+        enableEmptySections={true}
+        dataSource={this.dataSource}
+        renderRow={this.renderEvent.bind(this)}
+      />
+    );
+  }
+
+  renderEvent(item) {
+    return (
+      <Animatable.View style={{ marginTop: 5 }} key={item.eventID + "1"}>
+        <EventCard
+          key={item.eventName}
+          event={item}
+          onPress={this.onPress.bind(this, item)}
+          navigation={this.props.navigation}
+        />
+      </Animatable.View>
+    );
   }
 
   render() {
     return (
-      <View style={styles.eventsContainer}>{this.renderCreatedEvents()}</View>
+      <View style={styles.eventsContainer}>{this.renderFavoritedEvents()}</View>
     );
   }
 }
 
 const mapStateToProps = state => {
   return {
-    user: state.user,
-    event: state.userEvents.createdEvents
+    user: state.user
   };
 };
 
@@ -115,10 +109,13 @@ const mapDispatchToProps = dispatch => {
 
 const styles = {
   eventsContainer: {
+    flex: 1,
     marginTop: 8,
-    marginBottom: 8,
-    flex: 1
+    marginBottom: 8
   }
 };
 
-export default connect(mapStateToProps)(withNavigation(CreatedEvents));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withNavigation(FavoritedEvents));

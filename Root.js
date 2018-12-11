@@ -29,7 +29,7 @@ import EventInformation from "./components/EventInformation";
 import CreateEvent from "./screens/CreateEvent";
 import EventCardsRow from "./components/EventCardsRow";
 import AdminTools from "./components/AdminTools";
-import { AppNavigator, ProfileNavigator } from "./navigation/AppNavigator";
+import { AppNavigator } from "./navigation/AppNavigator";
 import { createStackNavigator } from "react-navigation";
 
 import { connect } from "react-redux";
@@ -58,8 +58,7 @@ const LoginStack = createStackNavigator(
         header: null,
         gesturesEnabled: false
       }
-    },
-    ProfileNavigator: ProfileNavigator
+    }
   },
   {
     initialRouteName: "Login"
@@ -74,8 +73,8 @@ const HomeStack = createStackNavigator(
     SignUpPersonalInfo: SignUpPersonalInfo,
     SignUpProfilePhoto: SignUpProfilePhoto,
     SignUpInterests: SignUpInterests,
-    LoginForm: LoginForm,
     EventInformation: EventInformation,
+    LoginForm: LoginForm,
     EventCardsRow: EventCardsRow,
     AdminTools: AdminTools,
     AppNavigator: {
@@ -84,8 +83,7 @@ const HomeStack = createStackNavigator(
         header: null,
         gesturesEnabled: false
       }
-    },
-    ProfileNavigator: ProfileNavigator
+    }
   },
   {
     initialRouteName: "AppNavigator"
@@ -130,15 +128,14 @@ class Root extends React.Component {
     if (this.state.loading) {
       return <SplashScreen />;
     }
-    {
-      this.props.fetchEvents("MA", this.props.user);
-      this.props.fetchUserEvents(this.props.user);
-    }
+
     if (this.state.authenticated) {
+      {
+        this.props.fetchEvents("MA", this.props.user);
+        this.props.fetchUserEvents(this.props.user);
+      }
       return <HomeStack />;
     } else {
-      {
-      }
       return <LoginStack />;
     }
   }
