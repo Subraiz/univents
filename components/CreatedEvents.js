@@ -29,6 +29,23 @@ class CreatedEvents extends Component {
     });
 
     this.dataSource = ds.cloneWithRows(this.props.createdEvents);
+
+    this.screenWillFocus = this.props.navigation.addListener(
+      "willFocus",
+      () => {
+        const ds = new ListView.DataSource({
+          rowHasChanged: (r1, r2) => r1 !== r2
+        });
+
+        this.setState({
+          dataSource: ds.cloneWithRows(this.props.createdEvents)
+        });
+      }
+    );
+  }
+
+  componentWillUnmount() {
+    this.screenWillFocus.remove();
   }
 
   renderEvent(item) {
@@ -48,7 +65,6 @@ class CreatedEvents extends Component {
   }
 
   renderCreatedEvents() {
-    console.log(this.props.createdEvents[0]);
     if (this.props.createdEvents[0]) {
       return (
         <ListView
@@ -115,7 +131,7 @@ const mapDispatchToProps = dispatch => {
 
 const styles = {
   eventsContainer: {
-    marginTop: 8,
+    marginTop: 10,
     marginBottom: 8,
     flex: 1
   }

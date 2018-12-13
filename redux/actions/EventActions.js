@@ -27,6 +27,38 @@ export const updateEventInfo = ({ prop, value }) => {
   };
 };
 
+export const deleteEvent = (event, uid) => {
+  let state = "MA";
+  let user;
+  event.cancled = true;
+  return async dispatch => {
+    await initializeFirebase();
+    await firestore
+      .collection("Location")
+      .doc(state)
+      .collection("Events")
+      .doc(event.eventID)
+      .set(event)
+      .then(doc => {
+        let refrenceString = `Location/${state}/Events/${event.eventID}`;
+        firestore
+          .collection("Users")
+          .doc(uid)
+          .get()
+          .then(doc => {
+            user = doc.data();
+            let index = user.events.createdEvents.indexOf(refrenceString);
+            user.events.createdEvents.splice(index, 1);
+
+            firestore
+              .collection("Users")
+              .doc(uid)
+              .set(user);
+          });
+      });
+  };
+};
+
 export const updateEventData = (event, state) => {
   return async dispatch => {
     await initializeFirebase();
@@ -43,7 +75,9 @@ export const publishEvent = (event, state) => {
   let uid = event.eventID.substring(0, event.eventID.length - 5);
   let createdEvents = [];
   let user;
+  let success = false;
   return async dispatch => {
+    dispatch({ type: T.START_PUBLISH });
     await initializeFirebase();
     await firestore
       .collection("Location")
@@ -51,26 +85,36 @@ export const publishEvent = (event, state) => {
       .collection("Events")
       .doc(event.eventID)
       .set(event)
-      .then()
-      .catch(error => console.log(error));
+      .then(() => {
+        setTimeout(() => {
+          dispatch({ type: T.PUBLISH_SUCCESS });
+          dispatch({ type: T.CLEAR_EVENT_INFO });
+        }, 1700);
 
-    await firestore
-      .collection("Users")
-      .doc(uid)
-      .get()
-      .then(doc => {
-        user = doc.data();
-        let refrenceString = `Location/${state}/Events/${event.eventID}`;
-        user.events.createdEvents.push(refrenceString);
+        success = true;
+      })
+      .catch(error => dispatch({ type: T.PUBLISH_FAIL }));
 
-        firestore
-          .collection("Users")
-          .doc(uid)
-          .set(user)
-          .then(() => {
-            dispatch({ type: T.SAVE_USER, payload: user });
-          });
-      });
+    if (success) {
+      await firestore
+        .collection("Users")
+        .doc(uid)
+        .get()
+        .then(doc => {
+          user = doc.data();
+          let refrenceString = `Location/${state}/Events/${event.eventID}`;
+          user.events.createdEvents.push(refrenceString);
+
+          firestore
+            .collection("Users")
+            .doc(uid)
+            .set(user)
+            .then(() => {
+              dispatch({ type: T.SAVE_USER, payload: user });
+            });
+        })
+        .catch(error => {});
+    }
 
     user.events.createdEvents.forEach(async event => {
       let refrenceArray = event.split("/");
@@ -89,8 +133,6 @@ export const publishEvent = (event, state) => {
       type: T.FETCH_USER_EVENTS,
       payload: { prop: "createdEvents", value: createdEvents }
     });
-
-    dispatch({ type: T.CLEAR_EVENT_INFO });
   };
 };
 

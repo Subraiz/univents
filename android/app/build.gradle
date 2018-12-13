@@ -159,6 +159,9 @@ dependencies {
     exclude group: "com.google.android.gms"
     implementation 'com.android.support:exifinterface:27.+'
     implementation project(':react-native-svg')
+    implementation project(':react-native-fs')
+    implementation project(':react-native-fast-image')
+    implementation project(':lottie-react-native')
     implementation ('com.google.android.gms:play-services-vision:12.0.1') {
         force = true
     }

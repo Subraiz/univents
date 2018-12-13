@@ -36,7 +36,9 @@ const INITIAL_STATE = {
   eventData: {
     currentAttendance: 0,
     usersAttended: []
-  }
+  },
+  canceled: false,
+  uploading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -48,6 +50,12 @@ export default (state = INITIAL_STATE, action) => {
       };
     case T.CLEAR_EVENT_INFO:
       return INITIAL_STATE;
+    case T.START_PUBLISH:
+      return { ...state, uploading: true };
+    case T.PUBLISH_SUCCESS:
+      return { ...state, uploading: false };
+    case T.PUBLISH_FAIL:
+      return { ...state, uploading: "failed" };
     default:
       return state;
   }

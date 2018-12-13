@@ -20,10 +20,6 @@ class SplashScreen extends Component {
 
     const width = Dimensions.get("window").width;
     const height = Dimensions.get("window").height;
-    this.position = new Animated.ValueXY(0, 0);
-    Animated.spring(this.position, {
-      toValue: { x: width - width / 2 - 30, y: height - height / 2 - 30 }
-    }).start();
   }
 
   componentWillMount() {
@@ -37,14 +33,14 @@ class SplashScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Animated.View style={this.position.getLayout()}>
+        <View style={this.position.getLayout()}>
           <View style={styles.imageContainer}>
             <Image
               source={require("../assets/images/UniventsSplashLogo.png")}
               style={styles.imageStyle}
             />
           </View>
-        </Animated.View>
+        </View>
       </View>
     );
   }

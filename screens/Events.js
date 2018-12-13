@@ -7,7 +7,8 @@ import {
   UIManager,
   LayoutAnimation,
   TouchableOpacity,
-  Dimensions
+  Dimensions,
+  Platform
 } from "react-native";
 import FavoritedEvents from "../components/FavoritedEvents";
 import CreatedEvents from "../components/CreatedEvents";
@@ -107,11 +108,11 @@ class Events extends Component {
               {...props}
               indicatorStyle={{ backgroundColor: "red" }}
               style={{ backgroundColor: "white" }}
-              labelStyle={{
-                color: "black",
-                fontWeight: "400",
-                textTransform: "capitalize"
-              }}
+              labelStyle={
+                Platform.OS === "ios"
+                  ? styles.iosLabelStyle
+                  : styles.androidLabelStyle
+              }
             />
           )}
           initialLayout={{
@@ -179,6 +180,15 @@ const styles = {
     paddingRight: 20,
     backgroundColor: "white",
     height: 100
+  },
+  iosLabelStyle: {
+    color: "black",
+    fontWeight: "400",
+    textTransform: "capitalize"
+  },
+  androidLabelStyle: {
+    color: "black",
+    fontWeight: "400"
   }
 };
 

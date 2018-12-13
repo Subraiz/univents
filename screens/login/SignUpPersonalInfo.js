@@ -9,10 +9,17 @@ import {
   UIManager,
   LayoutAnimation,
   Dimensions,
-  Keyboard
+  Keyboard,
+  FlatList,
+  TextInput,
+  Platform
 } from "react-native";
 import ImagePicker from "react-native-image-picker";
 import { FormLabel, FormInput } from "react-native-elements";
+import SegmentedControlTab from "react-native-segmented-control-tab";
+import LottieView from "lottie-react-native";
+import Icon from "react-native-vector-icons/Ionicons";
+import * as Animatable from "react-native-animatable";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { updateUserInfo } from "../../redux/actions/LoginActions";
@@ -20,33 +27,255 @@ import { updateUserInfo } from "../../redux/actions/LoginActions";
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
 
-const male0 = require("../../assets/images/male0.png");
-const female0 = require("../../assets/images/female0.png");
-const male1 = require("../../assets/images/male1.png");
-const female1 = require("../../assets/images/female1.png");
+const majors = [
+  "Computer Science",
+  "Biology",
+  "Finance",
+  "Design",
+  "Engineering"
+];
 
 class SignUpPersonalInfo extends Component {
   state = {
-    male: male0,
-    female: female0
+    selectedIndex: 0,
+    showSearch: null,
+    returnAnimation: "",
+    modalAnimation: "slideOutRight",
+    opacity: 0,
+    searchedMajors: majors,
+    searchValue: "",
+    major: "Enter Major"
   };
 
-  renderButton() {
-    if (this.props.sex !== "" && this.props.major !== "") {
-      return (
-        <TouchableOpacity
-          disabled={false}
-          onPress={this.onNext.bind(this)}
-          alignItems="center"
+  componentWillMount() {
+    this.keyboardWillHide = Keyboard.addListener(
+      "keyboardWillHide",
+      this.keyboardWillHide.bind(this)
+    );
+    this.keyboardWillShow = Keyboard.addListener(
+      "keyboardWillShow",
+      this.keyboardWillShow.bind(this)
+    );
+  }
+
+  handleBackPress() {
+    return true;
+  }
+
+  keyboardWillShow() {
+    if (this.state.searchValue == "") {
+      this.handleSearch("");
+    }
+  }
+
+  renderSearchItem(item) {
+    return (
+      <TouchableOpacity onPress={() => this.onListItemPress(item.item)}>
+        <Animatable.View
+          animation="fadeInUp"
+          duration={250}
+          style={{
+            width: screenWidth * 0.95,
+            paddingVertical: 10,
+            paddingHorizontal: 10,
+            alignSelf: "center",
+            alignItems: "flex-start",
+            justifyContent: "space-between",
+            borderBottomWidth: 0.5,
+            borderBottomColor: "white",
+            flexDirection: "row"
+          }}
         >
-          <View style={styles.selectedButtonStyle}>
-            <Text style={{ color: "white", padding: 20, fontSize: 18 }}>
-              Next
-            </Text>
-          </View>
-        </TouchableOpacity>
+          <Text style={{ color: "white", fontSize: 16, fontWeight: "500" }}>
+            {item.item}
+          </Text>
+          <Icon
+            name="md-arrow-forward"
+            style={{ color: "white", fontSize: 16 }}
+          />
+        </Animatable.View>
+      </TouchableOpacity>
+    );
+  }
+
+  onListItemPress(item) {
+    this.setState({
+      showSearch: false,
+      returnAnimation: "slideInLeft",
+      modalAnimation: "slideOutDown",
+      searchValue: "",
+      searchedEvents: [],
+      major: item
+    });
+    this.props.updateUserInfo({ prop: "major", value: item });
+  }
+
+  renderSearches() {
+    return (
+      <Animatable.View
+        duration={600}
+        animation={this.state.modalAnimation}
+        style={{
+          position: "absolute",
+          marginTop: screenHeight * 0.07,
+          width: screenWidth,
+          height: screenHeight,
+          paddingBottom: screenHeight * 0.55,
+          backgroundColor: "rgba(0,0,0,.5)",
+          opacity: this.state.opacity,
+          flex: 1
+        }}
+      >
+        <FlatList
+          keyboardShouldPersistTaps="handled"
+          data={this.state.searchedMajors}
+          renderItem={this.renderSearchItem.bind(this)}
+          keyExtractor={(item, index) => index.toString()}
+        />
+      </Animatable.View>
+    );
+  }
+
+  keyboardWillHide() {
+    this.setState({
+      showSearch: false,
+      returnAnimation: "slideInLeft",
+      modalAnimation: "slideOutDown",
+      searchValue: "",
+      searchedMajors: []
+    });
+  }
+
+  keyboardWillHide() {
+    this.setState({
+      showSearch: false,
+      returnAnimation: "slideInLeft",
+      modalAnimation: "slideOutDown",
+      searchValue: "",
+      searchedMajors: []
+    });
+  }
+
+  handleSearch(text) {
+    this.setState({ searchValue: text });
+    let searchedMajors = [];
+    if (text != "") {
+      majors.forEach(major => {
+        if (major.toLowerCase().includes(text.toLowerCase())) {
+          searchedMajors.push(major);
+        }
+      });
+    } else {
+      searchedMajors = majors;
+    }
+
+    this.setState({ searchedMajors: searchedMajors });
+  }
+
+  onSearchPress() {
+    this.setState({
+      showSearch: true,
+      opacity: 1,
+      modalAnimation: "slideInUp"
+    });
+  }
+
+  onReturn() {
+    if (Platform.OS !== "ios") {
+      this.setState({
+        showSearch: false,
+        returnAnimation: "slideInLeft",
+        modalAnimation: "slideOutDown",
+        searchValue: "",
+        searchedEvents: []
+      });
+    }
+    Keyboard.dismiss();
+  }
+
+  renderSearchBar() {
+    if (this.state.showSearch) {
+      return (
+        <View>
+          <Animatable.View
+            duration={600}
+            animation="slideInRight"
+            style={{
+              height: screenHeight * 0.05,
+              backgroundColor: "white",
+              borderRadius: 25,
+              marginRight: 20,
+              marginLeft: 20
+            }}
+          >
+            <View
+              style={{
+                height: "100%",
+                flexDirection: "row",
+                alignItems: "center",
+                paddingHorizontal: 10
+              }}
+            >
+              <TouchableOpacity onPress={this.onReturn.bind(this)}>
+                <Icon
+                  name="md-arrow-back"
+                  style={{ fontSize: 16, marginRight: 10 }}
+                />
+              </TouchableOpacity>
+              <TextInput
+                onChangeText={text => this.handleSearch(text)}
+                value={this.state.searchValue}
+                placeholder="Search"
+                style={{ width: "95%", height: screenHeight * 0.04 }}
+                autoFocus={true}
+              />
+            </View>
+          </Animatable.View>
+        </View>
       );
     } else {
+      return (
+        <TouchableOpacity
+          onPress={this.onSearchPress.bind(this)}
+          style={{
+            height: screenHeight * 0.05,
+            backgroundColor: "white",
+            borderRadius: 25,
+            marginRight: 20,
+            marginLeft: 20
+          }}
+        >
+          <Animatable.View
+            duration={500}
+            animation={this.state.returnAnimation}
+            style={{
+              height: "100%",
+              width: "95%",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "flex-start",
+              paddingHorizontal: 10
+            }}
+          >
+            <Text
+              style={{
+                color: "grey",
+                fontSize: 16,
+                opacity: 1,
+                fontWeight: "500",
+                paddingLeft: 10
+              }}
+            >
+              {this.state.major}
+            </Text>
+          </Animatable.View>
+        </TouchableOpacity>
+      );
+    }
+  }
+
+  renderButton() {
+    if (this.props.sex == "" || this.props.major == "") {
       return (
         <TouchableOpacity
           disabled={true}
@@ -60,6 +289,20 @@ class SignUpPersonalInfo extends Component {
           </View>
         </TouchableOpacity>
       );
+    } else {
+      return (
+        <TouchableOpacity
+          disabled={false}
+          onPress={this.onNext.bind(this)}
+          alignItems="center"
+        >
+          <View style={styles.selectedButtonStyle}>
+            <Text style={{ color: "white", padding: 20, fontSize: 18 }}>
+              Next
+            </Text>
+          </View>
+        </TouchableOpacity>
+      );
     }
   }
 
@@ -67,12 +310,12 @@ class SignUpPersonalInfo extends Component {
     this.props.navigation.navigate("SignUpProfilePhoto");
   }
 
-  onGenderSelect(gender) {
-    if (gender === "male") {
-      this.setState({ male: male1, female: female0 });
+  handleIndexChange(index) {
+    if (index == 0) {
+      this.setState({ selectedIndex: index });
       this.props.updateUserInfo({ prop: "sex", value: "male" });
     } else {
-      this.setState({ male: male0, female: female1 });
+      this.setState({ selectedIndex: index });
       this.props.updateUserInfo({ prop: "sex", value: "female" });
     }
   }
@@ -81,17 +324,7 @@ class SignUpPersonalInfo extends Component {
     return (
       <View style={styles.container}>
         <TouchableOpacity activeOpacity={1} onPress={() => Keyboard.dismiss()}>
-          <View style={styles.section}>
-            <FormLabel>Major</FormLabel>
-            <FormInput
-              containerStyle={{ borderBottomColor: "red" }}
-              autoCorrect={true}
-              onChangeText={text =>
-                this.props.updateUserInfo({ prop: "major", value: text })
-              }
-              value={this.props.major}
-            />
-          </View>
+          <View style={styles.section}>{this.renderSearchBar()}</View>
           <View style={styles.section}>
             <Text style={styles.headerText}>Class Year</Text>
             <Picker
@@ -109,40 +342,26 @@ class SignUpPersonalInfo extends Component {
           </View>
 
           <View style={styles.section}>
-            <Text style={styles.headerText}>Sex</Text>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "center"
-              }}
-            >
-              <TouchableOpacity
-                style={{
-                  height: screenHeight * 0.1,
-                  width: 50,
-                  marginRight: 40
-                }}
-                onPress={this.onGenderSelect.bind(this, "male")}
-              >
-                <Image source={this.state.male} style={styles.imageStyle} />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{
-                  height: screenHeight * 0.1,
-                  width: 35,
-                  marginLeft: 40
-                }}
-                onPress={this.onGenderSelect.bind(this, "female")}
-              >
-                <Image source={this.state.female} style={styles.imageStyle} />
-              </TouchableOpacity>
+            <View style={{ width: screenWidth * 0.8, alignSelf: "center" }}>
+              <SegmentedControlTab
+                values={["Male", "Female"]}
+                selectedIndex={this.state.selectedIndex}
+                onTabPress={this.handleIndexChange.bind(this)}
+              />
             </View>
           </View>
 
           <View style={{ alignItems: "center", marginTop: 25 }}>
             {this.renderButton()}
           </View>
+          <LottieView
+            source={require("../../assets/animations/books.json")}
+            autoPlay
+            loop={false}
+            style={{ alignSelf: "center", width: 200, height: 200 }}
+          />
         </TouchableOpacity>
+        {this.renderSearches()}
       </View>
     );
   }
@@ -172,11 +391,12 @@ const mapDispatchToProps = dispatch => {
 const styles = {
   container: {
     flex: 1,
-    backgroundColor: "#F7F7F7"
+    backgroundColor: "#F7F7F7",
+    height: screenHeight,
+    width: screenWidth
   },
   section: {
     marginTop: 10,
-    backgroundColor: "white",
     paddingBottom: 5
   },
   headerText: {
@@ -203,7 +423,7 @@ const styles = {
     width: screenWidth * 0.7,
     backgroundColor: "red",
     alignItems: "center",
-    borderRadius: 7
+    borderRadius: 35
   }
 };
 

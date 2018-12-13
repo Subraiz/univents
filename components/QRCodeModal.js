@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, View, Modal, TouchableOpacity, Dimensions } from "react-native";
 import QRCode from "react-native-qrcode";
+import * as Animatable from "react-native-animatable";
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -11,7 +12,7 @@ const QRCodeModal = ({ children, visible, onPress, value }) => {
     <Modal
       visible={visible}
       transparent
-      animationType="slide"
+      animationType="fade"
       onRequestClose={() => {}}
       transparent={true}
     >
@@ -20,12 +21,14 @@ const QRCodeModal = ({ children, visible, onPress, value }) => {
         activeOpacity={0.95}
         style={styles.containerStyle}
       >
-        <QRCode
-          value={value}
-          size={screenWidth * 0.8}
-          bgColor="black"
-          fgColor="white"
-        />
+        <Animatable.View animation="slideInUp" delay={200} duration={500}>
+          <QRCode
+            value={value}
+            size={screenWidth * 0.8}
+            bgColor="black"
+            fgColor="white"
+          />
+        </Animatable.View>
       </TouchableOpacity>
     </Modal>
   );
@@ -39,7 +42,7 @@ const styles = {
     lineHeight: 40
   },
   containerStyle: {
-    backgroundColor: "rgba(0, 0, 0, 0.1)",
+    backgroundColor: "rgba(0, 0, 0, 0.2)",
     position: "relative",
     flex: 1,
     justifyContent: "center",

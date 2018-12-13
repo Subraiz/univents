@@ -73,60 +73,63 @@ export const fetchEvents = (state, user, type) => {
         // Use some instead of forEach so it can break
         data.docs.some(doc => {
           let event = doc.data();
-          let eventCategories = event.eventCategories;
+          if (!event.cancled) {
+            let eventCategories = event.eventCategories;
 
-          // Check if event categories match users interests or if event is checked as popular
-          let commonInterest = eventCategories.some(
-            category => studentInterests.indexOf(category) >= 0
-          );
+            // Check if event categories match users interests or if event is checked as popular
+            let commonInterest = eventCategories.some(
+              category => studentInterests.indexOf(category) >= 0
+            );
 
-          let popular = eventCategories.indexOf("Popular") >= 0 ? true : false;
+            let popular =
+              eventCategories.indexOf("Popular") >= 0 ? true : false;
 
-          // Create new Event Object
-          let eventObject = {
-            eventName: event.eventName,
-            eventDescription: event.eventDescription,
-            eventDate: event.eventDate,
-            eventHost: event.eventHost,
-            eventCategories: event.eventCategories,
-            eventCoordinates: event.eventCoordinates,
-            eventLocation: event.eventLocation,
-            eventTime: event.eventTime,
-            eventType: event.eventType,
-            eventImage: event.eventImage,
-            eventContact: event.eventContact,
-            eventID: event.eventID,
-            eventData: event.eventData
-          };
+            // Create new Event Object
+            let eventObject = {
+              eventName: event.eventName,
+              eventDescription: event.eventDescription,
+              eventDate: event.eventDate,
+              eventHost: event.eventHost,
+              eventCategories: event.eventCategories,
+              eventCoordinates: event.eventCoordinates,
+              eventLocation: event.eventLocation,
+              eventTime: event.eventTime,
+              eventType: event.eventType,
+              eventImage: event.eventImage,
+              eventContact: event.eventContact,
+              eventID: event.eventID,
+              eventData: event.eventData
+            };
 
-          // Stop getting events once it hits the first event which is out of date
-          let { month, day, year } = event.eventDate;
-          month = months.indexOf(month) + 1;
-          if (year <= currentYear) {
-            if (month <= currentMonth) {
-              if (day < currentDay) {
-                return true;
-              } else if (day == currentDay) {
-                todaysEvents.push(eventObject);
+            // Stop getting events once it hits the first event which is out of date
+            let { month, day, year } = event.eventDate;
+            month = months.indexOf(month) + 1;
+            if (year <= currentYear) {
+              if (month <= currentMonth) {
+                if (day < currentDay) {
+                  return true;
+                } else if (day == currentDay) {
+                  todaysEvents.push(eventObject);
+                }
               }
             }
-          }
 
-          // Sort events so most recent events are first in the array
-          allEvents.unshift(eventObject);
+            // Sort events so most recent events are first in the array
+            allEvents.unshift(eventObject);
 
-          // Put events in respective categories
+            // Put events in respective categories
 
-          if (studentInterests != false) {
-            if (commonInterest) {
-              suggestionEvents.unshift(eventObject);
-            } else {
-              schoolEvents.unshift(eventObject);
+            if (studentInterests != false) {
+              if (commonInterest) {
+                suggestionEvents.unshift(eventObject);
+              } else {
+                schoolEvents.unshift(eventObject);
+              }
             }
-          }
 
-          if (popular) {
-            popularEvents.unshift(eventObject);
+            if (popular) {
+              popularEvents.unshift(eventObject);
+            }
           }
         });
 
@@ -180,7 +183,14 @@ export const fetchUserEvents = (user, type) => {
         .doc(refrenceArray[3])
         .get()
         .then(doc => {
-          createdEvents.unshift(doc.data());
+          let event = doc.data();
+          if (event) {
+            if (!event.cancled) {
+              createdEvents.unshift(doc.data());
+            }
+          } else {
+            return;
+          }
         });
     });
 
@@ -194,7 +204,14 @@ export const fetchUserEvents = (user, type) => {
         .doc(refrenceArray[3])
         .get()
         .then(doc => {
-          favoritedEvents.unshift(doc.data());
+          let event = doc.data();
+          if (event) {
+            if (!event.cancled) {
+              favoritedEvents.unshift(doc.data());
+            }
+          } else {
+            return;
+          }
         });
     });
     await dispatch({

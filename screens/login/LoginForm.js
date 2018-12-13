@@ -31,7 +31,7 @@ const screenHeight = Dimensions.get("window").height;
 
 class LoginForm extends Component {
   static navigationOptions = {
-    title: "Create An Account",
+    title: "Log In",
     gesturesEnabled: false,
     headerRight: (
       <View

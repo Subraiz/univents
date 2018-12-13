@@ -37,9 +37,12 @@ class DateTimeModal extends Component {
   state = {
     startTime: "Start Time",
     endTime: "End Time",
+    realStartTime: "",
+    realEndTime: "",
     selected: "",
     isStartTimePickerVisible: false,
-    isEndTimePickerVisible: false
+    isEndTimePickerVisible: false,
+    interval: 15
   };
 
   onDayPress(date) {
@@ -65,24 +68,36 @@ class DateTimeModal extends Component {
   handleStartTimePicked = time => {
     let timeOfDay = "AM";
     let hour = time.getHours();
+    let realHour = time.getHours();
     if (hour > 12) {
       hour = hour - 12;
       timeOfDay = "PM";
     }
+
+    if (hour == 12) {
+      timeOfDay = "PM";
+    }
+
     if (hour == 0) {
       hour = 12;
+      timeOfDay = "AM";
     }
     let minutes = time.getMinutes();
+    if (minutes % 15 != 0) {
+      minutes = minutes - [minutes % 15];
+    }
     if (minutes < 10) {
       minutes = `0${minutes}`;
     }
-    let startTime = `${hour}:${minutes} ${timeOfDay}`;
+    let startTime = `${hour}:${minutes}${timeOfDay}`;
+    let realTime = `${realHour}:${minutes}`;
     this.props.updateEventInfo({
       prop: "eventTime",
-      value: { startTime: startTime, endTime: this.state.endTime }
+      value: { startTime: realTime, endTime: this.state.realEndTime }
     });
-    this.setState({ startTime: startTime });
+    this.setState({ startTime: startTime, realStartTime: realTime });
     this.hideStartTimePicker();
+    console.log(realTime, startTime);
   };
 
   showEndTimePicker = () => this.setState({ isEndTimePickerVisible: true });
@@ -92,24 +107,35 @@ class DateTimeModal extends Component {
   handleEndTimePicked = time => {
     let timeOfDay = "AM";
     let hour = time.getHours();
+    let realHour = time.getHours();
     if (hour > 12) {
       hour = hour - 12;
       timeOfDay = "PM";
     }
+
+    if (hour == 12) {
+      timeOfDay = "PM";
+    }
     if (hour == 0) {
       hour = 12;
+      timeOfDay = "AM";
     }
     let minutes = time.getMinutes();
+    if (minutes % 15 != 0) {
+      minutes = minutes - [minutes % 15];
+    }
     if (minutes < 10) {
       minutes = `0${minutes}`;
     }
-    let endTime = `${hour}:${minutes} ${timeOfDay}`;
+    let endTime = `${hour}:${minutes}${timeOfDay}`;
+    let realTime = `${realHour}:${minutes}`;
     this.props.updateEventInfo({
       prop: "eventTime",
-      value: { startTime: this.state.startTime, endTime: endTime }
+      value: { startTime: this.state.realStartTime, endTime: realTime }
     });
-    this.setState({ endTime: endTime });
+    this.setState({ endTime: endTime, realEndTime: realTime });
     this.hideEndTimePicker();
+    console.log(realTime, endTime);
   };
 
   render() {
@@ -190,6 +216,7 @@ class DateTimeModal extends Component {
             </View>
           </View>
           <DateTimePicker
+            minuteInterval={this.state.interval}
             isVisible={this.state.isStartTimePickerVisible}
             onConfirm={this.handleStartTimePicked}
             onCancel={this.hideStartTimePicker}
@@ -198,6 +225,7 @@ class DateTimeModal extends Component {
             is24Hour={false}
           />
           <DateTimePicker
+            minuteInterval={this.state.interval}
             isVisible={this.state.isEndTimePickerVisible}
             onConfirm={this.handleEndTimePicked}
             onCancel={this.hideEndTimePicker}

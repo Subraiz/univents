@@ -11,6 +11,7 @@ import {
   TouchableOpacity
 } from "react-native";
 import MapView, { Marker, Callout } from "react-native-maps";
+import Icon from "react-native-vector-icons/Ionicons";
 import Event from "../classes/Event";
 import * as Animatable from "react-native-animatable";
 
@@ -36,13 +37,17 @@ class Map extends Component {
 
   onRegionChange(mapRegion, lastLat, lastLong) {
     this.setState({
-      mapRegion,
+      mapRegion: mapRegion,
       lastLat: lastLat || this.state.lastLat,
       lastLong: lastLong || this.state.lastLong
     });
   }
 
-  componentDidMount() {
+  onLocatePress() {
+    this.map.animateToRegion(this.currentUserLocation, 1000);
+  }
+
+  componentWillMount() {
     this.requestLocationPermission();
   }
 
@@ -68,8 +73,14 @@ class Map extends Component {
               latitudeDelta: 0.00922 * 3,
               longitudeDelta: 0.00421 * 3
             };
-            this.currentUserLocation = { latitude, longitude };
+            this.currentUserLocation = {
+              latitude,
+              longitude,
+              latitudeDelta: 0.00922 * 3,
+              longitudeDelta: 0.00421 * 3
+            };
             this.onRegionChange(region, region.latitude, region.longitude);
+            this.map.animateToRegion(this.currentUserLocation, 1000);
           },
           err => {
             console.log(err);
@@ -138,25 +149,25 @@ class Map extends Component {
 
   render() {
     return (
-      <View
-        onMoveShouldSetResponder={event => {
-          if (
-            event.nativeEvent.locationX < screenWidth * 0.5 &&
-            event.nativeEvent.locationY > screenHeight * 0.25
-          ) {
-            return;
-          } else {
-            this.setState({ animation: "slideOutLeft" });
-          }
-          return true;
-        }}
-        onResponderRelease={this.onPanDragStop}
-      >
+      <View>
         <MapView
+          onMoveShouldSetResponder={event => {
+            if (
+              event.nativeEvent.locationX < screenWidth * 0.5 &&
+              event.nativeEvent.locationY > screenHeight * 0.25
+            ) {
+              return;
+            } else {
+              this.setState({ animation: "slideOutLeft" });
+            }
+            return true;
+          }}
+          onResponderRelease={this.onPanDragStop}
+          ref={map => (this.map = map)}
           style={styles.mapStyle}
-          // region={this.state.mapRegion}
-          // showsUserLocation={true}
-          // followUserLocation={true}
+          region={this.state.mapRegion}
+          showsUserLocation={true}
+          followUserLocation={true}
           onRegionChange={this.onRegionChange.bind(this)}
           initialRegion={{
             latitude: 42.3355488,
@@ -167,6 +178,45 @@ class Map extends Component {
         >
           {this.createMarkers()}
         </MapView>
+        <View
+          style={{
+            position: "absolute",
+            width: screenWidth,
+            display: "flex",
+            alignItems: "flex-end",
+            paddingTop: 10,
+            paddingRight: 10
+          }}
+        >
+          <TouchableOpacity
+            activeOpacity={0.75}
+            onPress={this.onLocatePress.bind(this)}
+            style={{
+              shadowOffset: { width: 0.3, height: -0.3 },
+              shadowColor: "black",
+              shadowOpacity: 0.3,
+              shadowRadius: 1,
+              alignItems: "center",
+              justifyContent: "center",
+              zIndex: 2
+            }}
+          >
+            <Icon
+              size={26}
+              name="md-locate"
+              style={{
+                paddingTop: 7,
+                width: 40,
+                height: 40,
+                textAlign: "center",
+                color: "#007AFF",
+                borderRadius: 12,
+                backgroundColor: "white",
+                overflow: "hidden"
+              }}
+            />
+          </TouchableOpacity>
+        </View>
         {this.renderMoreInfo()}
       </View>
     );
@@ -185,17 +235,47 @@ class Map extends Component {
     if (this.state.selectedEvent != null) {
       let event = this.state.selectedEvent;
       let { month, day, year } = event.eventDate;
-      let { startTime, endTime } = event.eventTime;
-      eventDate = `${month} ${day}, ${year}`;
-      eventTime = `${startTime} - ${endTime}`;
+
+      let startTimeArray = event.eventTime.startTime.split(":");
+      let endTimeArray = event.eventTime.endTime.split(":");
+
+      let startHour;
+      let startMinute;
+      let endHour;
+      let endMinute;
+
+      let startTimeOfDay = "AM";
+      let endTimeOfDay = "AM";
+
+      startHour = parseInt(startTimeArray[0]);
+      if (startHour == 0) {
+        startHour = 12;
+        startTimeOfDay = "AM";
+      } else if (startHour > 12) {
+        startHour = startHour - 12;
+      }
+      let startTime = `${startHour}:${startTimeArray[1]}`;
+
+      endHour = parseInt(endTimeArray[0]);
+      if (endHour > 12) {
+        endHour = endHour - 12;
+        endTimeOfDay = "PM";
+      } else if (endHour == 0) {
+        endHour = 12;
+        timeOfDay = "AM";
+      }
+      let endTime = `${endHour}:${endTimeArray[1]}`;
+      eventTime = `${startTime}${startTimeOfDay} - ${endTime}${endTimeOfDay}`;
 
       eventName = event.eventName;
       eventLocation = event.eventLocation.locationAddress;
       eventImage = event.eventImage;
+      eventDate = `${month} ${day}, ${year}`;
     }
     return (
       <Animatable.View
         animation={this.state.animation}
+        delay={this.state.opacity == 0 ? 500 : 0}
         style={{
           position: "absolute",
           width: screenWidth * 0.5,

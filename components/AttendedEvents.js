@@ -45,7 +45,6 @@ class AttendedEvents extends Component {
   }
 
   renderCreatedEvents() {
-    console.log(this.props.attendedEvents[0]);
     if (this.props.attendedEvents.length > 0) {
       return (
         <ListView

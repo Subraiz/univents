@@ -20,6 +20,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { signOutUser } from "../redux/actions/SettingsActions";
 import { createStackNavigator } from "react-navigation";
+import CacheImage from "../components/common/CacheImage";
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
@@ -93,12 +94,17 @@ class Profile extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      scrollY: new Animated.Value(0),
-      showModal: false
-    };
+
     this.AccountSettings;
   }
+
+  state = {
+    scrollY: new Animated.Value(0),
+    showModal: false,
+    created: this.props.createdEvents.length,
+    favorited: this.props.favoritedEvents.length,
+    attended: this.props.attendedEvents.length
+  };
 
   componentWillMount() {
     let {
@@ -113,6 +119,17 @@ class Profile extends Component {
       uid,
       ethnicity
     } = this.props;
+
+    this.screenWillFocus = this.props.navigation.addListener(
+      "willFocus",
+      () => {
+        this.setState({
+          created: this.props.createdEvents.length,
+          favorited: this.props.favoritedEvents.length,
+          attended: this.props.attendedEvents.length
+        });
+      }
+    );
 
     this.AccountSettings = [
       {
@@ -142,6 +159,10 @@ class Profile extends Component {
     });
     major = major.replace(/\s/g, "");
     userStringInfo = `${firstName} ${lastName} ${email} ${major} ${year} ${sex} ${ethnicity} ${uid} ${interestString}`;
+  }
+
+  componentWillUnmount() {
+    this.screenWillFocus.remove();
   }
 
   renderModal() {
@@ -212,8 +233,6 @@ class Profile extends Component {
       extrapolate: "clamp"
     });
 
-    console.log(profileImageHeight);
-
     return (
       <View style={styles.container}>
         <Animated.View
@@ -236,11 +255,19 @@ class Profile extends Component {
               opacity: headerTitleOpacity
             }}
           >
-            <Text style={{ fontSize: 19, fontWeight: "bold", color: "white" }}>
+            <Text
+              style={{
+                fontSize: 22,
+                fontWeight: "bold",
+                color: "white",
+                paddingBottom: 3
+              }}
+            >
               {this.props.firstName} {this.props.lastName}
             </Text>
           </Animated.View>
         </Animated.View>
+
         <ScrollView
           scrollEventThrottle={16}
           onScroll={Animated.event([
@@ -262,8 +289,8 @@ class Profile extends Component {
                 zIndex: headerZindex
               }}
             >
-              <Image
-                source={this.props.avatarSource}
+              <CacheImage
+                uri={this.props.avatarSource.uri}
                 style={{
                   width: null,
                   height: null,
@@ -271,37 +298,35 @@ class Profile extends Component {
                 }}
               />
             </Animated.View>
-            <Animated.View
+          </View>
+          <Animated.View
+            style={{
+              position: "absolute",
+              right: 10,
+              top: HEADER_MAX_HEIGHT + 10,
+              zIndex: 2,
+              height: profileImageHeight,
+              width: profileImageHeight
+            }}
+          >
+            <TouchableOpacity
               onPress={this.renderModal.bind(this)}
               style={{
-                position: "absolute",
-                right: 10,
-                top: HEADER_MAX_HEIGHT + 10,
-
-                zIndex: 2,
-                height: profileImageHeight,
-                width: profileImageHeight
+                height: null,
+                width: null,
+                flex: 1
               }}
             >
-              <TouchableOpacity
-                onPress={this.renderModal.bind(this)}
+              <Image
+                source={require("../assets/images/qrcode.png")}
                 style={{
-                  height: null,
                   width: null,
+                  height: null,
                   flex: 1
                 }}
-              >
-                <Image
-                  source={require("../assets/images/qrcode.png")}
-                  style={{
-                    width: null,
-                    height: null,
-                    flex: 1
-                  }}
-                />
-              </TouchableOpacity>
-            </Animated.View>
-          </View>
+              />
+            </TouchableOpacity>
+          </Animated.View>
 
           <View style={{ paddingBottom: 10 }}>
             <Text style={{ fontWeight: "bold", paddingLeft: 9, fontSize: 24 }}>
@@ -371,7 +396,7 @@ class Profile extends Component {
                 <Text
                   style={{ fontSize: 14, fontWeight: "600", marginRight: 6 }}
                 >
-                  {this.props.createdEvents.length}
+                  {this.state.created}
                 </Text>
                 <Text
                   style={{
@@ -386,22 +411,7 @@ class Profile extends Component {
                 <Text
                   style={{ fontSize: 14, fontWeight: "600", marginRight: 6 }}
                 >
-                  {this.props.favoritedEvents.length}
-                </Text>
-                <Text
-                  style={{
-                    fontWeight: "300",
-                    fontSize: 14,
-                    color: "grey",
-                    marginRight: 10
-                  }}
-                >
-                  Favorited
-                </Text>
-                <Text
-                  style={{ fontSize: 14, fontWeight: "600", marginRight: 6 }}
-                >
-                  {this.props.attendedEvents.length}
+                  {this.state.attended}
                 </Text>
                 <Text
                   style={{

@@ -7,7 +7,8 @@ import {
   Image,
   TextInput,
   ScrollView,
-  Keyboard
+  Keyboard,
+  Platform
 } from "react-native";
 import { Icon } from "react-native-elements";
 import ImagePicker from "react-native-image-picker";
@@ -126,7 +127,7 @@ class Screen2 extends Component {
             </TouchableOpacity>
             <View style={styles.infoContainer}>
               <TextInput
-                style={{ height: "25%" }}
+                style={{ height: Platform.OS === "ios" ? "25%" : "50%" }}
                 placeholder="Event Description"
                 value={this.props.eventDescription}
                 spellCheck={true}

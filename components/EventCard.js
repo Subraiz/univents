@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, View, Image, Dimensions, TouchableOpacity } from "react-native";
-import { CachedImage } from "react-native-cached-image";
+import CacheImage from "./common/CacheImage";
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
@@ -15,8 +15,36 @@ const EventCard = ({ event, onPress }) => {
   let eventName = event.eventName;
   let hostName = event.eventHost;
 
-  let { startTime, endTime } = event.eventTime;
-  eventTime = `${startTime} - ${endTime}`;
+  let startTimeArray = event.eventTime.startTime.split(":");
+  let endTimeArray = event.eventTime.endTime.split(":");
+
+  let startHour;
+  let startMinute;
+  let endHour;
+  let endMinute;
+
+  let startTimeOfDay = "AM";
+  let endTimeOfDay = "AM";
+
+  startHour = parseInt(startTimeArray[0]);
+  if (startHour == 0) {
+    startHour = 12;
+    startTimeOfDay = "AM";
+  } else if (startHour > 12) {
+    startHour = startHour - 12;
+  }
+  let startTime = `${startHour}:${startTimeArray[1]}`;
+
+  endHour = parseInt(endTimeArray[0]);
+  if (endHour > 12) {
+    endHour = endHour - 12;
+    endTimeOfDay = "PM";
+  } else if (endHour == 0) {
+    endHour = 12;
+    timeOfDay = "AM";
+  }
+  let endTime = `${endHour}:${endTimeArray[1]}`;
+  let eventTime = `${startTime}${startTimeOfDay} - ${endTime}${endTimeOfDay}`;
 
   return (
     <View
@@ -32,13 +60,13 @@ const EventCard = ({ event, onPress }) => {
         onPress={onPress}
         style={styles.container}
       >
-        <Image
+        <CacheImage
           style={{
             width: "100%",
             height: "40%",
             opacity: 0.7
           }}
-          source={event.eventImage}
+          uri={event.eventImage.uri}
         />
         <View style={styles.opacityContainer} />
 

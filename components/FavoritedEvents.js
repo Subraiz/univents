@@ -16,6 +16,10 @@ import { fetchUserEvents } from "../redux/actions/EventsActions";
 import { withNavigation } from "react-navigation";
 
 class FavoritedEvents extends Component {
+  state = {
+    dataSource: {}
+  };
+
   onPress(data) {
     this.props.navigation.navigate("EventInformation", {
       data: data,
@@ -28,7 +32,24 @@ class FavoritedEvents extends Component {
       rowHasChanged: (r1, r2) => r1 !== r2
     });
 
-    this.dataSource = ds.cloneWithRows(this.props.favoritedEvents);
+    this.setState({ dataSource: ds.cloneWithRows(this.props.favoritedEvents) });
+
+    this.screenWillFocus = this.props.navigation.addListener(
+      "willFocus",
+      () => {
+        const ds = new ListView.DataSource({
+          rowHasChanged: (r1, r2) => r1 !== r2
+        });
+
+        this.setState({
+          dataSource: ds.cloneWithRows(this.props.favoritedEvents)
+        });
+      }
+    );
+  }
+
+  componentWillUnmount() {
+    this.screenWillFocus.remove();
   }
 
   renderFavoritedEvents() {
@@ -66,7 +87,7 @@ class FavoritedEvents extends Component {
     return (
       <ListView
         enableEmptySections={true}
-        dataSource={this.dataSource}
+        dataSource={this.state.dataSource}
         renderRow={this.renderEvent.bind(this)}
       />
     );

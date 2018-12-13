@@ -9,11 +9,13 @@ import {
   Image,
   Dimensions,
   TouchableOpacity,
-  ScrollView
+  ScrollView,
+  Animated
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import MapView from "react-native-maps";
 import { Marker } from "react-native-maps";
+import FastImage from "react-native-fast-image";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { uploadUser } from "../redux/actions/LoginActions";
@@ -22,7 +24,7 @@ import {
   storeLocalEvents
 } from "../redux/actions/EventsActions";
 import InterestContainer from "../components/InterestContainer";
-import BarChart from "./DataCharts/BarChart";
+import LottieView from "lottie-react-native";
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
@@ -39,7 +41,8 @@ class EventInformation extends Component {
   };
 
   state = {
-    favorite: false
+    favorite: false,
+    progress: new Animated.Value(0)
   };
 
   async componentWillMount() {
@@ -54,6 +57,7 @@ class EventInformation extends Component {
     this.props.user.events.favoritedEvents.some(e => {
       let refrenceArray = e.split("/");
       if (event.eventID === refrenceArray[3]) {
+        this.setState({ progress: new Animated.Value(1) });
         this.setState({ favorite: true });
         return true;
       }
@@ -64,9 +68,17 @@ class EventInformation extends Component {
     this.setState({ favorite: !this.state.favorite });
     let refrenceArray = `Location/MA/Events/${event.eventID}`;
     if (!this.state.favorite) {
+      Animated.timing(this.state.progress, {
+        toValue: 1, // <-- Animate to the beginning of animation
+        duration: 600
+      }).start();
       this.props.user.events.favoritedEvents.push(refrenceArray);
       this.props.localFavoritedEvents.unshift(event);
     } else {
+      Animated.timing(this.state.progress, {
+        toValue: 0, // <-- Animate to the beginning of animation
+        duration: 600
+      }).start();
       let index = this.props.user.events.favoritedEvents.indexOf(refrenceArray);
       let localIndex = this.props.localFavoritedEvents.indexOf(event);
       this.props.user.events.favoritedEvents.splice(index, 1);
@@ -141,7 +153,7 @@ class EventInformation extends Component {
         <ScrollView>
           <View style={styles.firstSection}>
             <View style={styles.headerImageContainer}>
-              <Image style={styles.headerImage} source={event.eventImage} />
+              <FastImage style={styles.headerImage} source={event.eventImage} />
             </View>
 
             <View style={styles.informationContainer}>
@@ -161,15 +173,12 @@ class EventInformation extends Component {
                 </View>
                 <View>
                   <TouchableOpacity onPress={this.onLikePress.bind(this)}>
-                    <Icon
-                      name={
-                        this.state.favorite ? "ios-heart" : "ios-heart-empty"
-                      }
-                      style={{
-                        fontSize: 34,
-                        fontWeight: "300",
-                        color: "red"
-                      }}
+                    <LottieView
+                      progress={this.state.progress}
+                      style={{ width: 50, height: 50 }}
+                      source={require("../assets/animations/favorite.json")}
+                      loop={false}
+                      ref={animation => (this.animation = animation)}
                     />
                   </TouchableOpacity>
                 </View>

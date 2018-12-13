@@ -53,8 +53,9 @@ class Screen1 extends Component {
 
   renderDateTime() {
     if (
-      this.props.eventDate.month == "" &&
-      this.props.eventTime.startTime == ""
+      this.props.eventDate.month == "" ||
+      this.props.eventTime.startTime == "" ||
+      this.props.eventTime.endTime == ""
     ) {
       return (
         <TouchableOpacity onPress={this.onShowDateTimeModal.bind(this)}>
@@ -65,9 +66,34 @@ class Screen1 extends Component {
       let dateString = `${this.props.eventDate.month} ${this.props.eventDate
         .day || "Event Date"}, ${this.props.eventDate.year}`;
 
-      let timeString = `${this.props.eventTime.startTime} - ${
-        this.props.eventTime.endTime
-      }`;
+      let startTimeArray = this.props.eventTime.startTime.split(":");
+      let endTimeArray = this.props.eventTime.endTime.split(":");
+
+      let startHour;
+      let startMinute;
+      let endHour;
+      let endMinute;
+
+      let startTimeOfDay = "AM";
+      let endTimeOfDay = "AM";
+
+      if (startTimeArray[0] > 12) {
+        startHour = parseInt(startTimeArray[0]) - 12;
+        startTimeOfDay = "PM";
+      } else {
+        startHour = startTimeArray[0];
+      }
+      let startTime = `${startHour}:${startTimeArray[1]}`;
+
+      if (endTimeArray[0] > 12) {
+        endHour = parseInt(endTimeArray[0] - 12);
+        endTimeOfDay = "PM";
+      } else {
+        endHour = endTimeArray[0];
+      }
+      let endTime = `${endHour}:${endTimeArray[1]}`;
+
+      let timeString = `${startTime}${startTimeOfDay} - ${endTime}${endTimeOfDay}`;
 
       return (
         <TouchableOpacity onPress={this.onShowDateTimeModal.bind(this)}>

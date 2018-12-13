@@ -1,8 +1,9 @@
 package com.univents;
 
 import android.app.Application;
-import com.horcrux.svg.SvgPackage;
+
 import com.facebook.react.ReactApplication;
+import com.horcrux.svg.SvgPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.airbnb.android.react.maps.MapsPackage;
@@ -15,6 +16,9 @@ import com.facebook.soloader.SoLoader;
 import java.util.Arrays;
 import java.util.List;
 import com.RNFetchBlob.RNFetchBlobPackage;
+import com.rnfs.RNFSPackage;
+import com.dylanvann.fastimage.FastImageViewPackage;
+import com.airbnb.android.react.lottie.LottiePackage;
 
 
 public class MainApplication extends Application implements ReactApplication {
@@ -34,7 +38,10 @@ public class MainApplication extends Application implements ReactApplication {
             new MapsPackage(),
             new RNCameraPackage(),
             new RNFetchBlobPackage(),
-            new SvgPackage()
+            new SvgPackage(),
+            new RNFSPackage(),
+            new FastImageViewPackage(),
+            new LottiePackage()
       );
     }
 

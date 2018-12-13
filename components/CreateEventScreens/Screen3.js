@@ -3,6 +3,7 @@ import { Text, View, TouchableOpacity, Dimensions } from "react-native";
 import * as Animatable from "react-native-animatable";
 import EventCard from "../EventCard";
 import Event from "../../classes/Event";
+import LottieView from "lottie-react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import {
@@ -22,6 +23,10 @@ const screenHeight = Dimensions.get("window").height;
 let tempEvent;
 
 class Screen3 extends Component {
+  state = {
+    uploading: false
+  };
+
   componentWillMount() {
     let randomString = this.makeid();
     let eventID = `${this.props.uid}${randomString}`;
@@ -36,18 +41,23 @@ class Screen3 extends Component {
       this.props.eventLocation,
       this.props.eventTime,
       this.props.eventType,
-      this.props.tempEventImage,
+      this.props.eventImage,
       this.props.eventContact,
       this.props.eventID
     );
   }
 
   async onPublish() {
-    await this.props.fetchEvents("MA", this.props.user);
-    await this.props.publishEvent(this.props.event, "MA");
     this.props.localCreatedEvents.unshift(this.props.event);
+    await this.props.publishEvent(this.props.event, "MA");
+    await this.props.fetchEvents("MA", this.props.user);
     this.props.storeLocalEvents(this.props.localCreatedEvents, "createdEvents");
-    this.props.navigation.navigate("Explore");
+
+    setTimeout(() => {
+      if (!this.props.event.uploading) {
+        this.props.navigation.navigate("Explore");
+      }
+    }, 2000);
   }
 
   makeid() {
@@ -59,6 +69,36 @@ class Screen3 extends Component {
       text += possible.charAt(Math.floor(Math.random() * possible.length));
 
     return text;
+  }
+
+  renderPublishButton() {
+    if (this.props.event.uploading) {
+      return (
+        <View
+          style={{
+            alignSelf: "center",
+
+            alignItems: "center"
+          }}
+        >
+          <LottieView
+            style={{ width: 100, height: 100 }}
+            autoPlay
+            loop
+            source={require("../../assets/animations/loading.json")}
+          />
+        </View>
+      );
+    } else {
+      return (
+        <TouchableOpacity
+          style={styles.buttonStyle}
+          onPress={this.onPublish.bind(this)}
+        >
+          <Text style={{ color: "white", fontSize: 18 }}>Publish</Text>
+        </TouchableOpacity>
+      );
+    }
   }
 
   render() {
@@ -85,12 +125,7 @@ class Screen3 extends Component {
           >
             <Text style={{ color: "white", fontSize: 18 }}>Return</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.buttonStyle}
-            onPress={this.onPublish.bind(this)}
-          >
-            <Text style={{ color: "white", fontSize: 18 }}>Publish</Text>
-          </TouchableOpacity>
+          {this.renderPublishButton()}
         </View>
       </Animatable.View>
     );

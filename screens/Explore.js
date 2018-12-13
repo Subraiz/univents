@@ -83,9 +83,9 @@ class Explore extends Component {
   componentWillMount() {
     BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
 
-    UIManager.setLayoutAnimationEnabledExperimental &&
-      UIManager.setLayoutAnimationEnabledExperimental(true);
-    LayoutAnimation.easeInEaseOut();
+    // UIManager.setLayoutAnimationEnabledExperimental &&
+    //   UIManager.setLayoutAnimationEnabledExperimental(true);
+    // LayoutAnimation.easeInEaseOut();
   }
 
   onReturn() {
@@ -134,7 +134,7 @@ class Explore extends Component {
             duration={600}
             animation="slideInRight"
             style={{
-              height: screenHeight * 0.03,
+              height: screenHeight * 0.04,
               backgroundColor: "white",
               borderRadius: 25
             }}
@@ -169,7 +169,7 @@ class Explore extends Component {
         <TouchableOpacity
           onPress={this.onSearchPress.bind(this)}
           style={{
-            height: screenHeight * 0.03,
+            height: screenHeight * 0.04,
             backgroundColor: "white",
             borderRadius: 25
           }}
@@ -187,6 +187,9 @@ class Explore extends Component {
             }}
           >
             <Icon name="ios-search" style={{ fontSize: 16, marginRight: 10 }} />
+            <Text style={{ color: "grey", opacity: 0.7, fontWeight: "400" }}>
+              Search
+            </Text>
           </Animatable.View>
         </TouchableOpacity>
       );
@@ -314,7 +317,7 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     width: screenWidth,
-    height: screenHeight * 0.05,
+    height: screenHeight * 0.06,
     backgroundColor: "#F7F7F7",
     paddingHorizontal: 10,
     justifyContent: "center"
