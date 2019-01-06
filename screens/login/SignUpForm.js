@@ -138,6 +138,8 @@ class SignUpForm extends Component {
               <FormInput
                 placeholder={"student@bc.edu"}
                 containerStyle={styles.inputStyle}
+                keyboardType={"email-address"}
+                autoCapitalize={"none"}
                 onChangeText={text =>
                   this.props.updateUserInfo({ prop: "email", value: text })
                 }

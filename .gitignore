@@ -32,7 +32,6 @@ build/
 # node.js
 #
 node_modules/
-!node_modules/react-native-maps/lib/android/src/main/java/com/airbnb/android/react/maps/MapsPackage.java
 npm-debug.log
 yarn-error.log
 
