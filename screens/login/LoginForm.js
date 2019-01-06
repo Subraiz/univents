@@ -95,6 +95,8 @@ class LoginForm extends Component {
             <FormLabel>Email</FormLabel>
             <FormInput
               containerStyle={styles.inputStyle}
+              keyboardType={"email-address"}
+              autoCapitalize={"none"}
               onChangeText={text =>
                 this.props.updateLoginInfo({ prop: "email", value: text })
               }

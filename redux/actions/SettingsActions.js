@@ -27,3 +27,30 @@ export const signOutUser = () => {
       );
   };
 };
+
+export const refreshEmailVerified = () => {
+  return async dispatch => {
+    await initializeFirebase();
+    let user = auth.currentUser;
+    await user.reload()
+    dispatch({
+      type: T.UPDATE_USER_INFO,
+      payload: { prop: "emailVerified", value: user.emailVerified }
+    });
+  };
+};
+
+export const resendVerification = () => {
+  return async dispatch => {
+    await initializeFirebase();
+    let user = auth.currentUser;
+    await user.reload()
+    if (user.emailVerified !== true) {
+      user.sendEmailVerification();
+    }
+    dispatch({
+      type: T.UPDATE_USER_INFO,
+      payload: { prop: "emailVerified", value: user.emailVerified }
+    });
+  };
+};

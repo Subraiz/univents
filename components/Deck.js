@@ -293,7 +293,8 @@ class Deck extends Component {
           {
             width: screenWidth,
             marginTop: screenHeight * 0.45,
-            height: "100%"
+            height: "100%",
+            zIndex: 4
           }
         ]}
         {...this.state.panResponder.panHandlers}
