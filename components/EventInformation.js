@@ -10,7 +10,9 @@ import {
   Dimensions,
   TouchableOpacity,
   ScrollView,
-  Animated
+  Animated,
+  Share,
+  Platform,
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import MapView from "react-native-maps";
@@ -84,6 +86,28 @@ class EventInformation extends Component {
       this.props.user.events.favoritedEvents.splice(index, 1);
       this.props.localFavoritedEvents.splice(localIndex, 1);
     }
+  }
+
+  onSharePress() {
+    let eventID = event.eventID.substring(0, event.eventID.length - 5);
+
+    let downloadUrl = Platform.OS === "ios"
+      ? "IOS DOWNLOAD URL"
+      : "ANDROID DOWNLOAD URL";
+
+    let message, title;
+
+    message = `${event.eventDescription}\n\nFor more details go to the Univents app. Download it now: ${downloadUrl}`;
+    if (this.props.uid === eventID) {
+      title = `I'm hosting an event: ${event.eventName}!`;
+    } else {
+      title = `Join me at ${event.eventName}!`;
+    }
+
+    Share.share({
+      message,
+      title,
+    });
   }
 
   componentWillUpdate() {
@@ -171,7 +195,7 @@ class EventInformation extends Component {
                     {event.eventType} • {event.eventHost}
                   </Text>
                 </View>
-                <View>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
                   <TouchableOpacity onPress={this.onLikePress.bind(this)}>
                     <LottieView
                       progress={this.state.progress}
@@ -179,6 +203,12 @@ class EventInformation extends Component {
                       source={require("../assets/animations/favorite.json")}
                       loop={false}
                       ref={animation => (this.animation = animation)}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={this.onSharePress.bind(this)}>
+                    <Icon
+                      name="md-share"
+                      style={{ fontSize: 35, color: "black", marginBottom: -5 }}
                     />
                   </TouchableOpacity>
                 </View>
