@@ -95,18 +95,16 @@ class EventInformation extends Component {
       ? "IOS DOWNLOAD URL"
       : "ANDROID DOWNLOAD URL";
 
-    let message, title;
-
-    message = `${event.eventDescription}\n\nFor more details go to the Univents app. Download it now: ${downloadUrl}`;
+    let title;
     if (this.props.uid === eventID) {
       title = `I'm hosting an event: ${event.eventName}!`;
     } else {
       title = `Join me at ${event.eventName}!`;
     }
+    let message = `${title}\n\n${event.eventDescription}\n\nFor more details go to the Univents app. Download it now: ${downloadUrl}`;
 
     Share.share({
       message,
-      title,
     });
   }
 
