@@ -43,7 +43,7 @@ let navigatable = {};
 const data = [
   { time: "6:00", earnings: 20 },
   { time: "6:15", earnings: 25 },
-  { time: "6:30", earnings: 25 }
+  { time: "6:30", earnings: 20 }
 ];
 
 class AdminTools extends Component {
