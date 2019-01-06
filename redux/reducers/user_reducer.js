@@ -20,7 +20,8 @@ const INITIAL_STATE = {
   sex: "",
   school: "Boston College",
   uid: "",
-  endorsed: false
+  endorsed: false,
+  emailVerified: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -37,7 +38,7 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         error: "No Error",
-        uid: action.payload,
+        uid: action.payload.uid,
         password: "",
         confirmPassword: ""
       };

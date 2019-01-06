@@ -85,7 +85,8 @@ export const signUpUser = (email, password) => {
     await auth
       .createUserWithEmailAndPassword(email, password)
       .then(object => {
-        dispatch({ type: T.USER_SIGNUP_SUCCESS, payload: object.user.uid });
+        object.user.sendEmailVerification();
+        dispatch({ type: T.USER_SIGNUP_SUCCESS, payload: object.user });
       })
       .catch(error => {
         dispatch({ type: T.USER_SIGNUP_ERROR, payload: "inUseEmail" });
@@ -144,6 +145,7 @@ export const loginUser = (email, password) => {
       .signInWithEmailAndPassword(email, password)
       .then(async userObject => {
         uid = userObject.user.uid;
+        emailVerified = userObject.user.emailVerified;
 
         await firestore
           .collection("Users")
@@ -151,6 +153,7 @@ export const loginUser = (email, password) => {
           .get()
           .then(doc => {
             let user = doc.data();
+            user.emailVerified = emailVerified;
             dispatch({ type: T.SAVE_USER, payload: user });
             dispatch({ type: T.LOGIN_SUCCESS });
           });
