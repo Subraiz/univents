@@ -42,7 +42,7 @@ class SignUpInterests extends Component {
     let user = this.props.user;
     user.interest = this.state.likedInterests;
     await this.props.fetchEvents("MA", user);
-    this.props.navigation.navigate("AppNavigator");
+    this.props.screenProps.authenticated(user.emailVerified);
   }
 
   renderErrorMessage() {

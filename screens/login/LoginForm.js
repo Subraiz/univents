@@ -71,7 +71,7 @@ class LoginForm extends Component {
       await this.props.fetchEvents("MA", this.props.user);
       await this.props.fetchUserEvents(this.props.user);
       if (this.props.authorized) {
-        this.props.navigation.navigate("AppNavigator");
+        this.props.screenProps.authenticated(this.props.user.emailVerified);
       }
     }
   }

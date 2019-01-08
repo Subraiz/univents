@@ -18,11 +18,7 @@ import QRCode from "react-native-qrcode";
 import QRCodeModal from "../components/QRCodeModal";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import {
-  signOutUser,
-  refreshEmailVerified,
-  resendVerification
-} from "../redux/actions/SettingsActions";
+import { signOutUser } from "../redux/actions/SettingsActions";
 import { createStackNavigator } from "react-navigation";
 import CacheImage from "../components/common/CacheImage";
 
@@ -148,8 +144,8 @@ class Profile extends Component {
       {
         title: "Sign Out",
         onPress: () => {
-          this.props.navigation.navigate("Login");
           this.props.signOutUser();
+          this.props.screenProps.logout();
         }
       }
     ];
@@ -164,7 +160,6 @@ class Profile extends Component {
     });
     major = major.replace(/\s/g, "");
     userStringInfo = `${firstName} ${lastName} ${email} ${major} ${year} ${sex} ${ethnicity} ${uid} ${interestString}`;
-    this.props.refreshEmailVerified();
   }
 
   componentWillUnmount() {
@@ -173,12 +168,6 @@ class Profile extends Component {
 
   renderModal() {
     this.setState({ showModal: !this.state.showModal });
-  }
-
-  resendVerification() {
-    this.props.resendVerification();
-    this.setState({ didResend: true });
-    setTimeout(() => this.setState({ didResend: false }), 5000);
   }
 
   render() {
@@ -352,65 +341,6 @@ class Profile extends Component {
                 style={{
                   flexDirection: "row",
                   alignItems: "center",
-                }}
-              >
-                <Text style={{ fontWeight: "300", fontSize: 16, paddingTop: 2, color: "gray" }}>
-                  {this.props.email}
-                </Text>
-                { this.props.emailVerified === true
-                  ? <Icon
-                      name="md-checkmark-circle-outline"
-                      style={{
-                        fontSize: 12,
-                        marginLeft: 4,
-                        marginTop: 4,
-                        color: "green"
-                      }}
-                    />
-                  : [ <Icon
-                      name="md-close-circle-outline"
-                      key="unverified-icon"
-                      style={{
-                        fontSize: 12,
-                        marginLeft: 4,
-                        marginTop: 4,
-                        color: "red"
-                      }}
-                    />,
-                    this.state.didResend === false
-                      ? <TouchableOpacity
-                          onPress={this.resendVerification.bind(this)}
-                          key="verify-link"
-                          visible={!this.state.didResend}
-                          style={{
-                            height: null,
-                            width: null,
-                            flex: 1,
-                          }}
-                        >
-                          <Text style={{ fontWeight: "300", fontSize: 14, paddingTop: 2, color: "blue", marginLeft: 4 }}>
-                            Verify
-                          </Text>
-                        </TouchableOpacity>
-                      : <Text
-                          style={{
-                            fontWeight: "300",
-                            fontSize: 14,
-                            paddingTop: 2,
-                            color: "lightgray",
-                            marginLeft: 4
-                          }}
-                          key="verify-sent"
-                        >
-                          Sent
-                        </Text>
-                  ]
-                }
-              </View>
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
                   marginTop: 15
                 }}
               >
@@ -550,8 +480,6 @@ const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
       signOutUser: signOutUser,
-      refreshEmailVerified: refreshEmailVerified,
-      resendVerification: resendVerification,
     },
     dispatch
   );

@@ -16,6 +16,7 @@ import firebase from "@firebase/app";
 require("@firebase/auth");
 import SplashScreen from "./screens/SplashScreen";
 
+import Unverified from "./screens/login/Unverified";
 import Login from "./screens/login/Login";
 import SignUpForm from "./screens/login/SignUpForm";
 import SignUpPersonalInfo from "./screens/login/SignUpPersonalInfo";
@@ -42,39 +43,30 @@ let count = 0;
 const LoginStack = createStackNavigator(
   {
     Login: Login,
-    CreateEvent: CreateEvent,
     SignUpForm: SignUpForm,
     SignUpPersonalInfo: SignUpPersonalInfo,
     SignUpProfilePhoto: SignUpProfilePhoto,
     SignUpInterests: SignUpInterests,
-    LoginForm: LoginForm,
-    EventInformation: EventInformation,
-    EventCardsRow: EventCardsRow,
-    AdminTools: AdminTools,
-    Events: Events,
-    AppNavigator: {
-      screen: AppNavigator,
-      navigationOptions: {
-        header: null,
-        gesturesEnabled: false
-      }
-    }
+    LoginForm: LoginForm
   },
   {
     initialRouteName: "Login"
   }
 );
 
+const UnverifiedStack = createStackNavigator(
+  {
+    Unverified: Unverified
+  },
+  {
+    initialRouteName: "Unverified"
+  }
+);
+
 const HomeStack = createStackNavigator(
   {
-    Login: Login,
     CreateEvent: CreateEvent,
-    SignUpForm: SignUpForm,
-    SignUpPersonalInfo: SignUpPersonalInfo,
-    SignUpProfilePhoto: SignUpProfilePhoto,
-    SignUpInterests: SignUpInterests,
     EventInformation: EventInformation,
-    LoginForm: LoginForm,
     EventCardsRow: EventCardsRow,
     AdminTools: AdminTools,
     AppNavigator: {
@@ -93,6 +85,7 @@ const HomeStack = createStackNavigator(
 class Root extends React.Component {
   state = {
     authenticated: false,
+    verified: false,
     loading: true
   };
 
@@ -113,15 +106,27 @@ class Root extends React.Component {
       if (user && count == 0) {
         console.log(user.uid);
         await this.props.getUser(user.uid);
-        this.setState({ authenticated: true });
+        this.setState({ authenticated: true, verified: user.emailVerified });
         setTimeout(() => this.setState({ loading: false }), 1500);
         count++;
       } else if (!user && count == 0) {
-        this.setState({ authenticated: false });
+        this.setState({ authenticated: false, verified: false });
         setTimeout(() => this.setState({ loading: false }), 1500);
         count++;
       }
     });
+  };
+
+  authenticated = (emailVerified) => {
+    this.setState({ authenticated: true, verified: emailVerified });
+  };
+
+  verified = () => {
+    this.setState({ authenticated: true, verified: true });
+  };
+
+  logout =() => {
+    this.setState({ authenticated: false, verified: false });
   };
 
   render() {
@@ -129,14 +134,23 @@ class Root extends React.Component {
       return <SplashScreen />;
     }
 
-    if (this.state.authenticated) {
+    if (this.state.authenticated === true && this.state.verified === true) {
       {
         this.props.fetchEvents("MA", this.props.user);
         this.props.fetchUserEvents(this.props.user);
       }
-      return <HomeStack />;
+      return <HomeStack screenProps={{
+        logout: this.logout
+      }}/>;
+    } else if (this.state.authenticated === true) {
+      return <UnverifiedStack screenProps={{
+        verified: this.verified,
+        logout: this.logout
+      }}/>
     } else {
-      return <LoginStack />;
+      return <LoginStack screenProps={{
+        authenticated: this.authenticated
+      }}/>;
     }
   }
 }
@@ -152,7 +166,7 @@ const mapDispatchToProps = dispatch => {
     {
       getUser: getUser,
       fetchEvents: fetchEvents,
-      fetchUserEvents: fetchUserEvents
+      fetchUserEvents: fetchUserEvents,
     },
     dispatch
   );

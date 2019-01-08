@@ -28,7 +28,7 @@ export const signOutUser = () => {
   };
 };
 
-export const refreshEmailVerified = () => {
+export const refreshEmailVerified = (cb) => {
   return async dispatch => {
     await initializeFirebase();
     let user = auth.currentUser;
@@ -37,6 +37,9 @@ export const refreshEmailVerified = () => {
       type: T.UPDATE_USER_INFO,
       payload: { prop: "emailVerified", value: user.emailVerified }
     });
+    if (cb !== undefined) {
+      cb(user.emailVerified);
+    }
   };
 };
 

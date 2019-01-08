@@ -145,7 +145,7 @@ export const loginUser = (email, password) => {
       .signInWithEmailAndPassword(email, password)
       .then(async userObject => {
         uid = userObject.user.uid;
-        emailVerified = userObject.user.emailVerified;
+        let emailVerified = userObject.user.emailVerified;
 
         await firestore
           .collection("Users")
