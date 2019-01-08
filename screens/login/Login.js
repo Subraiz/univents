@@ -7,13 +7,14 @@ import {
   SafeAreaView,
   TouchableOpacity,
   UIManager,
-  LayoutAnimation
+  LayoutAnimation,
+  Platform
 } from "react-native";
 import * as Animatable from "react-native-animatable";
 import Swiper from "react-native-swiper";
 
 const screenWidth = Dimensions.get("window").width;
-const screenHeight = Dimensions.get("window").height;
+const screenHeight = Dimensions.get("window").height + (Platform.OS === 'android' ? 25 : 0);
 
 const Button = props => {
   return (
@@ -142,7 +143,8 @@ const styles = {
     position: "absolute",
     height: "100%",
     width: screenWidth,
-    justifyContent: "flex-end"
+    justifyContent: "flex-end",
+    marginTop: Platform.OS === 'android' ? -24 : 0
   },
   wrapper: {},
   slide1: {
