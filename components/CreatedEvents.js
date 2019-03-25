@@ -99,7 +99,10 @@ class CreatedEvents extends Component {
             the top right to get started!
           </Text>
           <Animatable.View animation="pulse" iterationCount="infinite">
-            <Icon name="ios-rocket" style={{ fontSize: 80, color: "grey" }} />
+            <Icon
+              name="ios-rocket"
+              style={{ fontSize: 80, color: "#ff802b" }}
+            />
           </Animatable.View>
         </Animatable.View>
       );

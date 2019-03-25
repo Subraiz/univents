@@ -18,6 +18,8 @@ import { updateEventInfo } from "../../redux/actions/EventActions";
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
 
+const MAX_CATEGORIES = 3;
+
 class CategoriesModal extends Component {
   state = {
     categories: allCategories,
@@ -32,6 +34,12 @@ class CategoriesModal extends Component {
 
   onCategoryPress(category) {
     Keyboard.dismiss();
+    if (
+      !category.selected &&
+      this.state.selectedCategories.length == MAX_CATEGORIES
+    ) {
+      return false;
+    }
     category.selected = !category.selected;
     updatedSelectedCategories = this.state.selectedCategories;
     if (category.selected) {
@@ -101,7 +109,7 @@ class CategoriesModal extends Component {
                 marginTop: 2
               }}
             >
-              Select All That Apply
+              Select Up To Three Categories
             </Text>
             <View style={styles.categories}>{this.renderCategories()}</View>
             <Button title="Confirm" onPress={this.props.onPress} />

@@ -10,8 +10,10 @@ import {
   Keyboard,
   UIManager,
   LayoutAnimation,
-  Platform
+  Platform,
+  Alert
 } from "react-native";
+import Terms from "../../constants/Terms.js";
 import {
   FormLabel,
   FormInput,
@@ -83,6 +85,20 @@ class SignUpForm extends Component {
         </FormValidationMessage>
       );
     }
+  }
+
+  async onTermsPress() {
+    Alert.alert(
+      "Terms & Policies",
+      Terms,
+      [
+        {
+          text: "Agree",
+          onPress: async () => {}
+        }
+      ],
+      { cancelable: false }
+    );
   }
 
   renderErrorPasswordMessage() {
@@ -179,13 +195,13 @@ class SignUpForm extends Component {
 
           <View style={styles.termsContainer}>
             <Text style={styles.termsTextStyle}>
-              By signing up, you accept Univent’s
+              By signing up, you accept Splurge's
             </Text>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={this.onTermsPress.bind(this)}>
               <Text style={{ color: "blue" }}>Terms of Service</Text>
             </TouchableOpacity>
             <Text> and </Text>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={this.onTermsPress.bind(this)}>
               <Text style={{ color: "blue" }}>Privacy Policy</Text>
             </TouchableOpacity>
           </View>

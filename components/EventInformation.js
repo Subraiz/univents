@@ -12,7 +12,7 @@ import {
   ScrollView,
   Animated,
   Share,
-  Platform,
+  Platform
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import MapView from "react-native-maps";
@@ -55,7 +55,7 @@ class EventInformation extends Component {
     const { navigation } = this.props;
     event = navigation.getParam("data", "NO-DATA");
     navigatable = navigation.getParam("navigation", "NO-NAVIGATION");
-
+    console.log(event.eventData);
     this.props.user.events.favoritedEvents.some(e => {
       let refrenceArray = e.split("/");
       if (event.eventID === refrenceArray[3]) {
@@ -91,9 +91,8 @@ class EventInformation extends Component {
   onSharePress() {
     let eventID = event.eventID.substring(0, event.eventID.length - 5);
 
-    let downloadUrl = Platform.OS === "ios"
-      ? "IOS DOWNLOAD URL"
-      : "ANDROID DOWNLOAD URL";
+    let downloadUrl =
+      Platform.OS === "ios" ? "IOS DOWNLOAD URL" : "ANDROID DOWNLOAD URL";
 
     let title;
     if (this.props.uid === eventID) {
@@ -101,10 +100,12 @@ class EventInformation extends Component {
     } else {
       title = `Join me at ${event.eventName}!`;
     }
-    let message = `${title}\n\n${event.eventDescription}\n\nFor more details go to the Univents app. Download it now: ${downloadUrl}`;
+    let message = `${title}\n\n${
+      event.eventDescription
+    }\n\nFor more details go to the Splurge Events app. Download it now: ${downloadUrl}`;
 
     Share.share({
-      message,
+      message
     });
   }
 
@@ -168,6 +169,33 @@ class EventInformation extends Component {
     let eventDate = `${month} ${day}, ${year}`;
 
     let { startTime, endTime } = event.eventTime;
+    let startTimeArray = startTime.split(":");
+    let endTimeArray = endTime.split(":");
+    let startHour;
+    let startMinute;
+    let endHour;
+    let endMinute;
+    let startTimeOfDay = "AM";
+    let endTimeOfDay = "AM";
+
+    startHour = parseInt(startTimeArray[0]);
+    if (startHour == 0) {
+      startHour = 12;
+      startTimeOfDay = "AM";
+    } else if (startHour > 12) {
+      startHour = startHour - 12;
+    }
+    startTime = `${startHour}:${startTimeArray[1]} ${startTimeOfDay}`;
+
+    endHour = parseInt(endTimeArray[0]);
+    if (endHour > 12) {
+      endHour = endHour - 12;
+      endTimeOfDay = "PM";
+    } else if (endHour == 0) {
+      endHour = 12;
+      timeOfDay = "AM";
+    }
+    endTime = `${endHour}:${endTimeArray[1]} ${endTimeOfDay}`;
     let eventTime = `${startTime} - ${endTime}`;
 
     return (
@@ -197,7 +225,7 @@ class EventInformation extends Component {
                   <TouchableOpacity onPress={this.onLikePress.bind(this)}>
                     <LottieView
                       progress={this.state.progress}
-                      style={{ width: 50, height: 50 }}
+                      style={{ width: 40, height: 40, marginRight: 5 }}
                       source={require("../assets/animations/favorite.json")}
                       loop={false}
                       ref={animation => (this.animation = animation)}
@@ -206,7 +234,11 @@ class EventInformation extends Component {
                   <TouchableOpacity onPress={this.onSharePress.bind(this)}>
                     <Icon
                       name="md-share"
-                      style={{ fontSize: 35, color: "black", marginBottom: -5 }}
+                      style={{
+                        fontSize: 20,
+                        color: "orange",
+                        marginBottom: -5
+                      }}
                     />
                   </TouchableOpacity>
                 </View>

@@ -89,7 +89,7 @@ class Events extends Component {
               <TouchableOpacity onPress={this.onButtonPress.bind(this)}>
                 <Icon
                   name="ios-add-circle"
-                  style={{ fontSize: 50, color: "#05B7EC" }}
+                  style={{ fontSize: 50, color: "#f4b042" }}
                 />
               </TouchableOpacity>
             </View>

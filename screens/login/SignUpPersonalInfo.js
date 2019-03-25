@@ -14,6 +14,7 @@ import {
   TextInput,
   Platform
 } from "react-native";
+import allMajors from "../../constants/Majors";
 import ImagePicker from "react-native-image-picker";
 import { FormLabel, FormInput } from "react-native-elements";
 import SegmentedControlTab from "react-native-segmented-control-tab";
@@ -27,13 +28,7 @@ import { updateUserInfo } from "../../redux/actions/LoginActions";
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
 
-const majors = [
-  "Computer Science",
-  "Biology",
-  "Finance",
-  "Design",
-  "Engineering"
-];
+const majors = allMajors;
 
 class SignUpPersonalInfo extends Component {
   state = {

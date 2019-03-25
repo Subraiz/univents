@@ -72,6 +72,7 @@ export const fetchEvents = (state, user, type) => {
       .then(data => {
         // Use some instead of forEach so it can break
         data.docs.some(doc => {
+          let pastEvent = false;
           let event = doc.data();
           if (!event.cancled) {
             let eventCategories = event.eventCategories;
@@ -103,10 +104,15 @@ export const fetchEvents = (state, user, type) => {
 
             // Stop getting events once it hits the first event which is out of date
             let { month, day, year } = event.eventDate;
+            console.log(currentMonth, currentDay, currentYear);
+
             month = months.indexOf(month) + 1;
             if (year <= currentYear) {
-              if (month <= currentMonth) {
+              if (year < currentYear) {
+                pastEvent = true;
+              } else if (month <= currentMonth) {
                 if (day < currentDay) {
+                  pastEvent = true;
                   return true;
                 } else if (day == currentDay) {
                   todaysEvents.push(eventObject);
@@ -114,21 +120,22 @@ export const fetchEvents = (state, user, type) => {
               }
             }
 
-            // Sort events so most recent events are first in the array
-            allEvents.unshift(eventObject);
+            if (!pastEvent) {
+              // Sort events so most recent events are first in the array
+              allEvents.unshift(eventObject);
 
-            // Put events in respective categories
-
-            if (studentInterests != false) {
-              if (commonInterest) {
-                suggestionEvents.unshift(eventObject);
-              } else {
-                schoolEvents.unshift(eventObject);
+              // Put events in respective categories
+              if (studentInterests != false) {
+                if (commonInterest) {
+                  suggestionEvents.unshift(eventObject);
+                } else {
+                  schoolEvents.unshift(eventObject);
+                }
               }
-            }
 
-            if (popular) {
-              popularEvents.unshift(eventObject);
+              if (popular) {
+                popularEvents.unshift(eventObject);
+              }
             }
           }
         });

@@ -8,6 +8,7 @@ import {
   Dimensions,
   Animated
 } from "react-native";
+import * as Animatable from "react-native-animatable";
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
@@ -34,12 +35,12 @@ class SplashScreen extends Component {
     return (
       <View style={styles.container}>
         <View style={this.position.getLayout()}>
-          <View style={styles.imageContainer}>
+          <Animatable.View style={styles.imageContainer} animation="zoomInDown">
             <Image
               source={require("../assets/images/UniventsSplashLogo.png")}
               style={styles.imageStyle}
             />
-          </View>
+          </Animatable.View>
         </View>
       </View>
     );

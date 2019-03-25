@@ -27,6 +27,20 @@ export const updateUserInfo = ({ prop, value }) => {
   };
 };
 
+export const resetUserPassword = email => {
+  return async dispatch => {
+    await initializeFirebase();
+    auth
+      .sendPasswordResetEmail(email)
+      .then(function() {
+        return true;
+      })
+      .catch(function(error) {
+        return false;
+      });
+  };
+};
+
 export const uploadUser = user => {
   return async dispatch => {
     await initializeFirebase();

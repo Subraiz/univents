@@ -209,7 +209,7 @@ class Map extends Component {
                 width: 40,
                 height: 40,
                 textAlign: "center",
-                color: "#007AFF",
+                color: "#f4b042",
                 borderRadius: 20,
                 backgroundColor: "white",
                 overflow: "hidden"

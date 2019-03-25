@@ -22,10 +22,12 @@ const Button = props => {
         animation={props.animation}
         style={{
           width: screenWidth * 0.9,
-          backgroundColor: props.color,
+          borderColor: props.color,
           alignItems: "center",
           marginTop: 10,
-          borderRadius: 30
+          borderRadius: 35,
+          backgroundColor: "rgba(0,0,0,.0)",
+          borderWidth: 2
         }}
       >
         <Text
@@ -70,25 +72,37 @@ class Login extends Component {
             autoplay={true}
             width={screenWidth}
             height={screenHeight}
-            autoplayTimeout={1.75}
+            autoplayTimeout={2.25}
           >
             <View style={styles.slide1}>
               <Image
-                source={require("../../assets/images/loginBackgroundImage.png")}
+                source={require("../../assets/images/loginBackgroundImage3.jpg")}
                 style={styles.imageStyle}
               />
             </View>
             <View style={styles.slide2}>
-              <Text style={styles.text}>Beautiful</Text>
+              <Image
+                source={require("../../assets/images/loginBackgroundImage2.jpg")}
+                style={styles.imageStyle}
+              />
             </View>
             <View style={styles.slide3}>
-              <Text style={styles.text}>And simple</Text>
+              <Image
+                source={require("../../assets/images/loginBackgroundImage.jpg")}
+                style={styles.imageStyle}
+              />
             </View>
           </Swiper>
         </View>
-        <View style={styles.headerLogoContainer}>
-          <Text style={styles.headerStyle}>UNIVENTS</Text>
-        </View>
+        <Animatable.View
+          style={styles.headerLogoContainer}
+          animation="zoomInUp"
+        >
+          <Image
+            source={require("../../assets/images/splurgeText.png")}
+            style={styles.splurgeTextStyle}
+          />
+        </Animatable.View>
         <View style={styles.buttonsViewContainer}>
           <View style={styles.buttonsContainer}>
             <Button
@@ -99,7 +113,7 @@ class Login extends Component {
             />
             <Button
               name={"Login"}
-              color={"rgba(224, 116, 116, .9)"}
+              color={"orange"}
               onPress={this.onButtonPress.bind(this, true)}
               animation="fadeInUp"
             />
@@ -119,19 +133,21 @@ const styles = {
     zIndex: -2
   },
   headerLogoContainer: {
-    alignItems: "center",
-    marginTop: screenHeight * 0.1
+    marginTop: screenHeight * 0.1,
+    height: screenHeight * 0.2,
+    width: "90%",
+    alignSelf: "center"
   },
   headerStyle: {
     fontSize: 62,
     color: "white",
-    fontWeight: "500"
+    fontWeight: "700"
   },
   imageStyle: {
     width: "100%",
     height: screenHeight,
     position: "absolute",
-    opacity: 0.9
+    opacity: 0.95
   },
   buttonsContainer: {
     flexDirection: "column",
@@ -167,6 +183,12 @@ const styles = {
     color: "#fff",
     fontSize: 30,
     fontWeight: "bold"
+  },
+  splurgeTextStyle: {
+    flex: 1,
+    width: null,
+    height: null,
+    resizeMode: "contain"
   }
 };
 

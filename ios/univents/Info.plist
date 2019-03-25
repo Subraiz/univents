@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>Univents</string>
+	<string>Splurge</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleGetInfoString</key>
@@ -23,7 +23,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>28</string>
+	<string>6</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -53,18 +53,26 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>We do not make use of this feature as of now.</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>Does not make use of this feature</string>
 	<key>NSCalendarsUsageDescription</key>
-	<string>Univents would like access to your photo gallery</string>
+	<string>Splurge would like to access your calendar so we can save events to your calendar.</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Your message to user when the camera is accessed for the first time</string>
+	<string>Splurge would like to access your camera so you can track attendance for your events.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string></string>
+	<string>Allow us to track your location so we can show you events near you!</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>Allow us to track your location so we can show you events near you!</string>
+	<key>NSMotionUsageDescription</key>
+	<string>In the future we will track how long you stay at an event.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Univents would like access to your photo gallery</string>
+	<string>Univents would like access to your photo gallery so you can upload a profile picture and add pictures for events.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Univents would like access to your photo gallery</string>
+	<string>Univents would like access to your photo gallery so you can upload a profile picture and add pictures for events.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Does not make use of this</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>MaterialIcons.ttf</string>

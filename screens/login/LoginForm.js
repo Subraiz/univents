@@ -17,6 +17,7 @@ import {
   FormInput,
   FormValidationMessage
 } from "react-native-elements";
+import ForgotPasswordModal from "./ForgotPasswordModal";
 import { Button } from "../../components/common";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -30,6 +31,10 @@ const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
 
 class LoginForm extends Component {
+  state = {
+    visible: false
+  };
+
   static navigationOptions = {
     title: "Log In",
     gesturesEnabled: false,
@@ -76,6 +81,10 @@ class LoginForm extends Component {
     }
   }
 
+  onForgotPasswordPress() {
+    this.setState({ visible: true });
+  }
+
   renderButton() {
     if (this.props.loading) {
       return (
@@ -94,6 +103,7 @@ class LoginForm extends Component {
           <KeyboardAvoidingView>
             <FormLabel>Email</FormLabel>
             <FormInput
+              autoFocus={true}
               containerStyle={styles.inputStyle}
               keyboardType={"email-address"}
               autoCapitalize={"none"}
@@ -116,10 +126,16 @@ class LoginForm extends Component {
           </KeyboardAvoidingView>
 
           <View style={styles.passwordContainer}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={this.onForgotPasswordPress.bind(this)}>
               <Text style={{ color: "blue" }}>Forgot Password</Text>
             </TouchableOpacity>
           </View>
+          <ForgotPasswordModal
+            visible={this.state.visible}
+            onClose={() => {
+              this.setState({ visible: false });
+            }}
+          />
 
           <View style={styles.buttonContainer}>{this.renderButton()}</View>
         </TouchableOpacity>

@@ -7,6 +7,7 @@ export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILED = "LOGIN_FAILED";
 export const START_LOGIN = "START_LOGIN";
 export const CLEAR_USER = "CLEAR_USER";
+export const RESET_PASSWORD = "RESET_PASSWORD";
 
 export const UPDATE_EVENT_INFO = "UPDATE_EVENT_INFO";
 export const CLEAR_EVENT_INFO = "CLEAR_EVENT_INFO";

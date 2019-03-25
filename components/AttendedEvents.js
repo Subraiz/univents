@@ -79,7 +79,7 @@ class AttendedEvents extends Component {
             explore page!
           </Text>
           <Animatable.View animation="pulse" iterationCount="infinite">
-            <Icon name="ios-alarm" style={{ fontSize: 80, color: "grey" }} />
+            <Icon name="ios-alarm" style={{ fontSize: 80, color: "#ff802b" }} />
           </Animatable.View>
         </Animatable.View>
       );

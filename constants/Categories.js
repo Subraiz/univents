@@ -39,6 +39,57 @@ const allCategories = [
     selected: false,
     colors: { mainColor: "#B4388F", secondaryColor: "#FFB8EA" }
   },
+
+  {
+    item: "Cultural",
+    selected: false,
+    colors: { mainColor: "#F67500", secondaryColor: "#F8A252" }
+  },
+  {
+    item: "Photography",
+    selected: false,
+    colors: { mainColor: "#34E696", secondaryColor: "#00724B" }
+  },
+  {
+    item: "Design",
+    selected: false,
+    colors: { mainColor: "#7C9AFF", secondaryColor: "#03296D" }
+  },
+  {
+    item: "Art",
+    selected: false,
+    colors: { mainColor: "#B4388F", secondaryColor: "#FFB8EA" }
+  },
+  {
+    item: "Education",
+    selected: false,
+    colors: { mainColor: "#F67500", secondaryColor: "#F8A252" }
+  },
+  {
+    item: "Business",
+    selected: false,
+    colors: { mainColor: "#34E696", secondaryColor: "#00724B" }
+  },
+  {
+    item: "Movies",
+    selected: false,
+    colors: { mainColor: "#7C9AFF", secondaryColor: "#03296D" }
+  },
+  {
+    item: "History",
+    selected: false,
+    colors: { mainColor: "#B4388F", secondaryColor: "#FFB8EA" }
+  },
+  {
+    item: "Social Justice",
+    selected: false,
+    colors: { mainColor: "#F67500", secondaryColor: "#F8A252" }
+  },
+  {
+    item: "Startups",
+    selected: false,
+    colors: { mainColor: "#7C9AFF", secondaryColor: "#03296D" }
+  },
   {
     item: "Popular",
     selected: false,

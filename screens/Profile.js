@@ -25,6 +25,7 @@ import {
 } from "../redux/actions/SettingsActions";
 import { createStackNavigator } from "react-navigation";
 import CacheImage from "../components/common/CacheImage";
+import PrivacyModal from "./PrivacyModal";
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
@@ -108,7 +109,8 @@ class Profile extends Component {
     didResend: false,
     created: this.props.createdEvents.length,
     favorited: this.props.favoritedEvents.length,
-    attended: this.props.attendedEvents.length
+    attended: this.props.attendedEvents.length,
+    showPrivacy: false
   };
 
   componentWillMount() {
@@ -138,12 +140,10 @@ class Profile extends Component {
 
     this.AccountSettings = [
       {
-        title: "Prefrences",
-        onPress: () => {}
-      },
-      {
         title: "Privacy",
-        onPress: () => {}
+        onPress: () => {
+          this.setState({ showPrivacy: true });
+        }
       },
       {
         title: "Sign Out",
@@ -253,7 +253,7 @@ class Profile extends Component {
             top: 0,
             left: 0,
             right: 0,
-            backgroundColor: "lightskyblue",
+            backgroundColor: "#f4b042",
             height: headerHeight,
             zIndex: headerZindex,
             display: "flex",
@@ -351,61 +351,19 @@ class Profile extends Component {
               <View
                 style={{
                   flexDirection: "row",
-                  alignItems: "center",
+                  alignItems: "center"
                 }}
               >
-                <Text style={{ fontWeight: "300", fontSize: 16, paddingTop: 2, color: "gray" }}>
+                <Text
+                  style={{
+                    fontWeight: "300",
+                    fontSize: 16,
+                    paddingTop: 2,
+                    color: "gray"
+                  }}
+                >
                   {this.props.email}
                 </Text>
-                { this.props.emailVerified === true
-                  ? <Icon
-                      name="md-checkmark-circle-outline"
-                      style={{
-                        fontSize: 12,
-                        marginLeft: 4,
-                        marginTop: 4,
-                        color: "green"
-                      }}
-                    />
-                  : [ <Icon
-                      name="md-close-circle-outline"
-                      key="unverified-icon"
-                      style={{
-                        fontSize: 12,
-                        marginLeft: 4,
-                        marginTop: 4,
-                        color: "red"
-                      }}
-                    />,
-                    this.state.didResend === false
-                      ? <TouchableOpacity
-                          onPress={this.resendVerification.bind(this)}
-                          key="verify-link"
-                          visible={!this.state.didResend}
-                          style={{
-                            height: null,
-                            width: null,
-                            flex: 1,
-                          }}
-                        >
-                          <Text style={{ fontWeight: "300", fontSize: 14, paddingTop: 2, color: "blue", marginLeft: 4 }}>
-                            Verify
-                          </Text>
-                        </TouchableOpacity>
-                      : <Text
-                          style={{
-                            fontWeight: "300",
-                            fontSize: 14,
-                            paddingTop: 2,
-                            color: "lightgray",
-                            marginLeft: 4
-                          }}
-                          key="verify-sent"
-                        >
-                          Sent
-                        </Text>
-                  ]
-                }
               </View>
               <View
                 style={{
@@ -497,7 +455,7 @@ class Profile extends Component {
               </View>
             </View>
           </View>
-          <View style={{ height: screenHeight, backgroundColor: "#F7F7F7" }}>
+          <View style={{ height: "100%", backgroundColor: "#F7F7F7" }}>
             <Row title="Account Settings" sections={this.AccountSettings} />
           </View>
         </ScrollView>
@@ -506,6 +464,12 @@ class Profile extends Component {
           value={userStringInfo}
           visible={this.state.showModal}
           onPress={this.renderModal.bind(this)}
+        />
+        <PrivacyModal
+          visible={this.state.showPrivacy}
+          onClose={() => {
+            this.setState({ showPrivacy: false });
+          }}
         />
       </View>
     );
@@ -551,7 +515,7 @@ const mapDispatchToProps = dispatch => {
     {
       signOutUser: signOutUser,
       refreshEmailVerified: refreshEmailVerified,
-      resendVerification: resendVerification,
+      resendVerification: resendVerification
     },
     dispatch
   );
