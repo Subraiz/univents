@@ -143,7 +143,7 @@ export default class TabBar extends Component {
             space="preserve"
           >
             <AnimatedPath
-              fill="#f0f0f0"
+              fill="#e0e0e0"
               d={`M30,60h${
                 this.state.pathX
               }.3c17.2,0,31,14.4,30,31.6c-0.2,2.7-0.3,5.5-0.3,8.2c0,71.2,58.1,129.6,129.4,130c72.1,0.3,130.6-58,130.6-130c0-2.7-0.1-5.4-0.2-8.1C${
@@ -226,13 +226,12 @@ const styles = StyleSheet.create({
   container: {
     overflow: "hidden",
     position: "absolute",
-    top: screenHeight - 100
+    top: screenHeight - 90
   },
   content: {
     flexDirection: "column",
     zIndex: 10,
     width: Dimensions.get("window").width + 20,
-    marginBottom: -3,
     right: "4%"
   },
   subContent: {

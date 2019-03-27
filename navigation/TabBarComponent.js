@@ -11,21 +11,21 @@ class TabBarComponent extends Component {
     return (
       <TabBar routes={routes} navigation={navigation}>
         <TabBar.Item
-          icon={require("./tab1.png")}
+          icon={require("./tab1Disabled.png")}
           selectedIcon={require("./tab1.png")}
           title="Tab1"
         >
           <View>{/*Page Content*/}</View>
         </TabBar.Item>
         <TabBar.Item
-          icon={require("./tab2.png")}
+          icon={require("./tab2Disabled.png")}
           selectedIcon={require("./tab2.png")}
           title="Tab2"
         >
           <View>{/*Page Content*/}</View>
         </TabBar.Item>
         <TabBar.Item
-          icon={require("./tab3.png")}
+          icon={require("./tab3Disabled.png")}
           selectedIcon={require("./tab3.png")}
           title="Tab3"
         >
