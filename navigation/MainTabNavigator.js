@@ -14,6 +14,7 @@ import BottomNavigation, {
   IconTab,
   Badge
 } from "react-native-material-bottom-navigation";
+import TabBarComponent from "./TabBarComponent";
 
 let regularSize = 25;
 let selectedSize = 27;
@@ -77,8 +78,10 @@ const TabNavigator = createBottomTabNavigator(
     Profile: { screen: ProfileScreen }
   },
   {
+    tabBarComponent: props => <TabBarComponent {...props} />,
     initialRouteName: "Explore",
     tabBarOptions: {
+      position: "absolute",
       activeTintColor: "red",
       inactiveTintColor: "#4D4D4D",
       style: { paddingTop: 4, backgroundColor: "#F7F7F7" },

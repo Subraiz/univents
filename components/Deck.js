@@ -130,7 +130,7 @@ class Deck extends Component {
   componentWillUpdate() {
     UIManager.setLayoutAnimationEnabledExperimental &&
       UIManager.setLayoutAnimationEnabledExperimental(true);
-    LayoutAnimation.spring();
+    LayoutAnimation.easeInEaseOut();
   }
 
   renderSpinner() {
@@ -318,6 +318,7 @@ class Deck extends Component {
           {this.renderPopularRow()}
           {this.renderSuggestionsRow()}
           {this.renderSchoolRow()}
+          <View style={{ height: 65 }} />
         </ScrollView>
       </Animated.View>
     );

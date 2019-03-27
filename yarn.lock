@@ -683,6 +683,10 @@
   version "0.2.11"
   resolved "https://registry.yarnpkg.com/@firebase/webchannel-wrapper/-/webchannel-wrapper-0.2.11.tgz#32a853fad9974cbbc9fc766ec5699a18b22ccee6"
 
+"@mindinventory/react-native-tab-bar-interaction@github:mindinventory/react-native-tab-bar-interaction":
+  version "1.0.3"
+  resolved "https://codeload.github.com/mindinventory/react-native-tab-bar-interaction/tar.gz/87b3ccf324c74b57ad7610e85e6fb941a13a2fb5"
+
 abab@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/abab/-/abab-2.0.0.tgz#aba0ab4c5eee2d4c79d3487d85450fb2376ebb0f"
