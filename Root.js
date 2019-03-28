@@ -1,7 +1,6 @@
 import React from "react";
 import {
   Platform,
-  StatusBar,
   StyleSheet,
   View,
   SafeAreaView,
@@ -10,7 +9,8 @@ import {
   LayoutAnimation,
   Easing,
   Animated,
-  BackHandler
+  BackHandler,
+  StatusBar
 } from "react-native";
 import firebase from "@firebase/app";
 require("@firebase/auth");
@@ -104,6 +104,7 @@ class Root extends React.Component {
   componentWillUpdate() {}
 
   componentWillMount = async () => {
+    StatusBar.setBarStyle("dark-content", true);
     var config = {
       apiKey: "AIzaSyAAeuyg8vOKzrFOkS-oeNBTGvSTiWz-y2E",
       authDomain: "univents-a5f76.firebaseapp.com",

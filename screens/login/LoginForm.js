@@ -59,7 +59,7 @@ class LoginForm extends Component {
   };
 
   componentDidMount() {
-    StatusBar.setBarStyle("light-content", true);
+    StatusBar.setBarStyle("dark-content", true);
 
     this.state.buttonWidth.addListener(({ value }) => {
       if (value === COLLAPSED_BUTTON_WIDTH) {
