@@ -379,11 +379,13 @@ const styles = {
   },
   eventNameStyle: {
     fontSize: 22,
-    fontWeight: "700"
+    fontWeight: "700",
+    width: screenWidth * 0.75
   },
   eventHostTextStyle: {
     color: "grey",
-    fontWeight: "400"
+    fontWeight: "400",
+    width: screenWidth * 0.75
   },
   dateStyle: {
     flexDirection: "row",

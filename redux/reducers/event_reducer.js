@@ -37,6 +37,7 @@ const INITIAL_STATE = {
     currentAttendance: 0,
     usersAttended: []
   },
+  eventOrder: 0,
   canceled: false,
   uploading: false
 };

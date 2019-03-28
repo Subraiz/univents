@@ -56,7 +56,6 @@ export const uploadUser = user => {
 };
 
 export const getUser = uid => {
-  console.log(uid);
   return async dispatch => {
     await initializeFirebase();
     firestore

@@ -27,7 +27,7 @@ class CategoriesModal extends Component {
   };
 
   componentWillUnmount() {
-    allCategories.forEach(category => {
+    this.props.categories.forEach(category => {
       category.selected = false;
     });
   }
@@ -58,6 +58,24 @@ class CategoriesModal extends Component {
         selectedCategories: updatedSelectedCategories
       });
     }
+
+    // Handling special events that we do such as AHANA weekend - adds Special Event category
+    if (
+      this.props.specialEventActive &&
+      updatedSelectedCategories.indexOf(this.props.specialEventTitle) >= 0
+    ) {
+      updatedSelectedCategories.push("Special Event");
+      this.setState({
+        selectedCategories: updatedSelectedCategories
+      });
+    } else {
+      if (updatedSelectedCategories.indexOf("Special Event") >= 0) {
+        let indexToRemove = updatedSelectedCategories.indexOf("Special Event");
+        updatedSelectedCategories.splice(indexToRemove, 1);
+      }
+    }
+
+    // Updates the redux side of it
     this.props.updateEventInfo({
       prop: "eventCategories",
       value: this.state.selectedCategories
@@ -137,7 +155,9 @@ const mapStateToProps = state => {
     event: state.event,
     eventCategories: eventCategories,
     endorsed: state.user.endorsed,
-    categories: state.settings
+    categories: state.settings,
+    specialEventActive: state.events.specialEventActive,
+    specialEventTitle: state.events.specialEventTitle
   };
 };
 

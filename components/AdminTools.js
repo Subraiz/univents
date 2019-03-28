@@ -96,7 +96,7 @@ class AdminTools extends Component {
               "createdEvents"
             );
             await this.props.deleteEvent(event, this.props.user.uid);
-            this.props.navigation.navigate("Explore");
+            this.props.navigation.navigate("Events");
           }
         },
         {

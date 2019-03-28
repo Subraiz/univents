@@ -38,6 +38,28 @@ export const storeLocalEvents = (eventArray, type) => {
   };
 };
 
+export const getSpecialEvent = () => {
+  let specialEventInfo = {
+    specialEventActive: false,
+    specialEventTitle: ""
+  };
+
+  return async dispatch => {
+    await initializeFirebase();
+    await firebase
+      .firestore()
+      .collection("Location")
+      .doc("MA")
+      .collection("SpecialEvent")
+      .doc("SpecialEvent")
+      .get()
+      .then(doc => {
+        specialEventInfo = doc.data();
+      });
+    dispatch({ type: T.GET_SPECIAL_EVENT, payload: specialEventInfo });
+  };
+};
+
 export const fetchEvents = (state, user, type) => {
   // Create event categories
   let allEvents = [];
@@ -68,13 +90,14 @@ export const fetchEvents = (state, user, type) => {
       .collection("Location")
       .doc("MA")
       .collection("Events")
-      .orderBy("eventDate", "desc")
+      .orderBy("eventOrder", "desc")
       .get()
       .then(data => {
         // Use some instead of forEach so it can break
         data.docs.some(doc => {
           let pastEvent = false;
           let event = doc.data();
+          console.log(event.eventName);
           if (!event.cancled) {
             let eventCategories = event.eventCategories;
 
@@ -108,7 +131,6 @@ export const fetchEvents = (state, user, type) => {
 
             // Stop getting events once it hits the first event which is out of date
             let { month, day, year } = event.eventDate;
-            console.log(currentMonth, currentDay, currentYear);
 
             month = months.indexOf(month) + 1;
             if (year <= currentYear) {
@@ -133,7 +155,9 @@ export const fetchEvents = (state, user, type) => {
                 if (commonInterest) {
                   suggestionEvents.unshift(eventObject);
                 } else {
-                  schoolEvents.unshift(eventObject);
+                  if (!specialEvent) {
+                    schoolEvents.unshift(eventObject);
+                  }
                 }
               }
 

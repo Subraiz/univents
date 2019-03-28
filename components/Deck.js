@@ -233,24 +233,28 @@ class Deck extends Component {
   }
 
   renderSpecialRow() {
-    if (this.props.events.specialEvents.length != 0) {
-      return (
-        <EventCardsRow
-          scroll={this.state.scroll}
-          data={this.props.events.schoolEvents}
-          title={"School"}
-          navigation={this.props.navigation}
-        />
-      );
+    if (this.props.specialEventActive) {
+      if (this.props.events.specialEvents.length != 0) {
+        return (
+          <EventCardsRow
+            scroll={this.state.scroll}
+            data={this.props.events.specialEvents}
+            title={this.props.specialEventTitle}
+            navigation={this.props.navigation}
+          />
+        );
+      } else {
+        return (
+          <EventCardsRow
+            scroll={this.state.scroll}
+            data={[emptyEvent]}
+            title={this.props.specialEventTitle}
+            navigation={this.props.navigation}
+          />
+        );
+      }
     } else {
-      return (
-        <EventCardsRow
-          scroll={this.state.scroll}
-          data={[emptyEvent]}
-          title={"School"}
-          navigation={this.props.navigation}
-        />
-      );
+      return null;
     }
   }
 
@@ -338,10 +342,9 @@ class Deck extends Component {
           style={styles.container}
         >
           {this.renderPopularRow()}
+          {this.renderSpecialRow()}
           {this.renderSuggestionsRow()}
           {this.renderSchoolRow()}
-          {this.renderSpecialRow()}
-          <View style={{ height: 65 }} />
         </ScrollView>
       </Animated.View>
     );
@@ -351,7 +354,9 @@ class Deck extends Component {
 const mapStateToProps = state => {
   return {
     loading: state.events.loading,
-    user: state.user
+    user: state.user,
+    specialEventActive: state.events.specialEventActive,
+    specialEventTitle: state.events.specialEventTitle
   };
 };
 

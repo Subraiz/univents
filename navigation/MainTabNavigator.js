@@ -78,14 +78,13 @@ const TabNavigator = createBottomTabNavigator(
     Profile: { screen: ProfileScreen }
   },
   {
-    tabBarComponent: props => <TabBarComponent {...props} />,
     initialRouteName: "Explore",
     tabBarOptions: {
       position: "absolute",
       activeTintColor: "red",
       inactiveTintColor: "#4D4D4D",
-      style: { backgroundColor: "#F7F7F7" },
-      labelStyle: { fontWeight: "600" }
+      style: { backgroundColor: "#F7F7F7", paddingTop: 5 },
+      labelStyle: { fontWeight: "300" }
     },
     order: ["Events", "Explore", "Profile"]
   }

@@ -35,7 +35,11 @@ import { createStackNavigator } from "react-navigation";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { getUser } from "./redux/actions/LoginActions";
-import { fetchEvents, fetchUserEvents } from "./redux/actions/EventsActions";
+import {
+  fetchEvents,
+  fetchUserEvents,
+  getSpecialEvent
+} from "./redux/actions/EventsActions";
 import { getCategories } from "./redux/actions/SettingsActions";
 
 let count = 0;
@@ -110,10 +114,10 @@ class Root extends React.Component {
     };
     firebase.initializeApp(config);
     this.props.getCategories();
+    this.props.getSpecialEvent();
 
     firebase.auth().onAuthStateChanged(async user => {
       if (user && count == 0) {
-        console.log(user.uid);
         await this.props.getUser(user.uid);
         this.setState({ authenticated: true });
         setTimeout(() => this.setState({ loading: false }), 1500);
@@ -155,7 +159,8 @@ const mapDispatchToProps = dispatch => {
       getUser: getUser,
       fetchEvents: fetchEvents,
       fetchUserEvents: fetchUserEvents,
-      getCategories: getCategories
+      getCategories: getCategories,
+      getSpecialEvent: getSpecialEvent
     },
     dispatch
   );

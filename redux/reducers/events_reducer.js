@@ -8,7 +8,8 @@ const INITIAL_STATE = {
   schoolEvents: [],
   specialEvents: [],
   loading: false,
-  specialEventActive: false
+  specialEventActive: false,
+  specialEventTitle: ""
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -20,6 +21,12 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         [action.payload.prop]: action.payload.value,
         loading: false
+      };
+    case T.GET_SPECIAL_EVENT:
+      return {
+        ...state,
+        specialEventActive: action.payload.active,
+        specialEventTitle: action.payload.title
       };
     default:
       return state;

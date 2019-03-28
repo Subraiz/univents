@@ -57,7 +57,10 @@ class DateTimeModal extends Component {
       day: day,
       year: year
     };
+    let eventOrder = year + monthIndex / 11 + day / 1000;
+    eventOrder = Math.floor(eventOrder * 1000000) / 1000000;
     this.props.updateEventInfo({ prop: "eventDate", value: eventDate });
+    this.props.updateEventInfo({ prop: "eventOrder", value: eventOrder });
   }
 
   showStartTimePicker = () => this.setState({ isStartTimePickerVisible: true });
