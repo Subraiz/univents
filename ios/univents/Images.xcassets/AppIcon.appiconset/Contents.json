@@ -3,55 +3,55 @@
     {
       "size" : "20x20",
       "idiom" : "iphone",
-      "filename" : "logo3-20@2x.png",
+      "filename" : "iglogo-20@2x.png",
       "scale" : "2x"
     },
     {
       "size" : "20x20",
       "idiom" : "iphone",
-      "filename" : "logo3-20@3x.png",
+      "filename" : "iglogo-20@3x.png",
       "scale" : "3x"
     },
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "logo3-29@2x.png",
+      "filename" : "iglogo-29@2x.png",
       "scale" : "2x"
     },
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "logo3-29@3x.png",
+      "filename" : "iglogo-29@3x.png",
       "scale" : "3x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "logo3-40@2x.png",
+      "filename" : "iglogo-40@2x.png",
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "logo3-40@3x.png",
+      "filename" : "iglogo-40@3x.png",
       "scale" : "3x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "logo3-60@2x.png",
+      "filename" : "iglogo-60@2x.png",
       "scale" : "2x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "logo3-60@3x.png",
+      "filename" : "iglogo-60@3x.png",
       "scale" : "3x"
     },
     {
       "size" : "1024x1024",
       "idiom" : "ios-marketing",
-      "filename" : "AppIcon.png",
+      "filename" : "iglogo-1024.png",
       "scale" : "1x"
     }
   ],
