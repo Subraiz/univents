@@ -23,7 +23,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>7</string>
+	<string>9</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -63,6 +63,8 @@
 	<string>Splurge would like to access your camera so you can track attendance for your events.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Allow us to track your location so we can show you events near you!</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Allow Splurge to track your location so we can show you events near you!</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Allow us to track your location so we can show you events near you!</string>
 	<key>NSMotionUsageDescription</key>
@@ -101,8 +103,6 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Allow Splurge to track your location so we can show you events near you!</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 </dict>
