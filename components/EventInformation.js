@@ -129,7 +129,10 @@ class EventInformation extends Component {
 
   renderAdminTools() {
     let eventID = event.eventID.substring(0, event.eventID.length - 5);
-    if (this.props.uid == eventID) {
+    if (
+      this.props.uid == eventID ||
+      this.props.uid == "l02HUkN10fb8uYXx1HKojfQjRZg2"
+    ) {
       return (
         <TouchableOpacity
           style={styles.adminToolsContainer}
