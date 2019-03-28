@@ -9,11 +9,11 @@ import {
   Button,
   Keyboard
 } from "react-native";
-import allCategories from "../../constants/Categories";
 import InterestContainer from "../../components/InterestContainer";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { updateEventInfo } from "../../redux/actions/EventActions";
+import { getCategories } from "../../redux/actions/SettingsActions";
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
@@ -22,7 +22,7 @@ const MAX_CATEGORIES = 3;
 
 class CategoriesModal extends Component {
   state = {
-    categories: allCategories,
+    categories: this.props.categories,
     selectedCategories: []
   };
 
@@ -30,6 +30,10 @@ class CategoriesModal extends Component {
     allCategories.forEach(category => {
       category.selected = false;
     });
+  }
+
+  componentWillMount() {
+    this.setState({ categories: this.props.categories });
   }
 
   onCategoryPress(category) {
@@ -121,7 +125,10 @@ class CategoriesModal extends Component {
 }
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ updateEventInfo: updateEventInfo }, dispatch);
+  return bindActionCreators(
+    { updateEventInfo: updateEventInfo, getCategories: getCategories },
+    dispatch
+  );
 };
 
 const mapStateToProps = state => {
@@ -129,7 +136,8 @@ const mapStateToProps = state => {
   return {
     event: state.event,
     eventCategories: eventCategories,
-    endorsed: state.user.endorsed
+    endorsed: state.user.endorsed,
+    categories: state.settings
   };
 };
 

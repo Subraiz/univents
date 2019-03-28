@@ -143,7 +143,7 @@ export default class TabBar extends Component {
             space="preserve"
           >
             <AnimatedPath
-              fill="#e0e0e0"
+              fill="#F7F7F7"
               d={`M30,60h${
                 this.state.pathX
               }.3c17.2,0,31,14.4,30,31.6c-0.2,2.7-0.3,5.5-0.3,8.2c0,71.2,58.1,129.6,129.4,130c72.1,0.3,130.6-58,130.6-130c0-2.7-0.1-5.4-0.2-8.1C${
@@ -154,7 +154,7 @@ export default class TabBar extends Component {
             />
             <AnimatedCircle
               ref={ref => (this._myCircle = ref)}
-              fill="#f0f0f0"
+              fill="#e0e0e0"
               cx="546"
               cy="100"
               r="100"
@@ -226,7 +226,11 @@ const styles = StyleSheet.create({
   container: {
     overflow: "hidden",
     position: "absolute",
-    top: screenHeight - 90
+    top: screenHeight - 90,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.6,
+    shadowRadius: 2
   },
   content: {
     flexDirection: "column",

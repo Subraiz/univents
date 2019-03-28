@@ -36,6 +36,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { getUser } from "./redux/actions/LoginActions";
 import { fetchEvents, fetchUserEvents } from "./redux/actions/EventsActions";
+import { getCategories } from "./redux/actions/SettingsActions";
 
 let count = 0;
 
@@ -108,6 +109,7 @@ class Root extends React.Component {
       messagingSenderId: "106554497811"
     };
     firebase.initializeApp(config);
+    this.props.getCategories();
 
     firebase.auth().onAuthStateChanged(async user => {
       if (user && count == 0) {
@@ -152,7 +154,8 @@ const mapDispatchToProps = dispatch => {
     {
       getUser: getUser,
       fetchEvents: fetchEvents,
-      fetchUserEvents: fetchUserEvents
+      fetchUserEvents: fetchUserEvents,
+      getCategories: getCategories
     },
     dispatch
   );

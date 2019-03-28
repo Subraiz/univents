@@ -11,6 +11,24 @@ const initializeFirebase = async () => {
   firestore.settings({ timestampsInSnapshots: true });
 };
 
+export const getCategories = () => {
+  let categories = [];
+
+  return async dispatch => {
+    await initializeFirebase();
+    await firebase
+      .firestore()
+      .collection("Categories")
+      .doc("Categories")
+      .get()
+      .then(doc => {
+        categories = doc.data().categories;
+      });
+
+    dispatch({ type: T.GET_CATEGORIES, payload: categories });
+  };
+};
+
 export const signOutUser = () => {
   initializeFirebase();
   return async dispatch => {
@@ -32,7 +50,7 @@ export const refreshEmailVerified = () => {
   return async dispatch => {
     await initializeFirebase();
     let user = auth.currentUser;
-    await user.reload()
+    await user.reload();
     dispatch({
       type: T.UPDATE_USER_INFO,
       payload: { prop: "emailVerified", value: user.emailVerified }
@@ -44,7 +62,7 @@ export const resendVerification = () => {
   return async dispatch => {
     await initializeFirebase();
     let user = auth.currentUser;
-    await user.reload()
+    await user.reload();
     if (user.emailVerified !== true) {
       user.sendEmailVerification();
     }

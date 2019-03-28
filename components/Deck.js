@@ -232,6 +232,28 @@ class Deck extends Component {
     }
   }
 
+  renderSpecialRow() {
+    if (this.props.events.specialEvents.length != 0) {
+      return (
+        <EventCardsRow
+          scroll={this.state.scroll}
+          data={this.props.events.schoolEvents}
+          title={"School"}
+          navigation={this.props.navigation}
+        />
+      );
+    } else {
+      return (
+        <EventCardsRow
+          scroll={this.state.scroll}
+          data={[emptyEvent]}
+          title={"School"}
+          navigation={this.props.navigation}
+        />
+      );
+    }
+  }
+
   getBarStyle() {
     const { position } = this.state;
     const rotate = position.y.interpolate({
@@ -318,6 +340,7 @@ class Deck extends Component {
           {this.renderPopularRow()}
           {this.renderSuggestionsRow()}
           {this.renderSchoolRow()}
+          {this.renderSpecialRow()}
           <View style={{ height: 65 }} />
         </ScrollView>
       </Animated.View>

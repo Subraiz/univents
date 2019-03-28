@@ -16,7 +16,6 @@ import {
 } from "react-native-elements";
 import { Button } from "../../components/common";
 import InterestContainer from "../../components/InterestContainer";
-import allInterests from "../../constants/Interests";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { updateUserInfo, saveUser } from "../../redux/actions/LoginActions";
@@ -27,7 +26,7 @@ const screenHeight = Dimensions.get("window").height;
 
 class SignUpInterests extends Component {
   state = {
-    interests: allInterests,
+    interests: this.props.categories,
     likedInterests: [],
     searchValue: ""
   };
@@ -205,7 +204,8 @@ const mapStateToProps = state => {
   return {
     user: state.user,
     interests: state.user.interests,
-    error: state.user.error
+    error: state.user.error,
+    categories: state.settings
   };
 };
 

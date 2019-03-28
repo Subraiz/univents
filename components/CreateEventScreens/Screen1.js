@@ -20,6 +20,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { updateEventInfo } from "../../redux/actions/EventActions";
+import { getCategories } from "../../redux/actions/SettingsActions";
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
@@ -34,6 +35,8 @@ class Screen1 extends Component {
     showDateTimeModal: false,
     showLocationModal: false
   };
+
+  componentWillMount() {}
 
   onSwitchValueChange() {
     this.setState({ switchValue: !this.state.switchValue });
@@ -173,6 +176,7 @@ class Screen1 extends Component {
     } else {
       this.onButtonPress();
     }
+    //this.props.onPress();
   }
 
   render() {
@@ -276,7 +280,10 @@ class Screen1 extends Component {
 }
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ updateEventInfo: updateEventInfo }, dispatch);
+  return bindActionCreators(
+    { updateEventInfo: updateEventInfo, getCategories: getCategories },
+    dispatch
+  );
 };
 
 const mapStateToProps = state => {

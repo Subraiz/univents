@@ -84,7 +84,7 @@ const TabNavigator = createBottomTabNavigator(
       position: "absolute",
       activeTintColor: "red",
       inactiveTintColor: "#4D4D4D",
-      style: { paddingTop: 4, backgroundColor: "#F7F7F7" },
+      style: { backgroundColor: "#F7F7F7" },
       labelStyle: { fontWeight: "600" }
     },
     order: ["Events", "Explore", "Profile"]

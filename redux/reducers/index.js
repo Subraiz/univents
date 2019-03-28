@@ -5,6 +5,7 @@ import eventReducer from "./event_reducer";
 import eventsReducer from "./events_reducer";
 import userEventsReducer from "./user_events_reducer";
 import localUserEventsReducer from "./local_user_events_reducer";
+import settingsReducer from "./settings_reducer";
 
 export default combineReducers({
   user: userRedcuer,
@@ -12,5 +13,6 @@ export default combineReducers({
   event: eventReducer,
   events: eventsReducer,
   userEvents: userEventsReducer,
-  localUserEvents: localUserEventsReducer
+  localUserEvents: localUserEventsReducer,
+  settings: settingsReducer
 });

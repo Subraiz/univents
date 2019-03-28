@@ -6,7 +6,9 @@ const INITIAL_STATE = {
   popularEvents: [],
   suggestionEvents: [],
   schoolEvents: [],
-  loading: false
+  specialEvents: [],
+  loading: false,
+  specialEventActive: false
 };
 
 export default (state = INITIAL_STATE, action) => {

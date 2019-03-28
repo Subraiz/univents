@@ -45,6 +45,7 @@ export const fetchEvents = (state, user, type) => {
   let popularEvents = [];
   let suggestionEvents = [];
   let schoolEvents = [];
+  let specialEvents = [];
 
   // Get current date
   let currentDate = new Date();
@@ -84,6 +85,9 @@ export const fetchEvents = (state, user, type) => {
 
             let popular =
               eventCategories.indexOf("Popular") >= 0 ? true : false;
+
+            let specialEvent =
+              eventCategories.indexOf("Special Event") >= 0 ? true : false;
 
             // Create new Event Object
             let eventObject = {
@@ -136,6 +140,10 @@ export const fetchEvents = (state, user, type) => {
               if (popular) {
                 popularEvents.unshift(eventObject);
               }
+
+              if (specialEvent) {
+                specialEvents.unshift(eventObject);
+              }
             }
           }
         });
@@ -170,6 +178,10 @@ export const fetchEvents = (state, user, type) => {
       dispatch({
         type: T.FETCH_EVENTS,
         payload: { prop: "schoolEvents", value: schoolEvents }
+      });
+      dispatch({
+        type: T.FETCH_EVENTS,
+        payload: { prop: "specialEvents", value: specialEvents }
       });
     }, delay);
   };
