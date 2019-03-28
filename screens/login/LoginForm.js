@@ -33,6 +33,8 @@ import {
   fetchEvents,
   fetchUserEvents
 } from "../../redux/actions/EventsActions";
+import Icon from "react-native-vector-icons/Ionicons";
+import { withNavigation } from "react-navigation";
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
@@ -188,6 +190,20 @@ class LoginForm extends Component {
           source={require("../../assets/images/loginBackgroundImage2.jpg")}
         />
         <View style={styles.backgroundOverlay} />
+        <SafeAreaView
+          style={{ position: "absolute", marginLeft: screenWidth * 0.05 }}
+        >
+          <TouchableOpacity
+            onPress={() => {
+              this.props.navigation.goBack();
+            }}
+          >
+            <Icon
+              name="md-arrow-round-back"
+              style={{ fontSize: 36, color: "white" }}
+            />
+          </TouchableOpacity>
+        </SafeAreaView>
         <View style={styles.headerLogoContainer}>
           <Image
             source={require("../../assets/images/UniventsLogo.png")}
@@ -438,4 +454,4 @@ const styles = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(LoginForm);
+)(withNavigation(LoginForm));
