@@ -70,7 +70,7 @@ class SignUpInterests extends Component {
     console.log(e);
     this.setState({ searchValue: e });
     let newInterests = [];
-    allInterests.forEach(interest => {
+    this.state.categories.forEach(interest => {
       if (interest.item.includes(e)) {
         newInterests.push(interest);
       }
