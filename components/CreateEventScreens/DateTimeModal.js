@@ -72,6 +72,7 @@ class DateTimeModal extends Component {
     let timeOfDay = "AM";
     let hour = time.getHours();
     let realHour = time.getHours();
+    console.log(hour);
     if (hour > 12) {
       hour = hour - 12;
       timeOfDay = "PM";

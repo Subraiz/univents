@@ -23,7 +23,8 @@ const MAX_CATEGORIES = 3;
 class CategoriesModal extends Component {
   state = {
     categories: this.props.categories,
-    selectedCategories: []
+    selectedCategories: [],
+    specialCategoryCount: 0
   };
 
   componentWillUnmount() {
@@ -38,9 +39,10 @@ class CategoriesModal extends Component {
 
   onCategoryPress(category) {
     Keyboard.dismiss();
+    console.log(this.state.selectedCategories.length);
     if (
       !category.selected &&
-      this.state.selectedCategories.length == MAX_CATEGORIES
+      this.state.selectedCategories.length >= MAX_CATEGORIES
     ) {
       return false;
     }
@@ -62,16 +64,21 @@ class CategoriesModal extends Component {
     // Handling special events that we do such as AHANA weekend - adds Special Event category
     if (
       this.props.specialEventActive &&
-      updatedSelectedCategories.indexOf(this.props.specialEventTitle) >= 0
+      updatedSelectedCategories.indexOf(this.props.specialEventTitle) >= 0 &&
+      this.state.specialCategoryCount < 1
     ) {
       updatedSelectedCategories.push("Special Event");
       this.setState({
-        selectedCategories: updatedSelectedCategories
+        selectedCategories: updatedSelectedCategories,
+        specialCategoryCount: this.state.specialCategoryCount + 1
       });
     } else {
       if (updatedSelectedCategories.indexOf("Special Event") >= 0) {
         let indexToRemove = updatedSelectedCategories.indexOf("Special Event");
         updatedSelectedCategories.splice(indexToRemove, 1);
+        this.setState({
+          specialCategoryCount: 0
+        });
       }
     }
 
@@ -171,6 +178,7 @@ const styles = {
   },
   categoryContainer: {
     backgroundColor: "white",
+    height: screenHeight * 0.8,
     padding: 10,
     width: screenWidth * 0.95,
     borderRadius: 15,
@@ -181,7 +189,7 @@ const styles = {
     flexWrap: "wrap",
     justifyContent: "center",
     marginBottom: screenHeight * 0.1,
-    height: screenHeight * 0.4
+    height: screenHeight * 0.5
   }
 };
 

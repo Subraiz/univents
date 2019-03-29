@@ -55,7 +55,6 @@ class EventInformation extends Component {
     const { navigation } = this.props;
     event = navigation.getParam("data", "NO-DATA");
     navigatable = navigation.getParam("navigation", "NO-NAVIGATION");
-    console.log(event.eventData);
     this.props.user.events.favoritedEvents.some(e => {
       let refrenceArray = e.split("/");
       if (event.eventID === refrenceArray[3]) {

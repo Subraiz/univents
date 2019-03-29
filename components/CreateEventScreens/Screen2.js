@@ -127,7 +127,6 @@ class Screen2 extends Component {
             </TouchableOpacity>
             <View style={styles.infoContainer}>
               <TextInput
-                style={{ height: Platform.OS === "ios" ? "25%" : "50%" }}
                 placeholder="Event Description"
                 value={this.props.eventDescription}
                 spellCheck={true}

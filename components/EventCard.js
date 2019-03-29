@@ -32,6 +32,7 @@ const EventCard = ({ event, onPress }) => {
     startTimeOfDay = "AM";
   } else if (startHour > 12) {
     startHour = startHour - 12;
+    startTimeOfDay = "PM";
   }
   let startTime = `${startHour}:${startTimeArray[1]}`;
 
