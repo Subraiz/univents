@@ -186,6 +186,7 @@ class EventInformation extends Component {
       startTimeOfDay = "AM";
     } else if (startHour > 12) {
       startHour = startHour - 12;
+      startTimeOfDay = "PM";
     }
     startTime = `${startHour}:${startTimeArray[1]} ${startTimeOfDay}`;
 

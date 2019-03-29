@@ -124,8 +124,8 @@ android {
         applicationId "com.SplurgeLLC"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 12
-        versionName "1.12"
+        versionCode 14
+        versionName "1.15"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
