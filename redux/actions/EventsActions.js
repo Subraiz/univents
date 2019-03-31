@@ -97,7 +97,7 @@ export const fetchEvents = (state, user, type) => {
         data.docs.some(doc => {
           let pastEvent = false;
           let event = doc.data();
-          console.log(event.eventName);
+
           if (!event.cancled) {
             let eventCategories = event.eventCategories;
 
@@ -114,6 +114,7 @@ export const fetchEvents = (state, user, type) => {
 
             // Create new Event Object
             let eventObject = {
+              cancled: event.canceled,
               eventName: event.eventName,
               eventDescription: event.eventDescription,
               eventDate: event.eventDate,
@@ -126,7 +127,8 @@ export const fetchEvents = (state, user, type) => {
               eventImage: event.eventImage,
               eventContact: event.eventContact,
               eventID: event.eventID,
-              eventData: event.eventData
+              eventData: event.eventData,
+              eventOrder: event.eventOrder
             };
 
             // Stop getting events once it hits the first event which is out of date

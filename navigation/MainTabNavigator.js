@@ -81,9 +81,17 @@ const TabNavigator = createBottomTabNavigator(
     initialRouteName: "Explore",
     tabBarOptions: {
       position: "absolute",
-      activeTintColor: "red",
-      inactiveTintColor: "#4D4D4D",
-      style: { backgroundColor: "#F7F7F7", paddingTop: 5 },
+      showLabel: false,
+      activeTintColor: "orange",
+      inactiveTintColor: "black",
+      style: {
+        backgroundColor: "#F7F7F7",
+        paddingTop: 8,
+        shadowOffset: { width: 0, height: 4 },
+        shadowColor: "black",
+        shadowRadius: 7,
+        shadowOpacity: 0.25
+      },
       labelStyle: { fontWeight: "300" }
     },
     order: ["Events", "Explore", "Profile"]

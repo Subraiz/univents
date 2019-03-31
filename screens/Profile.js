@@ -26,6 +26,7 @@ import {
 import { createStackNavigator } from "react-navigation";
 import CacheImage from "../components/common/CacheImage";
 import PrivacyModal from "./PrivacyModal";
+import EditAccountModal from "../components/EditAccountModal";
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
@@ -110,7 +111,8 @@ class Profile extends Component {
     created: this.props.createdEvents.length,
     favorited: this.props.favoritedEvents.length,
     attended: this.props.attendedEvents.length,
-    showPrivacy: false
+    showPrivacy: false,
+    showEditAccount: false
   };
 
   componentWillMount() {
@@ -139,6 +141,10 @@ class Profile extends Component {
     );
 
     this.AccountSettings = [
+      {
+        title: "Account Display",
+        onPress: () => this.setState({ showEditAccount: true })
+      },
       {
         title: "Privacy",
         onPress: () => {
@@ -470,6 +476,15 @@ class Profile extends Component {
           onClose={() => {
             this.setState({ showPrivacy: false });
           }}
+        />
+        <EditAccountModal
+          visible={this.state.showEditAccount}
+          onClose={() => this.setState({ showEditAccount: false })}
+          avatarSource={this.props.avatarSource}
+          firstName={this.props.firstName}
+          lastName={this.props.lastName}
+          year={this.props.year}
+          major={this.props.major}
         />
       </View>
     );

@@ -67,7 +67,6 @@ export const getYearData = event => {
   };
 
   eventData.usersAttended.forEach(user => {
-    console.log(user);
     if (user.year.toLowerCase() == "freshman") {
       yearData.freshman.push(user);
     } else if (user.year.toLowerCase() == "sophomore") {
@@ -123,12 +122,10 @@ export const getTimeData = event => {
   let endTime = endHour + endMinute;
 
   let totalTimeInMinutes = (endTime - startTime) * 60;
-  console.log(totalTimeInMinutes);
 
   if (startHour > endHour) {
     totalTimeInMinutes = [24 - [startTime - endTime]] * 60;
   }
-  console.log(totalTimeInMinutes);
 
   if (totalTimeInMinutes < 60) {
     interval = [totalTimeInMinutes * 3] / 15;
@@ -158,13 +155,15 @@ export const getTimeData = event => {
     let userTime = userHour + userMinute;
     let elapsedTime = [userTime - startTime] * 60;
     let index = Math.floor(elapsedTime / timeInterval);
-    console.log(index);
+
     if (index < timeData.length && index >= 0) {
       timeData[index].earnings = eventData.currentAttendance;
+    } else if (index < 0) {
+      timeData[0].earnings = eventData.currentAttendance;
+    } else if (index >= timeData.length) {
+      timeData[timeData.length - 1].earnings = eventData.currentAttendance;
     }
   });
-
-  console.log(timeData);
 
   return timeData;
 };

@@ -127,6 +127,7 @@ class AdminTools extends Component {
       this.timeData = getTimeData(event);
       this.sexData = getSexData(event);
       this.yearData = getYearData(event);
+      event.canceled = false;
       this.props.updateEventData(event, "MA");
       this.scanner.showMessage();
     } else {
