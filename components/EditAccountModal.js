@@ -103,8 +103,37 @@ class EditAccountModal extends Component {
         }
       }
       await this.props.updateUser(this.props.user);
+      this.initialState = this.state;
       this.props.onClose();
     }
+  }
+
+  renderSaveButton() {
+    let infoChanged =
+      this.state.imageChanged ||
+      this.state.firstName != this.initialState.firstName ||
+      this.state.lastName != this.initialState.lastName ||
+      this.state.year != this.initialState.year ||
+      this.state.major != this.initialState.major;
+    if (infoChanged) {
+      return (
+        <TouchableOpacity
+          style={styles.saveButtonStyle}
+          onPress={this._handleAccount.bind(this, "save")}
+        >
+          <Text style={styles.buttonTextStyle}>Save</Text>
+        </TouchableOpacity>
+      );
+    } else
+      return (
+        <TouchableOpacity
+          disabled={true}
+          style={styles.saveButtonStyle}
+          onPress={this._handleAccount.bind(this, "save")}
+        >
+          <Text style={[styles.buttonTextStyle, { color: "grey" }]}>Save</Text>
+        </TouchableOpacity>
+      );
   }
 
   render() {
@@ -123,12 +152,7 @@ class EditAccountModal extends Component {
             >
               <Text style={styles.buttonTextStyle}>Cancel</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.saveButtonStyle}
-              onPress={this._handleAccount.bind(this, "save")}
-            >
-              <Text style={styles.buttonTextStyle}>Save</Text>
-            </TouchableOpacity>
+            {this.renderSaveButton()}
           </View>
           <View style={styles.accountInfo}>
             <View style={styles.profilePicContainer}>
