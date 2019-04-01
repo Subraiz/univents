@@ -72,9 +72,12 @@ export const fetchEvents = (state, user, type) => {
   // Get current date
   let currentDate = new Date();
   let currentYear = currentDate.getFullYear();
-  let currentMonth = currentDate.getMonth() + 1;
+  let currentMonth = currentDate.getMonth();
   let currentDay = currentDate.getDate();
   let studentInterests = false;
+
+  let lastEventOrder = currentYear + currentMonth / 11 + currentDay / 1000;
+  lastEventOrder = Math.floor(lastEventOrder * 1000000) / 1000000;
 
   // Check if user is logged in
   if (user) {
@@ -133,19 +136,13 @@ export const fetchEvents = (state, user, type) => {
 
             // Stop getting events once it hits the first event which is out of date
             let { month, day, year } = event.eventDate;
+            let { eventOrder } = event;
 
             month = months.indexOf(month) + 1;
-            if (year <= currentYear) {
-              if (year < currentYear) {
-                pastEvent = true;
-              } else if (month <= currentMonth) {
-                if (day < currentDay) {
-                  pastEvent = true;
-                  return true;
-                } else if (day == currentDay) {
-                  todaysEvents.push(eventObject);
-                }
-              }
+            if (eventOrder < lastEventOrder) {
+              pastEvent = true;
+            } else if (eventOrder == lastEventOrder) {
+              todaysEvents.unshift(eventObject);
             }
 
             if (!pastEvent) {

@@ -37,6 +37,7 @@
     "react-native-qrcode-scanner": "^1.1.0",
     "react-native-segmented-control-tab": "^3.3.1",
     "react-native-svg": "^8.0.9",
+    "react-native-svg-icon": "^0.8.1",
     "react-native-swiper": "^1.5.14",
     "react-native-typography": "^1.4.0",
     "react-native-vector-icons": "^6.1.0",
