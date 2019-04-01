@@ -11,15 +11,30 @@ import {
   TextInput
 } from "react-native";
 import SegmentedControlTab from "react-native-segmented-control-tab";
+import ImagePicker from "react-native-image-picker";
 import LottieView from "lottie-react-native";
 import CacheImage from "./common/CacheImage";
 import { TextField } from "react-native-material-textfield";
 import { dimensions } from "../constants/Dimensions";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import {
+  uploadImage,
+  updateUserInfo,
+  updateUser
+} from "../redux/actions/LoginActions";
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
+
+const options = {
+  title: "Select Avatar",
+  storageOptions: {
+    skipBackup: true,
+    path: "images"
+  },
+  allowsEditing: true
+};
 
 class EditAccountModal extends Component {
   initialState = {
@@ -35,9 +50,29 @@ class EditAccountModal extends Component {
     lastName: this.props.lastName,
     year: this.props.year,
     major: this.props.major,
-    selectedIndex: 0
+    selectedIndex: 0,
+    imageChanged: false
   };
   classYears = ["Freshman", "Sophomore", "Junior", "Senior"];
+
+  pickImage() {
+    ImagePicker.showImagePicker(options, response => {
+      if (response.didCancel) {
+        console.log("User cancelled image picker");
+      } else if (response.error) {
+        console.log("ImagePicker Error: ", response.error);
+      } else {
+        source = { uri: response.uri };
+
+        this.setState({
+          avatarSource: source.uri,
+          imageChanged: true,
+          source: source,
+          response: response
+        });
+      }
+    });
+  }
 
   componentWillMount() {
     classYears = ["Freshman", "Sophomore", "Junior", "Senior"];
@@ -50,6 +85,25 @@ class EditAccountModal extends Component {
       this.setState(this.initialState);
       this.props.onClose();
     } else {
+      this.animation.play();
+      this.props.user.firstName = this.state.firstName;
+      this.props.user.lastName = this.state.lastName;
+      this.props.user.major = this.state.major;
+      this.props.user.year = this.state.year;
+      if (this.state.imageChanged) {
+        try {
+          this.props.user.avatarSource.uri = this.state.response.uri;
+          await this.props.uploadImage(
+            this.state.response.uri,
+            "image/jpeg",
+            "Avatar"
+          );
+        } catch (err) {
+          console.log(err);
+        }
+      }
+      await this.props.updateUser(this.props.user);
+      this.props.onClose();
     }
   }
 
@@ -78,11 +132,14 @@ class EditAccountModal extends Component {
           </View>
           <View style={styles.accountInfo}>
             <View style={styles.profilePicContainer}>
-              <CacheImage
+              <Image
                 style={styles.profilePic}
-                uri={this.state.avatarSource}
+                source={{ uri: this.state.avatarSource }}
               />
-              <TouchableOpacity style={styles.overlayPicContainer}>
+              <TouchableOpacity
+                style={styles.overlayPicContainer}
+                onPress={this.pickImage.bind(this)}
+              >
                 <Image
                   style={styles.overlayPic}
                   source={require("../assets/images/editProfileOverlay.png")}
@@ -166,7 +223,9 @@ class EditAccountModal extends Component {
                 bottom: 10,
                 position: "absolute"
               }}
-              autoPlay
+              ref={animation => {
+                this.animation = animation;
+              }}
               loop
             />
           </View>
@@ -175,6 +234,23 @@ class EditAccountModal extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      updateUserInfo: updateUserInfo,
+      uploadImage: uploadImage,
+      updateUser: updateUser
+    },
+    dispatch
+  );
+};
 
 const styles = {
   container: {
@@ -222,7 +298,7 @@ const styles = {
   overlayPicContainer: {
     position: "absolute",
     overflow: "hidden",
-    backgroundColor: "rgba(0,0,0,.4)",
+    backgroundColor: "rgba(255,255,255,.4)",
     width: screenWidth * 0.4,
     height: screenWidth * 0.4,
     borderRadius: [screenWidth * 0.4] / 2,
@@ -261,4 +337,7 @@ const styles = {
   }
 };
 
-export default connect(null)(EditAccountModal);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EditAccountModal);

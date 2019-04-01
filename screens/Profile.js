@@ -100,7 +100,6 @@ class Profile extends Component {
 
   constructor(props) {
     super(props);
-
     this.AccountSettings;
   }
 
@@ -115,6 +114,8 @@ class Profile extends Component {
     showEditAccount: false
   };
 
+  componentWillReceiveProps() {}
+
   componentWillMount() {
     let {
       firstName,
@@ -127,7 +128,7 @@ class Profile extends Component {
       sex,
       uid,
       ethnicity
-    } = this.props;
+    } = this.props.user;
 
     this.screenWillFocus = this.props.navigation.addListener(
       "willFocus",
@@ -281,7 +282,7 @@ class Profile extends Component {
                 paddingBottom: 3
               }}
             >
-              {this.props.firstName} {this.props.lastName}
+              {this.props.user.firstName} {this.props.user.lastName}
             </Text>
           </Animated.View>
         </Animated.View>
@@ -307,8 +308,8 @@ class Profile extends Component {
                 zIndex: headerZindex
               }}
             >
-              <CacheImage
-                uri={this.props.avatarSource.uri}
+              <Image
+                source={{ uri: this.props.user.avatarSource.uri }}
                 style={{
                   width: null,
                   height: null,
@@ -348,11 +349,11 @@ class Profile extends Component {
 
           <View style={{ paddingBottom: 10 }}>
             <Text style={{ fontWeight: "bold", paddingLeft: 9, fontSize: 24 }}>
-              {this.props.firstName} {this.props.lastName}
+              {this.props.user.firstName} {this.props.user.lastName}
             </Text>
             <View style={{ paddingLeft: 10 }}>
               <Text style={{ fontWeight: "300", fontSize: 16, paddingTop: 2 }}>
-                {this.props.school}
+                {this.props.user.school}
               </Text>
               <View
                 style={{
@@ -368,7 +369,7 @@ class Profile extends Component {
                     color: "gray"
                   }}
                 >
-                  {this.props.email}
+                  {this.props.user.email}
                 </Text>
               </View>
               <View
@@ -396,7 +397,7 @@ class Profile extends Component {
                     marginRight: 20
                   }}
                 >
-                  {this.props.year}
+                  {this.props.user.year}
                 </Text>
 
                 <Icon
@@ -417,7 +418,7 @@ class Profile extends Component {
                     marginRight: 10
                   }}
                 >
-                  {this.props.major}
+                  {this.props.user.major}
                 </Text>
               </View>
               <View
@@ -480,11 +481,11 @@ class Profile extends Component {
         <EditAccountModal
           visible={this.state.showEditAccount}
           onClose={() => this.setState({ showEditAccount: false })}
-          avatarSource={this.props.avatarSource}
-          firstName={this.props.firstName}
-          lastName={this.props.lastName}
-          year={this.props.year}
-          major={this.props.major}
+          avatarSource={this.props.user.avatarSource}
+          firstName={this.props.user.firstName}
+          lastName={this.props.user.lastName}
+          year={this.props.user.year}
+          major={this.props.user.major}
         />
       </View>
     );
@@ -492,33 +493,8 @@ class Profile extends Component {
 }
 
 const mapStateToProps = state => {
-  let {
-    firstName,
-    lastName,
-    email,
-    interests,
-    major,
-    year,
-    school,
-    sex,
-    uid,
-    ethnicity,
-    avatarSource,
-    emailVerified
-  } = state.user;
   return {
-    firstName,
-    lastName,
-    email,
-    interests,
-    major,
-    year,
-    school,
-    sex,
-    ethnicity,
-    uid,
-    avatarSource,
-    emailVerified,
+    user: state.user,
     favoritedEvents: state.localUserEvents.favoritedEvents,
     createdEvents: state.userEvents.createdEvents,
     attendedEvents: state.userEvents.attendedEvents

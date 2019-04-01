@@ -252,6 +252,7 @@ class Map extends Component {
         startHour = 12;
         startTimeOfDay = "AM";
       } else if (startHour > 12) {
+        startTimeOfDay = "PM";
         startHour = startHour - 12;
       }
       let startTime = `${startHour}:${startTimeArray[1]}`;

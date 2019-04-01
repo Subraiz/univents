@@ -107,6 +107,20 @@ export const signUpUser = (email, password) => {
   };
 };
 
+export const updateUser = user => {
+  initializeFirebase();
+  let { uid } = user;
+  return async dispatch => {
+    await firestore
+      .collection("Users")
+      .doc(uid)
+      .set(user)
+      .then(() => {
+        dispatch({ type: T.SAVE_USER, payload: user });
+      });
+  };
+};
+
 export const saveUser = user => {
   initializeFirebase();
   return async dispatch => {

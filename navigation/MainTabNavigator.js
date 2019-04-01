@@ -82,6 +82,7 @@ const TabNavigator = createBottomTabNavigator(
     tabBarOptions: {
       position: "absolute",
       showLabel: false,
+      tabIconSelected: "orange",
       activeTintColor: "orange",
       inactiveTintColor: "black",
       style: {
