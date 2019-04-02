@@ -309,6 +309,7 @@ class Profile extends Component {
               }}
             >
               <Image
+                defaultSource={require("../assets/images/background.png")}
                 source={{ uri: this.props.user.avatarSource.uri }}
                 style={{
                   width: null,

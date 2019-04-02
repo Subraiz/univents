@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { View } from "react-native";
+import codePush from "react-native-code-push";
 import Root from "./Root";
 import store from "./store";
 import { Provider } from "react-redux";
@@ -14,4 +15,6 @@ class App extends Component {
   }
 }
 
-export default App;
+let codePushOptions = { checkFrequency: codePush.CheckFrequency.ON_APP_START };
+
+export default codePush(codePushOptions)(App);

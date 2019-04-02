@@ -97,6 +97,8 @@
 		5DA362BE21C0BBDC005414F7 /* libRNSVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DA362BB21C0BBD5005414F7 /* libRNSVG.a */; };
 		5DA362C821C15F2C005414F7 /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DA362C721C15F21005414F7 /* libRNFS.a */; };
 		5DA362D021C162DB005414F7 /* libFastImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DA362CF21C162D6005414F7 /* libFastImage.a */; };
+		5DBC154022532A42008B2037 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DBC153F22532A42008B2037 /* libz.tbd */; };
+		5DBC154222532ABD008B2037 /* libCodePush.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DBC1508225329D1008B2037 /* libCodePush.a */; };
 		5DC955B121A49F5700969920 /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DC9558E21A49F4D00969920 /* libRCTCameraRoll.a */; };
 		601933D42F6B3803C592FB61 /* libPods-univents.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D37F26C78135EC8905551E54 /* libPods-univents.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
@@ -454,6 +456,20 @@
 			remoteGlobalIDString = A287971D1DE0C0A60081BDFA;
 			remoteInfo = FastImage;
 		};
+		5DBC1507225329D1008B2037 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5DBC1501225329D1008B2037 /* CodePush.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = CodePush;
+		};
+		5DBC1509225329D1008B2037 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5DBC1501225329D1008B2037 /* CodePush.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F886647B1F4ADB500036D01B;
+			remoteInfo = "CodePush-tvOS";
+		};
 		5DC9558D21A49F4D00969920 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5DC9558321A49F4D00969920 /* RCTCameraRoll.xcodeproj */;
@@ -613,6 +629,8 @@
 		5DA362B521C0BBD4005414F7 /* RNSVG.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSVG.xcodeproj; path = "../node_modules/react-native-svg/ios/RNSVG.xcodeproj"; sourceTree = "<group>"; };
 		5DA362BF21C15F20005414F7 /* RNFS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNFS.xcodeproj; path = "../node_modules/react-native-fs/RNFS.xcodeproj"; sourceTree = "<group>"; };
 		5DA362C921C162D6005414F7 /* FastImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FastImage.xcodeproj; path = "../node_modules/react-native-fast-image/ios/FastImage.xcodeproj"; sourceTree = "<group>"; };
+		5DBC1501225329D1008B2037 /* CodePush.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CodePush.xcodeproj; path = "../node_modules/react-native-code-push/ios/CodePush.xcodeproj"; sourceTree = "<group>"; };
+		5DBC153F22532A42008B2037 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		5DC9558321A49F4D00969920 /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
@@ -636,6 +654,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5DBC154022532A42008B2037 /* libz.tbd in Frameworks */,
+				5DBC154222532ABD008B2037 /* libCodePush.a in Frameworks */,
 				5D4D18FB21C1AA2700ADC0B8 /* libLottieReactNative.a in Frameworks */,
 				5D4D18FA21C1AA2100ADC0B8 /* libLottie.a in Frameworks */,
 				5DA362D021C162DB005414F7 /* libFastImage.a in Frameworks */,
@@ -809,6 +829,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5DBC153F22532A42008B2037 /* libz.tbd */,
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
 				D37F26C78135EC8905551E54 /* libPods-univents.a */,
 			);
@@ -984,6 +1005,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		5DBC1502225329D1008B2037 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5DBC1508225329D1008B2037 /* libCodePush.a */,
+				5DBC150A225329D1008B2037 /* libCodePush.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		5DC9558421A49F4D00969920 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1035,6 +1065,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				5DBC1501225329D1008B2037 /* CodePush.xcodeproj */,
 				5D4D18F421C1AA1600ADC0B8 /* LottieReactNative.xcodeproj */,
 				5D4D18B521C1A9F700ADC0B8 /* Lottie.xcodeproj */,
 				5DA362C921C162D6005414F7 /* FastImage.xcodeproj */,
@@ -1235,6 +1266,10 @@
 				{
 					ProductGroup = 5D8F20682198CF5800158BEC /* Products */;
 					ProjectRef = 5D8F20672198CF5800158BEC /* AirMaps.xcodeproj */;
+				},
+				{
+					ProductGroup = 5DBC1502225329D1008B2037 /* Products */;
+					ProjectRef = 5DBC1501225329D1008B2037 /* CodePush.xcodeproj */;
 				},
 				{
 					ProductGroup = 5DA362CA21C162D6005414F7 /* Products */;
@@ -1663,6 +1698,20 @@
 			fileType = archive.ar;
 			path = libFastImage.a;
 			remoteRef = 5DA362CE21C162D6005414F7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5DBC1508225329D1008B2037 /* libCodePush.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libCodePush.a;
+			remoteRef = 5DBC1507225329D1008B2037 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5DBC150A225329D1008B2037 /* libCodePush.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libCodePush.a;
+			remoteRef = 5DBC1509225329D1008B2037 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		5DC9558E21A49F4D00969920 /* libRCTCameraRoll.a */ = {

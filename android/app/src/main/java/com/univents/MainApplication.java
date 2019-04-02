@@ -14,7 +14,7 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-
+import com.microsoft.codepush.react.CodePush;
 import java.util.Arrays;
 import java.util.List;
 import com.RNFetchBlob.RNFetchBlobPackage;
@@ -32,6 +32,11 @@ private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
         }
 
         @Override
+        protected String getJSBundleFile() {
+                return CodePush.getJSBundleFile();
+        }
+
+        @Override
         protected List<ReactPackage> getPackages() {
                 return Arrays.<ReactPackage>asList(
                         new MainReactPackage(),
@@ -43,7 +48,8 @@ private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
                         new SvgPackage(),
                         new RNFSPackage(),
                         new FastImageViewPackage(),
-                        new LottiePackage()
+                        new LottiePackage(),
+                        new CodePush("T2KHKkNkbXe6eRIOFqqpzy4Lx9khrJMzF_gKE", MainApplication.this, BuildConfig.DEBUG)
                         );
         }
 
