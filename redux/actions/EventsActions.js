@@ -101,7 +101,7 @@ export const fetchEvents = (state, user, type) => {
           let pastEvent = false;
           let event = doc.data();
 
-          if (!event.cancled) {
+          if (!event.canceled) {
             let eventCategories = event.eventCategories;
 
             // Check if event categories match users interests or if event is checked as popular
@@ -117,7 +117,7 @@ export const fetchEvents = (state, user, type) => {
 
             // Create new Event Object
             let eventObject = {
-              cancled: event.canceled,
+              canceled: event.canceled,
               eventName: event.eventName,
               eventDescription: event.eventDescription,
               eventDate: event.eventDate,
@@ -227,7 +227,7 @@ export const fetchUserEvents = (user, type) => {
         .then(doc => {
           let event = doc.data();
           if (event) {
-            if (!event.cancled) {
+            if (!event.canceled) {
               createdEvents.unshift(doc.data());
             }
           } else {
@@ -248,7 +248,7 @@ export const fetchUserEvents = (user, type) => {
         .then(doc => {
           let event = doc.data();
           if (event) {
-            if (!event.cancled) {
+            if (!event.canceled) {
               favoritedEvents.unshift(doc.data());
             }
           } else {

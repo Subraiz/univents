@@ -27,10 +27,20 @@ import {
 } from "../redux/actions/EventsActions";
 import InterestContainer from "../components/InterestContainer";
 import LottieView from "lottie-react-native";
+import EditEventModal from "./EditEventScreens/EditEventModal";
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
 
+let tempEvent = {
+  eventName: "Event Name",
+  eventHost: "Event Host",
+  eventDate: { month: 1, day: 1, year: 2019 },
+  eventLocation: { locationAddress: "Location, Address" },
+  eventTime: { startTime: "Hour:Minute", endTime: "Hour:Minute" },
+  eventCoordinates: { latitude: -42, longitude: 32 },
+  eventID: "l02HUkN10fb8uYXx1HKojfQjRZg212345"
+};
 let event = {};
 let navigatable = {};
 
@@ -44,7 +54,10 @@ class EventInformation extends Component {
 
   state = {
     favorite: false,
-    progress: new Animated.Value(0)
+    progress: new Animated.Value(0),
+    event: tempEvent,
+    edit: false,
+    report: false
   };
 
   async componentWillMount() {
@@ -54,10 +67,11 @@ class EventInformation extends Component {
 
     const { navigation } = this.props;
     event = navigation.getParam("data", "NO-DATA");
+    this.setState({ event: event });
     navigatable = navigation.getParam("navigation", "NO-NAVIGATION");
     this.props.user.events.favoritedEvents.some(e => {
       let refrenceArray = e.split("/");
-      if (event.eventID === refrenceArray[3]) {
+      if (this.state.event.eventID === refrenceArray[3]) {
         this.setState({ progress: new Animated.Value(1) });
         this.setState({ favorite: true });
         return true;
@@ -88,10 +102,15 @@ class EventInformation extends Component {
   }
 
   onSharePress() {
-    let eventID = event.eventID.substring(0, event.eventID.length - 5);
+    let eventID = this.state.event.eventID.substring(
+      0,
+      this.state.event.eventID.length - 5
+    );
 
     let downloadUrl =
-      Platform.OS === "ios" ? "IOS DOWNLOAD URL" : "ANDROID DOWNLOAD URL";
+      Platform.OS === "ios"
+        ? "https://itunes.apple.com/us/app/splurge-events/id1457509493?ls=1&mt=8"
+        : "https://play.google.com/store/apps/details?id=com.SplurgeLLC";
 
     let title;
     if (this.props.uid === eventID) {
@@ -127,7 +146,10 @@ class EventInformation extends Component {
   }
 
   renderAdminTools() {
-    let eventID = event.eventID.substring(0, event.eventID.length - 5);
+    let eventID = this.state.event.eventID.substring(
+      0,
+      this.state.event.eventID.length - 5
+    );
     if (
       this.props.uid == eventID ||
       this.props.uid == "l02HUkN10fb8uYXx1HKojfQjRZg2"
@@ -163,14 +185,48 @@ class EventInformation extends Component {
     }
   }
 
+  renderEditButton() {
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          this.setState({ edit: !this.state.edit });
+        }}
+        style={styles.actionButtonStyle}
+      >
+        <Icon
+          name="md-create"
+          style={{
+            fontSize: 20,
+            color: "black"
+          }}
+        />
+      </TouchableOpacity>
+    );
+  }
+
+  renderReportButton() {}
+
+  renderCornerButton() {
+    let eventID = this.state.event.eventID.substring(
+      0,
+      this.state.event.eventID.length - 5
+    );
+    if (
+      this.props.uid == eventID ||
+      this.props.uid == "l02HUkN10fb8uYXx1HKojfQjRZg2"
+    ) {
+      return this.renderEditButton();
+    }
+  }
+
   render() {
-    let locationAddress = event.eventLocation.locationAddress;
+    let locationAddress = this.state.event.eventLocation.locationAddress;
     locationAddress = locationAddress.split(",");
 
-    let { month, day, year } = event.eventDate;
+    let { month, day, year } = this.state.event.eventDate;
     let eventDate = `${month} ${day}, ${year}`;
 
-    let { startTime, endTime } = event.eventTime;
+    let { startTime, endTime } = this.state.event.eventTime;
     let startTimeArray = startTime.split(":");
     let endTimeArray = endTime.split(":");
     let startHour;
@@ -180,6 +236,7 @@ class EventInformation extends Component {
     let startTimeOfDay = "AM";
     let endTimeOfDay = "AM";
 
+    /* Start Hour */
     startHour = parseInt(startTimeArray[0]);
     if (startHour == 0) {
       startHour = 12;
@@ -190,6 +247,7 @@ class EventInformation extends Component {
     }
     startTime = `${startHour}:${startTimeArray[1]} ${startTimeOfDay}`;
 
+    // End hour
     endHour = parseInt(endTimeArray[0]);
     if (endHour > 12) {
       endHour = endHour - 12;
@@ -208,8 +266,57 @@ class EventInformation extends Component {
             <View style={styles.headerImageContainer}>
               <FastImage style={styles.headerImage} source={event.eventImage} />
             </View>
-
             <View style={styles.informationContainer}>
+              {/* Like and share button */}
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  position: "absolute",
+                  right: 0,
+                  top: -20,
+                  postion: "absolute"
+                }}
+              >
+                <TouchableOpacity
+                  onPress={this.onLikePress.bind(this)}
+                  style={[
+                    styles.actionButtonStyle,
+                    {
+                      marginRight: 10,
+                      borderWidth: 0.5,
+                      borderColor: "orange"
+                    }
+                  ]}
+                >
+                  <LottieView
+                    progress={this.state.progress}
+                    style={{ width: 35, height: 35, marginBottom: 2 }}
+                    source={require("../assets/animations/favorite.json")}
+                    loop={false}
+                    ref={animation => (this.animation = animation)}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={this.onSharePress.bind(this)}
+                  style={[
+                    styles.actionButtonStyle,
+                    {
+                      marginRight: 10,
+                      borderWidth: 0.5,
+                      borderColor: "teal"
+                    }
+                  ]}
+                >
+                  <Icon
+                    name="md-share"
+                    style={{
+                      fontSize: 20,
+                      color: "orange"
+                    }}
+                  />
+                </TouchableOpacity>
+              </View>
               <View
                 style={{
                   flexDirection: "row",
@@ -218,34 +325,18 @@ class EventInformation extends Component {
                   paddingRight: 15
                 }}
               >
+                {/* First section Event Name*/}
                 <View style={{ flexDirection: "column" }}>
-                  <Text style={styles.eventNameStyle}>{event.eventName}</Text>
+                  <Text style={styles.eventNameStyle}>
+                    {this.state.event.eventName}
+                  </Text>
                   <Text style={styles.eventHostTextStyle}>
-                    {event.eventType} • {event.eventHost}
+                    {this.state.event.eventType} • {this.state.event.eventHost}
                   </Text>
                 </View>
-                <View style={{ flexDirection: "row", alignItems: "center" }}>
-                  <TouchableOpacity onPress={this.onLikePress.bind(this)}>
-                    <LottieView
-                      progress={this.state.progress}
-                      style={{ width: 40, height: 40, marginRight: 5 }}
-                      source={require("../assets/animations/favorite.json")}
-                      loop={false}
-                      ref={animation => (this.animation = animation)}
-                    />
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={this.onSharePress.bind(this)}>
-                    <Icon
-                      name="md-share"
-                      style={{
-                        fontSize: 20,
-                        color: "orange",
-                        marginBottom: -5
-                      }}
-                    />
-                  </TouchableOpacity>
-                </View>
               </View>
+
+              {/* Second section for date*/}
               <View style={styles.dateStyle}>
                 <View
                   style={{ width: 30, marginRight: 10, alignItems: "center" }}
@@ -272,6 +363,7 @@ class EventInformation extends Component {
                 </View>
               </View>
 
+              {/* Third section Location*/}
               <View style={styles.locationStyle}>
                 <View
                   style={{ width: 30, marginRight: 10, alignItems: "center" }}
@@ -285,7 +377,7 @@ class EventInformation extends Component {
                   <Text
                     style={{ fontSize: 19, color: "black", fontWeight: "600" }}
                   >
-                    {event.eventLocation.locationName.trim()}
+                    {this.state.event.eventLocation.locationName.trim()}
                   </Text>
                   <Text style={{ color: "black", fontWeight: "300" }}>
                     {locationAddress[0]}
@@ -296,28 +388,31 @@ class EventInformation extends Component {
                 </View>
               </View>
             </View>
-
             {this.renderAdminTools()}
 
+            {/* Details */}
             <View style={styles.section}>
               <View style={styles.headerTextContainer}>
                 <Text style={styles.headerText}>Details</Text>
               </View>
-              <Text style={styles.detailsText}>{event.eventDescription}</Text>
+              <Text style={styles.detailsText}>
+                {this.state.event.eventDescription}
+              </Text>
             </View>
-
             <View style={styles.section}>
               <View style={styles.headerTextContainer}>
                 <Text style={styles.headerText}>Location</Text>
               </View>
+
+              {/* Map View */}
               <View style={styles.mapContainerStyle}>
                 <MapView
                   style={styles.mapStyle}
                   scrollEnabled={false}
                   zoomEnabled={false}
                   initialRegion={{
-                    latitude: event.eventCoordinates.latitude,
-                    longitude: event.eventCoordinates.longitude,
+                    latitude: this.state.event.eventCoordinates.latitude,
+                    longitude: this.state.event.eventCoordinates.longitude,
                     latitudeDelta: 0.00922 * 0.9,
                     longitudeDelta: 0.00421 * 0.9
                   }}
@@ -328,6 +423,13 @@ class EventInformation extends Component {
             </View>
           </View>
         </ScrollView>
+        <EditEventModal
+          visible={this.state.edit}
+          onClose={() => this.setState({ edit: false })}
+        />
+        <View style={styles.cornerButtonStyle}>
+          {this.renderCornerButton()}
+        </View>
       </SafeAreaView>
     );
   }
@@ -458,6 +560,24 @@ const styles = {
     height: null,
     resizeMode: "contain",
     marginRight: 5
+  },
+  cornerButtonStyle: {
+    position: "absolute",
+    right: 10,
+    top: 10,
+    shadowOffset: { width: 1, height: 1 },
+    shadowColor: "black",
+    shadowOpacity: 0.3,
+    shadowRadius: 2
+  },
+  actionButtonStyle: {
+    padding: 10,
+    backgroundColor: "white",
+    borderRadius: 20,
+    width: 40,
+    height: 40,
+    justifyContent: "center",
+    alignItems: "center"
   }
 };
 

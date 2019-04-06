@@ -11,9 +11,6 @@ import {
 import { Calendar, CalendarList, Agenda } from "react-native-calendars";
 import DateTimePicker from "react-native-modal-datetime-picker";
 import { Icon } from "react-native-elements";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { updateEventInfo } from "../../redux/actions/EventActions";
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
@@ -42,9 +39,7 @@ class DateTimeModal extends Component {
     selected: "",
     isStartTimePickerVisible: false,
     isEndTimePickerVisible: false,
-    interval: 15,
-    dayOrder: 0,
-    timeOrder: 0
+    interval: 15
   };
 
   onDayPress(date) {
@@ -59,11 +54,10 @@ class DateTimeModal extends Component {
       day: day,
       year: year
     };
-
-    let dayOrder = year + monthIndex / 11 + day / 1000;
-    this.setState({ dayOrder: dayOrder });
-
-    this.props.updateEventInfo({ prop: "eventDate", value: eventDate });
+    let eventOrder = year + monthIndex / 11 + day / 1000;
+    eventOrder = Math.floor(eventOrder * 1000000) / 1000000;
+    // this.props.updateEventInfo({ prop: "eventDate", value: eventDate });
+    // this.props.updateEventInfo({ prop: "eventOrder", value: eventOrder });
   }
 
   showStartTimePicker = () => this.setState({ isStartTimePickerVisible: true });
@@ -75,7 +69,7 @@ class DateTimeModal extends Component {
     let timeOfDay = "AM";
     let hour = time.getHours();
     let realHour = time.getHours();
-
+    console.log(hour);
     if (hour > 12) {
       hour = hour - 12;
       timeOfDay = "PM";
@@ -90,9 +84,6 @@ class DateTimeModal extends Component {
       timeOfDay = "AM";
     }
     let minutes = time.getMinutes();
-    let timeOrder = [parseInt(hour) + parseInt(minutes) / 60] / 100000;
-    this.setState({ timeOrder: timeOrder });
-
     if (minutes % 15 != 0) {
       minutes = minutes - [minutes % 15];
     }
@@ -101,12 +92,13 @@ class DateTimeModal extends Component {
     }
     let startTime = `${hour}:${minutes}${timeOfDay}`;
     let realTime = `${realHour}:${minutes}`;
-    this.props.updateEventInfo({
-      prop: "eventTime",
-      value: { startTime: realTime, endTime: this.state.realEndTime }
-    });
+    // this.props.updateEventInfo({
+    //   prop: "eventTime",
+    //   value: { startTime: realTime, endTime: this.state.realEndTime }
+    // });
     this.setState({ startTime: startTime, realStartTime: realTime });
     this.hideStartTimePicker();
+    console.log(realTime, startTime);
   };
 
   showEndTimePicker = () => this.setState({ isEndTimePickerVisible: true });
@@ -138,21 +130,14 @@ class DateTimeModal extends Component {
     }
     let endTime = `${hour}:${minutes}${timeOfDay}`;
     let realTime = `${realHour}:${minutes}`;
-    this.props.updateEventInfo({
-      prop: "eventTime",
-      value: { startTime: this.state.realStartTime, endTime: realTime }
-    });
+    // this.props.updateEventInfo({
+    //   prop: "eventTime",
+    //   value: { startTime: this.state.realStartTime, endTime: realTime }
+    // });
     this.setState({ endTime: endTime, realEndTime: realTime });
     this.hideEndTimePicker();
     console.log(realTime, endTime);
   };
-
-  onCloseModal() {
-    let eventOrder = this.state.dayOrder + this.state.timeOrder;
-    eventOrder = Math.floor(eventOrder * 1000000) / 1000000;
-    this.props.updateEventInfo({ prop: "eventOrder", value: eventOrder });
-    this.props.onClose();
-  }
 
   render() {
     return (
@@ -175,7 +160,7 @@ class DateTimeModal extends Component {
           <TouchableOpacity
             style={styles.buttonStyle}
             activeOpacity={0.8}
-            onPress={this.onCloseModal.bind(this)}
+            onPress={this.props.onClose}
           >
             <Icon name="close" color="navy" />
           </TouchableOpacity>
@@ -255,19 +240,6 @@ class DateTimeModal extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ updateEventInfo: updateEventInfo }, dispatch);
-};
-
-const mapStateToProps = state => {
-  let { eventDate, eventTime } = state.event;
-  return {
-    event: state.event,
-    eventDate: eventDate,
-    eventTime: eventTime
-  };
-};
-
 const styles = {
   container: {
     flex: 1,
@@ -290,7 +262,4 @@ const styles = {
   }
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(DateTimeModal);
+export default DateTimeModal;

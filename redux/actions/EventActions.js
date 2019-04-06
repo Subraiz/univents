@@ -30,7 +30,7 @@ export const updateEventInfo = ({ prop, value }) => {
 export const deleteEvent = (event, uid) => {
   let state = "MA";
   let user;
-  event.cancled = true;
+  event.canceled = true;
   return async dispatch => {
     await initializeFirebase();
     await firestore
