@@ -149,6 +149,11 @@ export const getTimeData = event => {
     timeData[i] = { time: stringTime, earnings: 0 };
   }
 
+  let userTimeCheckIn = [];
+  for (var i = 0; i < interval; i++) {
+    userTimeCheckIn[i] = 0;
+  }
+
   eventData.usersAttended.forEach(user => {
     let userHour = parseInt(user.time.hour);
     let userMinute = parseInt(user.time.minute) / 60;
@@ -157,16 +162,28 @@ export const getTimeData = event => {
     let index = Math.floor(elapsedTime / timeInterval);
 
     if (index < timeData.length && index >= 0) {
-      timeData[index].earnings = eventData.currentAttendance;
+      userTimeCheckIn[index] = userTimeCheckIn[index] + 1;
     } else if (index < 0) {
-      timeData[0].earnings = eventData.currentAttendance;
+      userTimeCheckIn[index] = userTimeCheckIn[index] + 1;
     } else if (index >= timeData.length) {
-      timeData[timeData.length - 1].earnings = eventData.currentAttendance;
+      userTimeCheckIn[index] = userTimeCheckIn[index] + 1;
     }
   });
+  for (var i = 0; i < interval; i++) {
+    let earnings = getSummation(userTimeCheckIn, i);
+    timeData[i].earnings = earnings;
+  }
 
   return timeData;
 };
+
+function getSummation(userCheckInArray, index) {
+  let totalAttendanceAtTime = 0;
+  for (var i = 0; i <= index; i++) {
+    totalAttendanceAtTime += userCheckInArray[i];
+  }
+  return totalAttendanceAtTime;
+}
 
 function getTimeAsString(startTime, interval, timeInterval) {
   startTime = parseInt(startTime);

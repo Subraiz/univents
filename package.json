@@ -10,6 +10,8 @@
     "build-android": "./gradlew assembleRelease -x bundleReleaseJsAndAssets",
     "release-ios": "appcenter codepush release-react -a subraiz/Splurge-Events -d Production",
     "release-android": "appcenter codepush release-react -a subraiz/Splurge-Events-1 -d Production",
+    "release-ios-m": "appcenter codepush release-react -a subraiz/Splurge-Events -d Production -m",
+    "release-android-m": "appcenter codepush release-react -a subraiz/Splurge-Events-1 -d Production -m",
     "release-ios-staging": "appcenter codepush release-react -a subraiz/Splurge-Events -d Staging",
     "release-android-staging": "appcenter codepush release-react -a subraiz/Splurge-Events-1 -d Staging"
   },

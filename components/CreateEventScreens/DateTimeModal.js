@@ -61,6 +61,10 @@ class DateTimeModal extends Component {
     };
 
     let dayOrder = year + monthIndex / 11 + day / 1000;
+    console.log(year);
+    console.log(monthIndex);
+    console.log(day);
+
     this.setState({ dayOrder: dayOrder });
 
     this.props.updateEventInfo({ prop: "eventDate", value: eventDate });
@@ -90,7 +94,10 @@ class DateTimeModal extends Component {
       timeOfDay = "AM";
     }
     let minutes = time.getMinutes();
-    let timeOrder = [parseInt(hour) + parseInt(minutes) / 60] / 100000;
+    let fractionMinutes = parseInt(minutes) / 60;
+    let timeOrder = parseInt(realHour) + fractionMinutes;
+    console.log(timeOrder);
+
     this.setState({ timeOrder: timeOrder });
 
     if (minutes % 15 != 0) {
@@ -148,8 +155,9 @@ class DateTimeModal extends Component {
   };
 
   onCloseModal() {
-    let eventOrder = this.state.dayOrder + this.state.timeOrder;
+    let eventOrder = this.state.dayOrder + this.state.timeOrder / 100000;
     eventOrder = Math.floor(eventOrder * 1000000) / 1000000;
+    console.log(eventOrder);
     this.props.updateEventInfo({ prop: "eventOrder", value: eventOrder });
     this.props.onClose();
   }
@@ -165,7 +173,7 @@ class DateTimeModal extends Component {
       >
         <SafeAreaView style={styles.container}>
           <TouchableOpacity
-            onPress={this.props.onClose}
+            onPress={this.onCloseModal.bind(this)}
             activeOpacity={1}
             style={{
               width: screenWidth,

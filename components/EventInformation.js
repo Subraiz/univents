@@ -12,15 +12,18 @@ import {
   ScrollView,
   Animated,
   Share,
-  Platform
+  Platform,
+  Alert
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import MapView from "react-native-maps";
 import { Marker } from "react-native-maps";
 import FastImage from "react-native-fast-image";
+import { addUserAttended } from "../classes/EventFunctions";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { uploadUser } from "../redux/actions/LoginActions";
+import { updateEventData } from "../redux/actions/EventActions";
 import {
   fetchUserEvents,
   storeLocalEvents
@@ -57,13 +60,16 @@ class EventInformation extends Component {
     progress: new Animated.Value(0),
     event: tempEvent,
     edit: false,
-    report: false
+    report: false,
+    currentUserLocation: { longitude: 0, latitude: 0 }
   };
 
   async componentWillMount() {
     UIManager.setLayoutAnimationEnabledExperimental &&
       UIManager.setLayoutAnimationEnabledExperimental(true);
     LayoutAnimation.easeInEaseOut();
+
+    this.getUserLocation();
 
     const { navigation } = this.props;
     event = navigation.getParam("data", "NO-DATA");
@@ -77,6 +83,146 @@ class EventInformation extends Component {
         return true;
       }
     });
+  }
+
+  componentWillUnmount() {
+    navigator.geolocation.clearWatch(this.watchId);
+  }
+
+  componentWillUpdate() {
+    this.props.uploadUser(this.props.user);
+    this.props.storeLocalEvents(
+      this.props.localFavoritedEvents,
+      "favoritedEvents"
+    );
+  }
+
+  /* ------------------------ Helper Functions --------------------*/
+
+  async getUserLocation() {
+    try {
+      const granted =
+        Platform.OS === "ios"
+          ? true
+          : await PermissionsAndroid.request(
+              PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+              {
+                title: "Location Permission",
+                message: "Univents needs access to your location."
+              }
+            );
+      if (granted) {
+        navigator.geolocation.getCurrentPosition(
+          position => {
+            const { latitude, longitude } = position.coords;
+            let currentUserLocation = { latitude, longitude };
+
+            this.setState({ currentUserLocation: currentUserLocation });
+          },
+          error => Alert.alert(error.message),
+          { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+        );
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  }
+
+  checkIfUserInRange(userLocation, eventLocation) {
+    let longitude,
+      latitude = false;
+    const delta = 0.0008;
+    let userLong = userLocation.longitude;
+    let userLat = userLocation.latitude;
+    let eventLong = eventLocation.longitude;
+    let eventLat = eventLocation.latitude;
+    console.log(userLocation);
+
+    let negativeLongThreshold = eventLong - delta;
+    let positiveLongThreshold = eventLong + delta;
+    if (
+      negativeLongThreshold <= userLong &&
+      userLong <= positiveLongThreshold
+    ) {
+      longitude = true;
+    }
+    let negativeLatThreshold = eventLat - delta;
+    let positiveLatThreshold = eventLat + delta;
+    if (negativeLatThreshold <= userLat && userLat <= positiveLatThreshold) {
+      latitude = true;
+    }
+    console.log(negativeLatThreshold);
+    if (longitude && longitude) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  checkIfAttending(event, uid) {
+    for (let i = 0; i < event.eventData.usersAttended.length; i++) {
+      if (event.eventData.usersAttended[i].uid === uid) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /* ------------------------ Action Responsive Functions --------------------*/
+
+  onCheckInEvent() {
+    let userInRange = this.checkIfUserInRange(
+      this.state.currentUserLocation,
+      this.state.event.eventCoordinates
+    );
+    if (userInRange) {
+      let userAttending = this.checkIfAttending(
+        this.state.event,
+        this.props.uid
+      );
+      if (!userAttending) {
+        addUserAttended(this.state.event, this.props.user);
+        this.props.updateEventData(this.state.event, "MA");
+        Alert.alert(
+          "Success",
+          "You Have Checked In 👍",
+          [
+            {
+              text: "Got It",
+              onPress: () => {},
+              style: "cancel"
+            }
+          ],
+          { cancelable: false }
+        );
+      } else {
+        Alert.alert(
+          "Already Attending",
+          "You Are Already Marked As Attending This Event",
+          [
+            {
+              text: "Cancel",
+              onPress: () => {},
+              style: "cancel"
+            }
+          ],
+          { cancelable: false }
+        );
+      }
+    } else {
+      Alert.alert(
+        "Not In Range",
+        "It seems that you are not close enough to the event to check in.",
+        [
+          {
+            text: "OK",
+            onPress: () => {},
+            style: "cancel"
+          }
+        ],
+        { cancelable: false }
+      );
+    }
   }
 
   onLikePress() {
@@ -127,23 +273,13 @@ class EventInformation extends Component {
     });
   }
 
-  componentWillUpdate() {
-    this.props.uploadUser(this.props.user);
-    this.props.storeLocalEvents(
-      this.props.localFavoritedEvents,
-      "favoritedEvents"
-    );
-  }
-
-  async onReturn() {
-    navigatable.pop();
-  }
-
   onAdminToolsPressed() {
     navigatable.navigate("AdminTools", {
       data: event
     });
   }
+
+  /* ---------------- Rendering Elements ------------------------*/
 
   renderAdminTools() {
     let eventID = this.state.event.eventID.substring(
@@ -449,7 +585,8 @@ const mapDispatchToProps = dispatch => {
     {
       uploadUser: uploadUser,
       fetchUserEvents: fetchUserEvents,
-      storeLocalEvents: storeLocalEvents
+      storeLocalEvents: storeLocalEvents,
+      updateEventData: updateEventData
     },
     dispatch
   );
