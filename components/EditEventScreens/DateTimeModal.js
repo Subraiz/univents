@@ -11,6 +11,9 @@ import {
 import { Calendar, CalendarList, Agenda } from "react-native-calendars";
 import DateTimePicker from "react-native-modal-datetime-picker";
 import { Icon } from "react-native-elements";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { updateEventInfo } from "../../redux/actions/EventActions";
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
@@ -36,11 +39,71 @@ class DateTimeModal extends Component {
     endTime: "End Time",
     realStartTime: "",
     realEndTime: "",
-    selected: "",
+    selected: "2019-04-07",
     isStartTimePickerVisible: false,
     isEndTimePickerVisible: false,
-    interval: 15
+    interval: 15,
+    dayOrder: 0,
+    timeOrder: 0,
+    eventDate: {}
   };
+
+  componentDidMount() {
+    let year = this.props.date.year;
+    let monthIndex = months.indexOf(this.props.date.month) + 1;
+    let day = this.props.date.day;
+    if (monthIndex < 10) {
+      monthIndex = `0${monthIndex}`;
+    }
+    if (day < 10) {
+      day = `0${day}`;
+    }
+    const dateString = `${year}-${monthIndex}-${day}`;
+
+    let startTimeArray = this.props.time.startTime.split(":");
+    let startHour = startTimeArray[0];
+    let startMinute = startTimeArray[1];
+    let startTimeOfDay = "AM";
+    if (startHour > 12) {
+      startHour = startHour - 12;
+      startTimeOfDay = "PM";
+    }
+    if (startHour == 12) {
+      startTimeOfDay = "PM";
+    }
+    if (startHour == 0) {
+      startHour = 12;
+      startTimeOfDay = "AM";
+    }
+    const startTime = `${startHour}:${startMinute}${startTimeOfDay}`;
+
+    let endTimeArray = this.props.time.endTime.split(":");
+    let endHour = endTimeArray[0];
+    let endMinute = endTimeArray[1];
+    let endTimeOfDay = "AM";
+    if (endHour > 12) {
+      endHour = endHour - 12;
+      endTimeOfDay = "PM";
+    }
+    if (endHour == 12) {
+      endTimeOfDay = "PM";
+    }
+    if (endHour == 0) {
+      endHour = 12;
+      endTimeOfDay = "AM";
+    }
+    const endTime = `${endHour}:${endMinute}${endTimeOfDay}`;
+
+    this.setState({
+      selected: dateString,
+      eventDate: this.props.date,
+      eventOrder: this.props.order,
+      realStartTime: this.props.time.startTime,
+      realEndTime: this.props.time.endTime,
+      startTime,
+      endTime
+    });
+  }
 
   onDayPress(date) {
     this.setState({ selected: date.dateString });
@@ -54,10 +117,8 @@ class DateTimeModal extends Component {
       day: day,
       year: year
     };
-    let eventOrder = year + monthIndex / 11 + day / 1000;
-    eventOrder = Math.floor(eventOrder * 1000000) / 1000000;
-    // this.props.updateEventInfo({ prop: "eventDate", value: eventDate });
-    // this.props.updateEventInfo({ prop: "eventOrder", value: eventOrder });
+
+    this.setState({ eventDate: eventDate });
   }
 
   showStartTimePicker = () => this.setState({ isStartTimePickerVisible: true });
@@ -65,11 +126,15 @@ class DateTimeModal extends Component {
   hideStartTimePicker = () =>
     this.setState({ isStartTimePickerVisible: false });
 
+  showEndTimePicker = () => this.setState({ isEndTimePickerVisible: true });
+
+  hideEndTimePicker = () => this.setState({ isEndTimePickerVisible: false });
+
   handleStartTimePicked = time => {
     let timeOfDay = "AM";
     let hour = time.getHours();
     let realHour = time.getHours();
-    console.log(hour);
+
     if (hour > 12) {
       hour = hour - 12;
       timeOfDay = "PM";
@@ -83,7 +148,7 @@ class DateTimeModal extends Component {
       hour = 12;
       timeOfDay = "AM";
     }
-    let minutes = time.getMinutes();
+
     if (minutes % 15 != 0) {
       minutes = minutes - [minutes % 15];
     }
@@ -92,18 +157,9 @@ class DateTimeModal extends Component {
     }
     let startTime = `${hour}:${minutes}${timeOfDay}`;
     let realTime = `${realHour}:${minutes}`;
-    // this.props.updateEventInfo({
-    //   prop: "eventTime",
-    //   value: { startTime: realTime, endTime: this.state.realEndTime }
-    // });
     this.setState({ startTime: startTime, realStartTime: realTime });
     this.hideStartTimePicker();
-    console.log(realTime, startTime);
   };
-
-  showEndTimePicker = () => this.setState({ isEndTimePickerVisible: true });
-
-  hideEndTimePicker = () => this.setState({ isEndTimePickerVisible: false });
 
   handleEndTimePicked = time => {
     let timeOfDay = "AM";
@@ -130,14 +186,34 @@ class DateTimeModal extends Component {
     }
     let endTime = `${hour}:${minutes}${timeOfDay}`;
     let realTime = `${realHour}:${minutes}`;
-    // this.props.updateEventInfo({
-    //   prop: "eventTime",
-    //   value: { startTime: this.state.realStartTime, endTime: realTime }
-    // });
+
     this.setState({ endTime: endTime, realEndTime: realTime });
     this.hideEndTimePicker();
-    console.log(realTime, endTime);
   };
+
+  onCloseModal() {
+    const fractionMinutes = parseInt(this.state.realEndTime.split(":")[1]) / 60;
+    const timeOrder =
+      parseInt(this.state.realEndTime.split(":")[0]) + fractionMinutes;
+
+    const dayOrder =
+      parseInt(this.state.eventDate.year) +
+      months.indexOf(this.state.eventDate.month) / 11 +
+      parseInt(this.state.eventDate.day) / 1000;
+
+    let eventOrder = dayOrder + timeOrder / 100000;
+    eventOrder = Math.floor(eventOrder * 1000000) / 1000000;
+    this.props.setTime({
+      eventDate: this.state.eventDate,
+      eventTime: {
+        startTime: this.state.realStartTime,
+        endTime: this.state.realEndTime
+      },
+      eventOrder,
+      dateChanged: eventOrder != this.props.order
+    });
+    this.props.onClose();
+  }
 
   render() {
     return (
@@ -150,7 +226,7 @@ class DateTimeModal extends Component {
       >
         <SafeAreaView style={styles.container}>
           <TouchableOpacity
-            onPress={this.props.onClose}
+            onPress={this.onCloseModal.bind(this)}
             activeOpacity={1}
             style={{
               width: screenWidth,
@@ -160,7 +236,7 @@ class DateTimeModal extends Component {
           <TouchableOpacity
             style={styles.buttonStyle}
             activeOpacity={0.8}
-            onPress={this.props.onClose}
+            onPress={this.onCloseModal.bind(this)}
           >
             <Icon name="close" color="navy" />
           </TouchableOpacity>
@@ -222,7 +298,7 @@ class DateTimeModal extends Component {
             onConfirm={this.handleStartTimePicked}
             onCancel={this.hideStartTimePicker}
             mode="time"
-            titleIOS="Select Time"
+            titleIOS="Select A Start Time"
             is24Hour={false}
           />
           <DateTimePicker
@@ -231,7 +307,7 @@ class DateTimeModal extends Component {
             onConfirm={this.handleEndTimePicked}
             onCancel={this.hideEndTimePicker}
             mode="time"
-            titleIOS="Select Time"
+            titleIOS="Select An End Time"
             is24Hour={false}
           />
         </SafeAreaView>
@@ -239,6 +315,19 @@ class DateTimeModal extends Component {
     );
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({ updateEventInfo: updateEventInfo }, dispatch);
+};
+
+const mapStateToProps = state => {
+  let { eventDate, eventTime } = state.event;
+  return {
+    event: state.event,
+    eventDate: eventDate,
+    eventTime: eventTime
+  };
+};
 
 const styles = {
   container: {
@@ -262,4 +351,7 @@ const styles = {
   }
 };
 
-export default DateTimeModal;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DateTimeModal);

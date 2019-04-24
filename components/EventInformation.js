@@ -560,6 +560,7 @@ class EventInformation extends Component {
           </View>
         </ScrollView>
         <EditEventModal
+          event={this.state.event}
           visible={this.state.edit}
           onClose={() => this.setState({ edit: false })}
         />

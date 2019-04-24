@@ -17,7 +17,7 @@ class LocationModal extends Component {
   handleSelectedLocation(details) {
     let eventLocation = {
       locationAddress: details.formatted_address,
-      locationName: this.props.locationName
+      locationName: this.props.eventLocation.locationName
     };
     let { lat, lng } = details.geometry.location;
     let eventCoordinates = { latitude: lat, longitude: lng };
@@ -26,6 +26,13 @@ class LocationModal extends Component {
     //   value: eventCoordinates
     // });
     // this.props.updateEventInfo({ prop: "eventLocation", value: eventLocation });
+    this.props.setLocation({
+      eventLocation,
+      eventCoordinates,
+      locationChanged:
+        eventLocation.locationAddress !=
+        this.props.eventLocation.locationAddress
+    });
     this.props.onClose();
   }
 
@@ -53,7 +60,7 @@ class LocationModal extends Component {
             getDefaultValue={() => ""}
             query={{
               // available options: https://developers.google.com/places/web-service/autocomplete
-              key: "AIzaSyD9TguYtWagQaPpe7rL3NrVjcZpXE_KvI0",
+              key: "AIzaSyDvQtcAW5QTS9-R8j48NFYcHr-yXEH4ah8",
               language: "en" // language of the results
             }}
             styles={{
