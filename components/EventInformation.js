@@ -58,7 +58,6 @@ class EventInformation extends Component {
   state = {
     favorite: false,
     progress: new Animated.Value(0),
-    event: tempEvent,
     edit: false,
     report: false,
     currentUserLocation: { longitude: 0, latitude: 0 }
@@ -73,11 +72,11 @@ class EventInformation extends Component {
 
     const { navigation } = this.props;
     event = navigation.getParam("data", "NO-DATA");
-    this.setState({ event: event });
     navigatable = navigation.getParam("navigation", "NO-NAVIGATION");
+    this.setState({ event });
     this.props.user.events.favoritedEvents.some(e => {
       let refrenceArray = e.split("/");
-      if (this.state.event.eventID === refrenceArray[3]) {
+      if (event.eventID === refrenceArray[3]) {
         this.setState({ progress: new Animated.Value(1) });
         this.setState({ favorite: true });
         return true;
@@ -173,16 +172,13 @@ class EventInformation extends Component {
   onCheckInEvent() {
     let userInRange = this.checkIfUserInRange(
       this.state.currentUserLocation,
-      this.state.event.eventCoordinates
+      event.eventCoordinates
     );
     if (userInRange) {
-      let userAttending = this.checkIfAttending(
-        this.state.event,
-        this.props.uid
-      );
+      let userAttending = this.checkIfAttending(event, this.props.uid);
       if (!userAttending) {
-        addUserAttended(this.state.event, this.props.user);
-        this.props.updateEventData(this.state.event, "MA");
+        addUserAttended(event, this.props.user);
+        this.props.updateEventData(event, "MA");
         Alert.alert(
           "Success",
           "You Have Checked In 👍",
@@ -248,10 +244,7 @@ class EventInformation extends Component {
   }
 
   onSharePress() {
-    let eventID = this.state.event.eventID.substring(
-      0,
-      this.state.event.eventID.length - 5
-    );
+    let eventID = event.eventID.substring(0, event.eventID.length - 5);
 
     let downloadUrl =
       Platform.OS === "ios"
@@ -282,10 +275,7 @@ class EventInformation extends Component {
   /* ---------------- Rendering Elements ------------------------*/
 
   renderAdminTools() {
-    let eventID = this.state.event.eventID.substring(
-      0,
-      this.state.event.eventID.length - 5
-    );
+    let eventID = event.eventID.substring(0, event.eventID.length - 5);
     if (
       this.props.uid == eventID ||
       this.props.uid == "l02HUkN10fb8uYXx1HKojfQjRZg2"
@@ -340,13 +330,8 @@ class EventInformation extends Component {
     );
   }
 
-  renderReportButton() {}
-
   renderCornerButton() {
-    let eventID = this.state.event.eventID.substring(
-      0,
-      this.state.event.eventID.length - 5
-    );
+    let eventID = event.eventID.substring(0, event.eventID.length - 5);
     if (
       this.props.uid == eventID ||
       this.props.uid == "l02HUkN10fb8uYXx1HKojfQjRZg2"
@@ -355,14 +340,19 @@ class EventInformation extends Component {
     }
   }
 
+  returnEditedEvent(editedEvent) {
+    event = editedEvent;
+    this.setState({ event: editedEvent });
+  }
+
   render() {
-    let locationAddress = this.state.event.eventLocation.locationAddress;
+    let locationAddress = event.eventLocation.locationAddress;
     locationAddress = locationAddress.split(",");
 
-    let { month, day, year } = this.state.event.eventDate;
+    let { month, day, year } = event.eventDate;
     let eventDate = `${month} ${day}, ${year}`;
 
-    let { startTime, endTime } = this.state.event.eventTime;
+    let { startTime, endTime } = event.eventTime;
     let startTimeArray = startTime.split(":");
     let endTimeArray = endTime.split(":");
     let startHour;
@@ -463,11 +453,9 @@ class EventInformation extends Component {
               >
                 {/* First section Event Name*/}
                 <View style={{ flexDirection: "column" }}>
-                  <Text style={styles.eventNameStyle}>
-                    {this.state.event.eventName}
-                  </Text>
+                  <Text style={styles.eventNameStyle}>{event.eventName}</Text>
                   <Text style={styles.eventHostTextStyle}>
-                    {this.state.event.eventType} • {this.state.event.eventHost}
+                    {event.eventType} • {event.eventHost}
                   </Text>
                 </View>
               </View>
@@ -513,7 +501,7 @@ class EventInformation extends Component {
                   <Text
                     style={{ fontSize: 19, color: "black", fontWeight: "600" }}
                   >
-                    {this.state.event.eventLocation.locationName.trim()}
+                    {event.eventLocation.locationName.trim()}
                   </Text>
                   <Text style={{ color: "black", fontWeight: "300" }}>
                     {locationAddress[0]}
@@ -531,9 +519,7 @@ class EventInformation extends Component {
               <View style={styles.headerTextContainer}>
                 <Text style={styles.headerText}>Details</Text>
               </View>
-              <Text style={styles.detailsText}>
-                {this.state.event.eventDescription}
-              </Text>
+              <Text style={styles.detailsText}>{event.eventDescription}</Text>
             </View>
             <View style={styles.section}>
               <View style={styles.headerTextContainer}>
@@ -547,8 +533,8 @@ class EventInformation extends Component {
                   scrollEnabled={false}
                   zoomEnabled={false}
                   initialRegion={{
-                    latitude: this.state.event.eventCoordinates.latitude,
-                    longitude: this.state.event.eventCoordinates.longitude,
+                    latitude: event.eventCoordinates.latitude,
+                    longitude: event.eventCoordinates.longitude,
                     latitudeDelta: 0.00922 * 0.9,
                     longitudeDelta: 0.00421 * 0.9
                   }}
@@ -560,7 +546,8 @@ class EventInformation extends Component {
           </View>
         </ScrollView>
         <EditEventModal
-          event={this.state.event}
+          returnEditedEvent={this.returnEditedEvent.bind(this)}
+          event={event}
           visible={this.state.edit}
           onClose={() => this.setState({ edit: false })}
         />

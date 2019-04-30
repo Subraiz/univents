@@ -75,6 +75,7 @@ class DateTimeModal extends Component {
   handleStartTimePicked = time => {
     let timeOfDay = "AM";
     let hour = time.getHours();
+    let minutes = time.getMinutes();
     let realHour = time.getHours();
 
     if (hour > 12) {

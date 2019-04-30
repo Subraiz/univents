@@ -75,7 +75,6 @@ class EditEventModal extends Component {
     };
 
     this.state = {
-      event: this.props.event,
       eventName,
       eventLocation,
       eventHost,
@@ -239,7 +238,29 @@ class EditEventModal extends Component {
       this.setState(this.initialState);
       this.props.onClose();
     } else {
+      let event = {
+        eventName: this.state.eventName,
+        eventLocation: this.state.eventLocation,
+        eventHost: this.state.eventHost,
+        eventContact: this.state.eventContact,
+        eventTime: this.state.eventTime,
+        eventDate: this.state.eventDate,
+        eventOrder: this.state.eventOrder,
+        eventCoordinates: this.state.eventCoordinates,
+        canceled: this.state.canceled,
+        eventCategories: this.state.eventCategories,
+        eventData: this.state.eventData,
+        eventDescription: this.state.eventDescription,
+        eventID: this.state.eventID,
+        eventImage: this.state.eventImage,
+        tempEventImage: this.state.tempEventImage,
+        eventType: this.state.eventType
+      };
       this.animation.play();
+      await this.props.updateEventData(event, "MA");
+      this.props.returnEditedEvent(event);
+      // this.initialState = this.state
+      // change state values of any info changed to false
       this.props.onClose();
     }
   }
@@ -389,7 +410,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({}, dispatch);
+  return bindActionCreators({ updateEventData }, dispatch);
 };
 
 const styles = {

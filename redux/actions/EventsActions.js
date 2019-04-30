@@ -141,7 +141,11 @@ export const fetchEvents = (state, user, type) => {
             month = months.indexOf(month) + 1;
             if (eventOrder < lastEventOrder) {
               pastEvent = true;
-            } else if (eventOrder == lastEventOrder) {
+            } else if (
+              year == currentYear &&
+              day == currentDay &&
+              month - 1 == currentMonth
+            ) {
               todaysEvents.unshift(eventObject);
             }
 
