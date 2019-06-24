@@ -127,6 +127,13 @@ class Deck extends Component {
     };
   }
 
+  componentDidMount() {
+    this.props.onRef(this);
+  }
+  componentWillUnmount() {
+    this.props.onRef(undefined);
+  }
+
   componentWillUpdate() {
     UIManager.setLayoutAnimationEnabledExperimental &&
       UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -216,7 +223,7 @@ class Deck extends Component {
         <EventCardsRow
           scroll={this.state.scroll}
           data={this.props.events.schoolEvents}
-          title={"School"}
+          title={"Summer in Boston"}
           navigation={this.props.navigation}
         />
       );
@@ -225,7 +232,7 @@ class Deck extends Component {
         <EventCardsRow
           scroll={this.state.scroll}
           data={[emptyEvent]}
-          title={"School"}
+          title={"Summer in Boston"}
           navigation={this.props.navigation}
         />
       );

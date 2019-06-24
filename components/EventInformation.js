@@ -13,7 +13,9 @@ import {
   Animated,
   Share,
   Platform,
-  Alert
+  Alert,
+  Linking,
+  WebView
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import MapView from "react-native-maps";
@@ -345,6 +347,38 @@ class EventInformation extends Component {
     this.setState({ event: editedEvent });
   }
 
+  /* Handling event links */
+
+  // Render any links associated w/ the event
+  renderEventLinks() {
+    return event.eventLinks.map((link, i) => {
+      return (
+        <TouchableOpacity
+          title="click"
+          onPress={() => Linking.openURL(link)}
+          key={i}
+        >
+          <Text style={styles.linkStyle}>{link.toLowerCase()}</Text>
+        </TouchableOpacity>
+      );
+    });
+  }
+
+  renderLinksContainer() {
+    if (event.eventLinks != undefined && event.eventLinks.length != 0) {
+      return (
+        <View style={styles.section}>
+          <View style={styles.headerTextContainer}>
+            <Text style={styles.headerText}>Event Links</Text>
+          </View>
+          <View style={{ marginLeft: screenWidth * 0.025, marginTop: 5 }}>
+            {this.renderEventLinks()}
+          </View>
+        </View>
+      );
+    }
+  }
+
   render() {
     let locationAddress = event.eventLocation.locationAddress;
     locationAddress = locationAddress.split(",");
@@ -512,6 +546,7 @@ class EventInformation extends Component {
                 </View>
               </View>
             </View>
+
             {this.renderAdminTools()}
 
             {/* Details */}
@@ -521,6 +556,8 @@ class EventInformation extends Component {
               </View>
               <Text style={styles.detailsText}>{event.eventDescription}</Text>
             </View>
+            {/* Event Links*/}
+            {this.renderLinksContainer()}
             <View style={styles.section}>
               <View style={styles.headerTextContainer}>
                 <Text style={styles.headerText}>Location</Text>
@@ -703,7 +740,8 @@ const styles = {
     height: 40,
     justifyContent: "center",
     alignItems: "center"
-  }
+  },
+  linkStyle: { marginBottom: 3, color: "#147efb" }
 };
 
 export default connect(

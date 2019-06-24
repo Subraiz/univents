@@ -253,7 +253,7 @@ class EditEventModal extends Component {
         eventDescription: this.state.eventDescription,
         eventID: this.state.eventID,
         eventImage: this.state.eventImage,
-        tempEventImage: this.state.tempEventImage,
+        tempEventImage: "",
         eventType: this.state.eventType
       };
       this.animation.play();

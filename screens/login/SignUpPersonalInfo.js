@@ -39,7 +39,8 @@ class SignUpPersonalInfo extends Component {
     opacity: 0,
     searchedMajors: majors,
     searchValue: "",
-    major: "Enter Major"
+    major: "Enter Major",
+    other: false
   };
 
   componentWillMount() {
@@ -307,15 +308,19 @@ class SignUpPersonalInfo extends Component {
 
   handleIndexChange(index) {
     if (index == 0) {
-      this.setState({ selectedIndex: index });
+      this.setState({ selectedIndex: index, other: false });
       this.props.updateUserInfo({ prop: "sex", value: "male" });
-    } else {
-      this.setState({ selectedIndex: index });
+    } else if (index == 1) {
+      this.setState({ selectedIndex: index, other: false });
       this.props.updateUserInfo({ prop: "sex", value: "female" });
+    } else {
+      this.setState({ selectedIndex: index, other: true });
+      this.props.updateUserInfo({ props: "sex", value: "other" });
     }
   }
 
   render() {
+    const { other } = this.state;
     return (
       <View style={styles.container}>
         <TouchableOpacity activeOpacity={1} onPress={() => Keyboard.dismiss()}>
@@ -339,11 +344,36 @@ class SignUpPersonalInfo extends Component {
           <View style={styles.section}>
             <View style={{ width: screenWidth * 0.8, alignSelf: "center" }}>
               <SegmentedControlTab
-                values={["Male", "Female"]}
+                values={["Man", "Woman", "Other"]}
                 selectedIndex={this.state.selectedIndex}
                 onTabPress={this.handleIndexChange.bind(this)}
               />
             </View>
+            {other ? (
+              <View
+                style={{
+                  height: screenHeight * 0.05,
+                  backgroundColor: "white",
+                  borderRadius: 25,
+                  marginRight: 20,
+                  marginLeft: 20,
+                  alignItems: "center",
+                  marginTop: 10
+                }}
+              >
+                <TextInput
+                  placeholder={"Gender"}
+                  style={{
+                    width: "95%",
+                    height: screenHeight * 0.04,
+                    marginTop: 3,
+                    paddingLeft: 10
+                  }}
+                />
+              </View>
+            ) : (
+              <View />
+            )}
           </View>
 
           <View style={{ alignItems: "center", marginTop: 25 }}>

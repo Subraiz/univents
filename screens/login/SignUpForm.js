@@ -34,16 +34,16 @@ const screenHeight = Dimensions.get("window").height;
 
 class SignUpForm extends Component {
   onButtonPress = async () => {
-    //this.props.navigation.navigate("SignUpPersonalInfo");
-    await this.props.checkForSignUpErrors(this.props.user);
-
-    if (this.props.error == "No Error") {
-      await this.props.signUpUser(this.props.email, this.props.password);
-      if (this.props.uid) {
-        this.props.saveUser(this.props.user);
-        this.props.navigation.navigate("SignUpPersonalInfo");
-      }
-    }
+    this.props.navigation.navigate("SignUpPersonalInfo");
+    // await this.props.checkForSignUpErrors(this.props.user);
+    //
+    // if (this.props.error == "No Error") {
+    //   await this.props.signUpUser(this.props.email, this.props.password);
+    //   if (this.props.uid) {
+    //     this.props.saveUser(this.props.user);
+    //     this.props.navigation.navigate("SignUpPersonalInfo");
+    //   }
+    // }
   };
 
   static navigationOptions = {

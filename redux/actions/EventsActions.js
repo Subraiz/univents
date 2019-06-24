@@ -131,7 +131,8 @@ export const fetchEvents = (state, user, type) => {
               eventContact: event.eventContact,
               eventID: event.eventID,
               eventData: event.eventData,
-              eventOrder: event.eventOrder
+              eventOrder: event.eventOrder,
+              eventLinks: event.eventLinks
             };
 
             // Stop getting events once it hits the first event which is out of date

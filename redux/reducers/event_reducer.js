@@ -3,6 +3,7 @@ import * as T from "../actions/types";
 const INITIAL_STATE = {
   eventName: "",
   eventDescription: "",
+  eventLinks: [],
   eventDate: {
     month: "",
     day: "",

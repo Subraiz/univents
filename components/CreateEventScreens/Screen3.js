@@ -43,7 +43,8 @@ class Screen3 extends Component {
       this.props.eventType,
       this.props.eventImage,
       this.props.eventContact,
-      this.props.eventID
+      this.props.eventID,
+      this.props.eventLinks
     );
   }
 
@@ -159,7 +160,8 @@ const mapStateToProps = state => {
     eventImage,
     eventContact,
     eventID,
-    tempEventImage
+    tempEventImage,
+    eventLinks
   } = state.event;
   return {
     event: state.event,
@@ -175,6 +177,7 @@ const mapStateToProps = state => {
     eventImage,
     eventContact,
     eventID,
+    eventLinks,
     uid: state.user.uid,
     tempEventImage,
     user: state.user,

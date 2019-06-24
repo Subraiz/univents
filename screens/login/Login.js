@@ -94,7 +94,7 @@ class Login extends Component {
                   left: 10
                 }}
               >
-                <Text style={{ color: "white", fontSizie: 16 }}>
+                <Text style={{ color: "white", fontSize: 10 }}>
                   Photo By: @Nikkita.Photo
                 </Text>
               </View>

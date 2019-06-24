@@ -117,6 +117,7 @@ class Explore extends Component {
       opacity: 1,
       modalAnimation: "slideInUp"
     });
+    this.child.resetPosition();
   }
 
   onListItemPress(item) {
@@ -279,6 +280,8 @@ class Explore extends Component {
             events={this.props.todaysEvents}
           />
           <Deck
+            onRef={ref => (this.child = ref)}
+            {...this.props}
             navigation={this.props.navigation}
             events={this.props.events}
             onIconPress={this.onExploreIconPress.bind(this)}
