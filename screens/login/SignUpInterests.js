@@ -41,6 +41,10 @@ class SignUpInterests extends Component {
     let user = this.props.user;
     user.interest = this.state.likedInterests;
     await this.props.fetchEvents("MA", user);
+    console.log("Clear interests");
+    this.props.categories.forEach(interest => {
+      interest.selected = false;
+    });
     this.props.navigation.navigate("AppNavigator");
   }
 

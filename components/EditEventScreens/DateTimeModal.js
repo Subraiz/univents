@@ -345,8 +345,8 @@ const styles = {
     justifyContent: "center",
     width: 100,
     height: 40,
-    borderTopLeftRadius: 50,
-    borderTopRightRadius: 50,
+    borderTopLeftRadius: 80,
+    borderTopRightRadius: 80,
     backgroundColor: "white"
   }
 };

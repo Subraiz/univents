@@ -10,7 +10,8 @@ import {
   Keyboard,
   FlatList,
   TextInput,
-  Linking
+  Linking,
+  ScrollView
 } from "react-native";
 import SCHOOLS from "../../constants/schools";
 import { connect } from "react-redux";
@@ -117,6 +118,7 @@ class SelectSchool extends Component {
       return (
         <FlatList
           showsHorizontalScrollIndicator={false}
+          keyboardShouldPersistTaps={"handled"}
           paddingEnabled
           horizontal={true}
           data={this.state.schools}
@@ -160,6 +162,7 @@ class SelectSchool extends Component {
             placeholder="School Name"
           />
         </View>
+
         <View style={styles.schoolsContainer}>{this.renderList()}</View>
         <View style={styles.buttonContainer}>{this.renderButton()}</View>
       </KeyboardAvoidingView>

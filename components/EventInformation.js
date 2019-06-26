@@ -533,7 +533,12 @@ class EventInformation extends Component {
                 </View>
                 <View style={styles.locationInformation}>
                   <Text
-                    style={{ fontSize: 19, color: "black", fontWeight: "600" }}
+                    style={{
+                      fontSize: 19,
+                      color: "black",
+                      fontWeight: "600",
+                      width: screenWidth * 0.9
+                    }}
                   >
                     {event.eventLocation.locationName.trim()}
                   </Text>
@@ -647,7 +652,7 @@ const styles = {
   eventNameStyle: {
     fontSize: 22,
     fontWeight: "700",
-    width: screenWidth * 0.75
+    width: screenWidth * 0.7
   },
   eventHostTextStyle: {
     color: "grey",

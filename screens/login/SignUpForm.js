@@ -64,7 +64,6 @@ class SignUpForm extends Component {
   };
 
   componentWillMount() {
-    console.log(this.props.school);
     for (var i = 0; i < SCHOOLS.length; i++) {
       let school = SCHOOLS[i];
       if (

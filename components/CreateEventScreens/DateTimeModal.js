@@ -285,10 +285,10 @@ const styles = {
     alignSelf: "center",
     alignItems: "center",
     justifyContent: "center",
-    width: 100,
+    width: 80,
     height: 40,
-    borderTopLeftRadius: 50,
-    borderTopRightRadius: 50,
+    borderTopLeftRadius: 80,
+    borderTopRightRadius: 80,
     backgroundColor: "white"
   }
 };
