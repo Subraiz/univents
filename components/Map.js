@@ -10,9 +10,11 @@ import {
   StyleSheet,
   TouchableOpacity
 } from "react-native";
+import Event from "../classes/Event";
+import CacheImage from "./common/CacheImage";
 import MapView, { Marker, Callout } from "react-native-maps";
 import Icon from "react-native-vector-icons/Ionicons";
-import Event from "../classes/Event";
+
 import * as Animatable from "react-native-animatable";
 
 const screenWidth = Dimensions.get("window").width;
@@ -35,6 +37,7 @@ class Map extends Component {
     selectedEvent: null
   };
 
+  // Update the maps view area whenever the user drags around the screen.
   onRegionChange(mapRegion, lastLat, lastLong) {
     this.setState({
       mapRegion: mapRegion,
@@ -43,6 +46,7 @@ class Map extends Component {
     });
   }
 
+  // Animate the map to go return to the users location.
   onLocatePress() {
     this.map.animateToRegion(this.currentUserLocation, 1000);
   }
@@ -51,6 +55,8 @@ class Map extends Component {
     this.requestLocationPermission();
   }
 
+  // Get users current location and check if we have permission to.
+  // Also set the coordinates of the map to match users current location.
   async requestLocationPermission() {
     try {
       const granted =
@@ -67,6 +73,7 @@ class Map extends Component {
         this.watchId = navigator.geolocation.watchPosition(
           position => {
             const { latitude, longitude } = position.coords;
+            // Set region to match user's region
             let region = {
               latitude,
               longitude,
@@ -93,11 +100,31 @@ class Map extends Component {
   }
 
   componentWillUnmount() {
-    navigator.geolocation.clearWatch(this.watchId);
+    navigator.geolocation.clearWatch(this.watchId); // Stop tracking users location
   }
 
+  // Function to create the pin drops for all events occurring today
   createMarkers() {
     return this.props.events.map(event => {
+      let eventPin = {};
+      // Set the proper event pin (different schools have different pins)
+      if (event.eventPin != undefined) {
+        if (event.eventType.trim().toLowerCase() == "special") {
+          eventPin = {
+            uri:
+              "https://firebasestorage.googleapis.com/v0/b/univents-a5f76.appspot.com/o/Pins%2FsplurgePin.png?alt=media&token=4d159e75-129c-4df6-9363-fd778abfff84"
+          };
+        } else {
+          eventPin = event.eventPin;
+        }
+      } else {
+        eventPin = {
+          uri:
+            "https://firebasestorage.googleapis.com/v0/b/univents-a5f76.appspot.com/o/Pins%2FsplurgePin.png?alt=media&token=4d159e75-129c-4df6-9363-fd778abfff84"
+        };
+      }
+
+      // Generate the marker for the event
       if (event.eventID != undefined) {
         return (
           <Marker
@@ -109,13 +136,11 @@ class Map extends Component {
               animation="fadeInDown"
               style={{ width: 35, height: 35 }}
             >
-              <Image
-                source={require("../assets/images/bostonCollegePin.png")}
+              <CacheImage
+                uri={eventPin.uri}
                 style={{
-                  width: null,
-                  height: null,
-                  flex: 1,
-                  resizeMode: "contain"
+                  width: 25,
+                  height: 30
                 }}
               />
             </Animatable.View>
@@ -125,6 +150,7 @@ class Map extends Component {
     });
   }
 
+  // Animate in the little square in bottom left screen for event preview
   onMarkerPress(event) {
     this.setState({
       opacity: 1,
@@ -134,10 +160,12 @@ class Map extends Component {
     this.renderMoreInfo();
   }
 
+  // Direct user to the event information screen.
   onEventPress() {
     if (this.state.selectedEvent != null) {
       let data = this.state.selectedEvent;
       this.setState({ animation: "slideOutLeft" });
+      // Pass in data of the event so the event infromation screen knows what to render.
       setTimeout(() => {
         this.props.navigation.navigate("EventInformation", {
           data: data,
@@ -151,6 +179,7 @@ class Map extends Component {
     return (
       <View>
         <MapView
+          /*This bit of code hides the event square preview if the user drags anywhere else on the map */
           onMoveShouldSetResponder={event => {
             if (
               event.nativeEvent.locationX < screenWidth * 0.5 &&
@@ -178,6 +207,8 @@ class Map extends Component {
         >
           {this.createMarkers()}
         </MapView>
+
+        {/* Return to users original location view box */}
         <View
           style={{
             position: "absolute",
@@ -222,7 +253,8 @@ class Map extends Component {
     );
   }
 
-  // Card to show more info on the map
+  // Card to show more info on the map - gets the current selected event and pops it up on the screen
+  // Move this to it's own component for code clean up!
   renderMoreInfo() {
     let eventDate = "";
     let eventName = "";

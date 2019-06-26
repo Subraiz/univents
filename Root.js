@@ -17,6 +17,7 @@ require("@firebase/auth");
 import SplashScreen from "./screens/SplashScreen";
 
 import Login from "./screens/login/Login";
+import SelectSchool from "./screens/login/SelectSchool";
 import SignUpForm from "./screens/login/SignUpForm";
 import SignUpPersonalInfo from "./screens/login/SignUpPersonalInfo";
 import SignUpProfilePhoto from "./screens/login/SignUpProfilePhoto";
@@ -48,6 +49,7 @@ const LoginStack = createStackNavigator(
   {
     Login: Login,
     CreateEvent: CreateEvent,
+    SelectSchool: SelectSchool,
     SignUpForm: SignUpForm,
     SignUpPersonalInfo: SignUpPersonalInfo,
     SignUpProfilePhoto: SignUpProfilePhoto,
@@ -74,6 +76,7 @@ const HomeStack = createStackNavigator(
   {
     Login: Login,
     CreateEvent: CreateEvent,
+    SelectSchool: SelectSchool,
     SignUpForm: SignUpForm,
     SignUpPersonalInfo: SignUpPersonalInfo,
     SignUpProfilePhoto: SignUpProfilePhoto,

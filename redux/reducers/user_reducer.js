@@ -18,7 +18,7 @@ const INITIAL_STATE = {
   major: "",
   year: "Junior",
   sex: "",
-  school: "Boston College",
+  school: "",
   uid: "",
   endorsed: false,
   emailVerified: false

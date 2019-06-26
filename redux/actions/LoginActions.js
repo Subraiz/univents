@@ -69,13 +69,14 @@ export const getUser = uid => {
   };
 };
 
-export const checkForSignUpErrors = user => {
+export const checkForSignUpErrors = (user, emailExtension) => {
   initializeFirebase();
-  if (!validEmail(user.email)) {
+  if (!validEmail(user.email, emailExtension)) {
     return dispatch => {
       dispatch({ type: T.USER_SIGNUP_ERROR, payload: "invalidEmail" });
     };
   }
+
   if (user.password.length < 6) {
     return dispatch => {
       console.log("password error");
@@ -253,8 +254,8 @@ export const uploadImage = (uri, mime, name) => {
   };
 };
 
-const validEmail = email => {
-  if (email.includes("edu") && email.includes("@")) {
+const validEmail = (email, emailExtension) => {
+  if (email.includes(emailExtension) && email.includes("@")) {
     return true;
   } else {
     return false;

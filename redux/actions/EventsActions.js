@@ -82,6 +82,7 @@ export const fetchEvents = (state, user, type) => {
   // Check if user is logged in
   if (user) {
     studentInterests = user.interests;
+    studentSchool = user.school.toLowerCase().trim();
   }
 
   return async dispatch => {
@@ -100,10 +101,14 @@ export const fetchEvents = (state, user, type) => {
         data.docs.some(doc => {
           let pastEvent = false;
           let event = doc.data();
-
-          if (!event.canceled) {
+          if (
+            !event.canceled &&
+            (event.eventType.trim().toLowerCase() === studentSchool ||
+              event.eventType === "Public" ||
+              event.eventType === "Special")
+          ) {
             let eventCategories = event.eventCategories;
-
+            console.log(studentSchool, event.eventType);
             // Check if event categories match users interests or if event is checked as popular
             let commonInterest = eventCategories.some(
               category => studentInterests.indexOf(category) >= 0
@@ -128,6 +133,7 @@ export const fetchEvents = (state, user, type) => {
               eventTime: event.eventTime,
               eventType: event.eventType,
               eventImage: event.eventImage,
+              eventPin: event.eventPin,
               eventContact: event.eventContact,
               eventID: event.eventID,
               eventData: event.eventData,

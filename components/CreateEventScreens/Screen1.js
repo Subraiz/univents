@@ -17,10 +17,12 @@ import * as Animatable from "react-native-animatable";
 import DateTimeModal from "./DateTimeModal";
 import LocationModal from "./LocationModal";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import SegmentedControlTab from "react-native-segmented-control-tab";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { updateEventInfo } from "../../redux/actions/EventActions";
 import { getCategories } from "../../redux/actions/SettingsActions";
+import SCHOOLS from "../../constants/schools";
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
@@ -31,21 +33,36 @@ const CardSection = props => {
 
 class Screen1 extends Component {
   state = {
-    switchValue: true,
+    switchValue: false,
     showDateTimeModal: false,
-    showLocationModal: false
+    showLocationModal: false,
+    eventPinUrl: SCHOOLS.find(school => school.school === this.props.school)
+      .eventPin,
+    selectedIndex: 0
   };
 
-  componentWillMount() {}
-
-  onSwitchValueChange() {
-    this.setState({ switchValue: !this.state.switchValue });
-    if (!this.state.switchValue) {
-      this.props.updateEventInfo({ prop: "eventType", value: "Public" });
-    } else {
-      this.props.updateEventInfo({ prop: "eventType", value: "School" });
-    }
+  componentWillMount() {
+    this.props.updateEventInfo({
+      prop: "eventPin",
+      value: { uri: this.state.eventPinUrl }
+    });
+    this.props.updateEventInfo({
+      prop: "eventType",
+      value: this.props.school.trim()
+    });
   }
+
+  handleIndexChange = index => {
+    this.setState({ selectedIndex: index });
+    if (index == 0) {
+      this.props.updateEventInfo({
+        prop: "eventType",
+        value: this.props.school.trim()
+      });
+    } else {
+      this.props.updateEventInfo({ prop: "eventType", value: "Public" });
+    }
+  };
 
   onChangeText(text) {
     this.props.updateEventInfo({
@@ -62,7 +79,7 @@ class Screen1 extends Component {
     ) {
       return (
         <TouchableOpacity onPress={this.onShowDateTimeModal.bind(this)}>
-          <Text style={{ color: "blue" }}>Date/Time</Text>
+          <Text style={{ color: "#147efb" }}>Date/Time</Text>
         </TouchableOpacity>
       );
     } else {
@@ -111,7 +128,7 @@ class Screen1 extends Component {
     if (this.props.eventLocation.locationAddress == "") {
       return (
         <TouchableOpacity onPress={this.onShowLocationModal.bind(this)}>
-          <Text style={{ color: "blue" }}>Location Address</Text>
+          <Text style={{ color: "#147efb" }}>Location Address</Text>
         </TouchableOpacity>
       );
     } else {
@@ -206,10 +223,10 @@ class Screen1 extends Component {
                     alignItems: "center"
                   }}
                 >
-                  <Text>{this.props.eventType}</Text>
-                  <Switch
-                    value={this.state.switchValue}
-                    onValueChange={this.onSwitchValueChange.bind(this)}
+                  <SegmentedControlTab
+                    values={[`${this.props.school}`, "Public"]}
+                    selectedIndex={this.state.selectedIndex}
+                    onTabPress={this.handleIndexChange.bind(this)}
                   />
                 </View>
               </CardSection>
@@ -306,7 +323,8 @@ const mapStateToProps = state => {
     eventCoordinates: eventCoordinates,
     eventLocation: eventLocation,
     eventHost: eventHost,
-    eventContact: eventContact
+    eventContact: eventContact,
+    school: state.user.school
   };
 };
 

@@ -60,7 +60,7 @@ class Login extends Component {
     if (login) {
       this.props.navigation.navigate("LoginForm");
     } else {
-      this.props.navigation.navigate("SignUpForm");
+      this.props.navigation.navigate("SelectSchool");
     }
   };
 

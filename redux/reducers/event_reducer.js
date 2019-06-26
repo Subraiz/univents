@@ -28,6 +28,10 @@ const INITIAL_STATE = {
     uri:
       "http://aooevents.com/wp-content/themes/invictus_3.3/images/dummy-image.jpg"
   },
+  eventPin: {
+    uri:
+      "https://firebasestorage.googleapis.com/v0/b/univents-a5f76.appspot.com/o/Pins%2FsplurgePin.png?alt=media&token=4d159e75-129c-4df6-9363-fd778abfff84"
+  },
   eventContact: "",
   eventID: "",
   tempEventImage: {

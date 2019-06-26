@@ -47,7 +47,8 @@ class EditEventModal extends Component {
       eventID,
       eventImage,
       tempEventImage,
-      eventType
+      eventType,
+      eventPin
     } = this.props.event;
 
     this.initialState = {
@@ -68,6 +69,7 @@ class EditEventModal extends Component {
       eventImage,
       tempEventImage,
       eventType,
+      eventPin,
       showLocationModal: false,
       showDateTimeModal: false,
       dateChanged: false,
@@ -91,6 +93,7 @@ class EditEventModal extends Component {
       eventImage,
       tempEventImage,
       eventType,
+      eventPin,
       showLocationModal: false,
       showDateTimeModal: false,
       dateChanged: false,
@@ -254,7 +257,8 @@ class EditEventModal extends Component {
         eventID: this.state.eventID,
         eventImage: this.state.eventImage,
         tempEventImage: "",
-        eventType: this.state.eventType
+        eventType: this.state.eventType,
+        eventPin: this.state.eventPin
       };
       this.animation.play();
       await this.props.updateEventData(event, "MA");

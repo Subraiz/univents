@@ -19,6 +19,7 @@ import {
   FormInput,
   FormValidationMessage
 } from "react-native-elements";
+import SCHOOLS from "../../constants/schools";
 import { Button } from "../../components/common";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -33,19 +34,6 @@ const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
 
 class SignUpForm extends Component {
-  onButtonPress = async () => {
-    this.props.navigation.navigate("SignUpPersonalInfo");
-    // await this.props.checkForSignUpErrors(this.props.user);
-    //
-    // if (this.props.error == "No Error") {
-    //   await this.props.signUpUser(this.props.email, this.props.password);
-    //   if (this.props.uid) {
-    //     this.props.saveUser(this.props.user);
-    //     this.props.navigation.navigate("SignUpPersonalInfo");
-    //   }
-    // }
-  };
-
   static navigationOptions = {
     title: "Create An Account",
     gesturesEnabled: false,
@@ -71,11 +59,44 @@ class SignUpForm extends Component {
     )
   };
 
+  state = {
+    emailExtension: "@"
+  };
+
+  componentWillMount() {
+    console.log(this.props.school);
+    for (var i = 0; i < SCHOOLS.length; i++) {
+      let school = SCHOOLS[i];
+      if (
+        school.school.trim().toLowerCase() ==
+        this.props.school.trim().toLowerCase()
+      ) {
+        this.setState({ emailExtension: school.email });
+      }
+    }
+  }
+
+  onButtonPress = async () => {
+    //this.props.navigation.navigate("SignUpPersonalInfo");
+    await this.props.checkForSignUpErrors(
+      this.props.user,
+      this.state.emailExtension
+    );
+
+    if (this.props.error == "No Error") {
+      await this.props.signUpUser(this.props.email, this.props.password);
+      if (this.props.uid) {
+        this.props.saveUser(this.props.user);
+        this.props.navigation.navigate("SignUpPersonalInfo");
+      }
+    }
+  };
+
   renderErrorEmailMessage() {
     if (this.props.error == "invalidEmail") {
       return (
         <FormValidationMessage>
-          Please enter a valid email
+          Please enter your proper school email
         </FormValidationMessage>
       );
     } else if (this.props.error == "inUseEmail") {
@@ -220,7 +241,8 @@ const mapStateToProps = state => {
     error: state.user.error,
     uid: state.user.uid,
     firstName: state.user.firstName,
-    lastName: state.user.lastName
+    lastName: state.user.lastName,
+    school: state.user.school
   };
 };
 
