@@ -64,7 +64,7 @@ const schools = [
   },
   {
     school: "Northeastern University",
-    email: "northeastern.edu",
+    email: "neu.edu",
     logo: require("../assets/images/logos/northeastern.png"),
     eventPin:
       "https://firebasestorage.googleapis.com/v0/b/univents-a5f76.appspot.com/o/Pins%2FnortheasternPin.png?alt=media&token=e13f48c5-ac1c-475e-8fb1-d59fd3634af3"

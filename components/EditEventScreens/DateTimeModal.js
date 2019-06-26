@@ -238,7 +238,7 @@ class DateTimeModal extends Component {
             activeOpacity={0.8}
             onPress={this.onCloseModal.bind(this)}
           >
-            <Icon name="close" color="navy" />
+            <Icon name="check" color="navy" />
           </TouchableOpacity>
           <View
             style={{

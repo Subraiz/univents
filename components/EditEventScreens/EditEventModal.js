@@ -258,7 +258,7 @@ class EditEventModal extends Component {
         eventImage: this.state.eventImage,
         tempEventImage: "",
         eventType: this.state.eventType,
-        eventPin: this.state.eventPin
+        eventPin: this.state.eventPin || ""
       };
       this.animation.play();
       await this.props.updateEventData(event, "MA");

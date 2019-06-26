@@ -108,7 +108,7 @@ class Map extends Component {
     return this.props.events.map(event => {
       let eventPin = {};
       // Set the proper event pin (different schools have different pins)
-      if (event.eventPin != undefined) {
+      if (event.eventPin != undefined && event.eventPin != "") {
         if (event.eventType.trim().toLowerCase() == "special") {
           eventPin = {
             uri:

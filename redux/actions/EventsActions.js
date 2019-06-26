@@ -108,7 +108,6 @@ export const fetchEvents = (state, user, type) => {
               event.eventType === "Special")
           ) {
             let eventCategories = event.eventCategories;
-            console.log(studentSchool, event.eventType);
             // Check if event categories match users interests or if event is checked as popular
             let commonInterest = eventCategories.some(
               category => studentInterests.indexOf(category) >= 0
