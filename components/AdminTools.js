@@ -13,7 +13,8 @@ import {
   addUserAttended,
   getYearData,
   getSexData,
-  getTimeData
+  getTimeData,
+  getSchoolData
 } from "../classes/EventFunctions";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -68,6 +69,7 @@ class AdminTools extends Component {
       this.timeData = getTimeData(event);
       this.sexData = getSexData(event);
       this.yearData = getYearData(event);
+      this.schoolData = getSchoolData(event);
     }
   }
 
@@ -144,6 +146,7 @@ class AdminTools extends Component {
               alignment="start"
               x="time"
               y="earnings"
+              domain={{ y: [0, event.eventData.currentAttendance] }}
             />
           </VictoryChart>
         </View>
@@ -163,7 +166,7 @@ class AdminTools extends Component {
           />
         </View>
       );
-    } else {
+    } else if (item.item == "Year") {
       return (
         <View style={styles.container}>
           <VictoryPie
@@ -178,6 +181,21 @@ class AdminTools extends Component {
           />
         </View>
       );
+    } else {
+      return (
+        <View style={styles.container}>
+          <VictoryPie
+            innerRadius={5}
+            labelRadius={20}
+            width={screenWidth}
+            height={screenWidth * 1.3}
+            style={{
+              labels: { fill: "white", fontSize: 13, fontWeight: "500" }
+            }}
+            data={this.schoolData}
+          />
+        </View>
+      );
     }
   }
 
@@ -187,20 +205,20 @@ class AdminTools extends Component {
         <View>
           <View
             style={{
-              width: screenWidth * 0.75,
+              width: screenWidth * 0.95,
               marginTop: 20,
               alignSelf: "center"
             }}
           >
             <SegmentedControlTab
-              values={["Attendance", "Sex", "Class Year"]}
+              values={["Attendance", "Sex", "Class Year", "School"]}
               selectedIndex={this.state.selectedIndex}
               onTabPress={this.handleIndexChange.bind(this)}
             />
           </View>
           <FlatList
             ref={dataList => (this.dataList = dataList)}
-            data={["Attendance", "Sex", "Year"]}
+            data={["Attendance", "Sex", "Year", "School"]}
             renderItem={(item, index) => this.renderDataTab(item, index)}
             horizontal={true}
             keyExtractor={(item, index) => index.toString()}

@@ -1,3 +1,5 @@
+import SCHOOLS from "../constants/schools";
+
 export const addUserAttended = (event, user) => {
   let eventData = event.eventData;
   let date = new Date();
@@ -16,9 +18,32 @@ export const addUserAttended = (event, user) => {
 };
 
 // Data functions
+export const getSchoolData = event => {
+  let eventData = event.eventData;
+  let data = [];
+  let schoolData = {};
+  SCHOOLS.forEach(school => {
+    let schoolName = school.school;
+    schoolData[schoolName] = [];
+  });
+  eventData.usersAttended.forEach(user => {
+    let email = user.email.split("@")[1].trim();
+    let school = SCHOOLS.find(school => school.email === email);
+    schoolData[school.school].push(user);
+  });
+
+  let total = eventData.currentAttendance + 0.0;
+  for (let school in schoolData) {
+    if (schoolData[school].length > 0) {
+      data.push({ x: school, y: schoolData[school].length });
+    }
+  }
+  return data;
+};
+
 export const getSexData = event => {
   let eventData = event.eventData;
-  let data = {};
+  let data = [];
   let sexData = {
     males: [],
     females: [],
@@ -39,8 +64,6 @@ export const getSexData = event => {
   let maleRatio = sexData.males.length / total;
   let femaleRatio = sexData.females.length / total;
   let otherRatio = sexData.other.length / total;
-
-  data = [];
 
   let numbers = [
     { title: "Males", data: sexData.males.length },
@@ -67,14 +90,14 @@ export const getYearData = event => {
   };
 
   eventData.usersAttended.forEach(user => {
-    if (user.year.toLowerCase() == "freshman") {
+    if (user.year.toLowerCase().trim() == "freshman") {
       yearData.freshman.push(user);
-    } else if (user.year.toLowerCase() == "sophomore") {
+    } else if (user.year.toLowerCase().trim() == "sophomore") {
       yearData.sophomore.push(user);
-    } else if (user.year.toLowerCase() == "junior") {
+    } else if (user.year.toLowerCase().trim() == "junior") {
       yearData.junior.push(user);
-    } else if (user.year.toLowerCase() == "senior") {
-      yearData.junior.push(user);
+    } else if (user.year.toLowerCase().trim() == "senior") {
+      yearData.senior.push(user);
     }
   });
 

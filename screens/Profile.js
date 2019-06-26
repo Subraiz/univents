@@ -36,8 +36,6 @@ const HEADER_MIN_HEIGHT = 70;
 const PROFILE_IMAGE_MAX_HEIGHT = 80;
 const PROFILE_IMAGE_MIN_HEIGHT = 40;
 
-let userStringInfo;
-
 const Row = ({ title, sections }) => {
   function renderSections() {
     return sections.map((section, i) => {
@@ -101,6 +99,7 @@ class Profile extends Component {
   constructor(props) {
     super(props);
     this.AccountSettings;
+    this.userStringInfo;
   }
 
   state = {
@@ -170,7 +169,7 @@ class Profile extends Component {
       }
     });
     major = major.replace(/\s/g, "");
-    userStringInfo = `${firstName} ${lastName} ${email} ${major} ${year} ${sex} ${ethnicity} ${uid} ${interestString}`;
+    this.userStringInfo = `${firstName.trim()} ${lastName.trim()} ${email.trim()} ${major.trim()} ${year.trim()} ${sex.trim()} ${uid.trim()} ${interestString}`;
     this.props.refreshEmailVerified();
   }
 
@@ -251,7 +250,7 @@ class Profile extends Component {
       outputRange: [0, 0, 0, 1],
       extrapolate: "clamp"
     });
-
+    console.log(this.userStringInfo);
     return (
       <View style={styles.container}>
         <Animated.View
@@ -469,7 +468,7 @@ class Profile extends Component {
         </ScrollView>
 
         <QRCodeModal
-          value={userStringInfo}
+          value={this.userStringInfo}
           visible={this.state.showModal}
           onPress={this.renderModal.bind(this)}
         />

@@ -33,9 +33,8 @@ class QRCodeScannerModal extends Component {
         major: dataArray[3],
         year: dataArray[4],
         sex: dataArray[5],
-        ethnicity: dataArray[6],
-        uid: dataArray[7],
-        interests: dataArray[8]
+        uid: dataArray[6],
+        interests: dataArray[7]
       };
       if (userData.uid) {
         this.props.onRead(userData);

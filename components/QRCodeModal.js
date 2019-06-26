@@ -7,7 +7,6 @@ const screenWidth = Dimensions.get("window").width;
 
 const QRCodeModal = ({ children, visible, onPress, value }) => {
   const { containerStyle, textStyle, cardSectionStyle } = styles;
-
   return (
     <Modal
       visible={visible}

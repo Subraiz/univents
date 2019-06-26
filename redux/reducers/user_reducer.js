@@ -17,7 +17,7 @@ const INITIAL_STATE = {
   },
   major: "",
   year: "Junior",
-  sex: "",
+  sex: "male",
   school: "",
   uid: "",
   endorsed: false,
