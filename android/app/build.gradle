@@ -202,6 +202,10 @@ dependencies {
     implementation ('com.google.android.gms:play-services-vision:12.0.1') {
         force = true
     }
+    implementation "com.google.firebase:firebase-core:15.0.2"
+    implementation "com.google.firebase:firebase-messaging:15.0.2"
+
+
 }
 }
 
@@ -211,3 +215,6 @@ task copyDownloadableDepsToLibs(type: Copy) {
     from configurations.compile
     into 'libs'
 }
+
+apply plugin: 'com.google.gms.google-services'
+com.google.gms.googleservices.GoogleServicesPlugin.config.disableVersionCheck = true

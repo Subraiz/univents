@@ -58,7 +58,7 @@ private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
 
         @Override
         protected String getJSMainModuleName() {
-                return "index.android";
+                return "index";
         }
 
 

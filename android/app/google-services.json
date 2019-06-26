@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "106554497811",
+    "firebase_url": "https://univents-a5f76.firebaseio.com",
+    "project_id": "univents-a5f76",
+    "storage_bucket": "univents-a5f76.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:106554497811:android:0f9aff35d8777eb0",
+        "android_client_info": {
+          "package_name": "com.SplurgeLLC"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "106554497811-pa118el1oll6v0itge251qbu9r6c82cv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdj_8rM5D1pCYJe-F1dOcEFwrOG8sc07E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "106554497811-pa118el1oll6v0itge251qbu9r6c82cv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "106554497811-1f7god1vcpm2n3mlg6jbrf9lsa3918d8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "splurge.events.com"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
