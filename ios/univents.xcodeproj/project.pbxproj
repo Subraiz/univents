@@ -38,6 +38,8 @@
 		2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
 		5D090F6B21A52E7D00CE4E13 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D090F6A21A52E6900CE4E13 /* libRNImagePicker.a */; };
 		5D0B3320219BF79300A3A903 /* libRNCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D0B331F219BF78800A3A903 /* libRNCamera.a */; };
+		5D3881FC22C47E8100E37450 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D3881F922C47E4500E37450 /* UserNotifications.framework */; };
+		5D3882D022C4833500E37450 /* libRNFirebase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D3881F322C47DFA00E37450 /* libRNFirebase.a */; };
 		5D4D18FA21C1AA2100ADC0B8 /* libLottie.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D4D18C521C1A9F700ADC0B8 /* libLottie.a */; };
 		5D4D18FB21C1AA2700ADC0B8 /* libLottieReactNative.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D4D18F921C1AA1600ADC0B8 /* libLottieReactNative.a */; };
 		5D4D18FC21C1AA4600ADC0B8 /* Lottie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D4D18BF21C1A9F700ADC0B8 /* Lottie.framework */; };
@@ -561,6 +563,7 @@
 		5D090F3C21A52E6900CE4E13 /* RNImagePicker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNImagePicker.xcodeproj; path = "../node_modules/react-native-image-picker/ios/RNImagePicker.xcodeproj"; sourceTree = "<group>"; };
 		5D0B32F4219BF78800A3A903 /* RNCamera.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNCamera.xcodeproj; path = "../node_modules/react-native-camera/ios/RNCamera.xcodeproj"; sourceTree = "<group>"; };
 		5D3881BD22C47DFA00E37450 /* RNFirebase.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNFirebase.xcodeproj; path = "../node_modules/react-native-firebase/ios/RNFirebase.xcodeproj"; sourceTree = "<group>"; };
+		5D3881F922C47E4500E37450 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		5D4D18B521C1A9F700ADC0B8 /* Lottie.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Lottie.xcodeproj; path = "../node_modules/lottie-ios/Lottie.xcodeproj"; sourceTree = "<group>"; };
 		5D4D18F421C1AA1600ADC0B8 /* LottieReactNative.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LottieReactNative.xcodeproj; path = "../node_modules/lottie-react-native/src/ios/LottieReactNative.xcodeproj"; sourceTree = "<group>"; };
 		5D4D191421C1F0F000ADC0B8 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
@@ -662,6 +665,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D3882D022C4833500E37450 /* libRNFirebase.a in Frameworks */,
 				5DBC154022532A42008B2037 /* libz.tbd in Frameworks */,
 				5DBC154222532ABD008B2037 /* libCodePush.a in Frameworks */,
 				5D4D18FB21C1AA2700ADC0B8 /* libLottieReactNative.a in Frameworks */,
@@ -689,6 +693,7 @@
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				5DC955B121A49F5700969920 /* libRCTCameraRoll.a in Frameworks */,
 				601933D42F6B3803C592FB61 /* libPods-univents.a in Frameworks */,
+				5D3881FC22C47E8100E37450 /* UserNotifications.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -837,6 +842,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5D3881F922C47E4500E37450 /* UserNotifications.framework */,
 				5DBC153F22532A42008B2037 /* libz.tbd */,
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
 				D37F26C78135EC8905551E54 /* libPods-univents.a */,
@@ -1926,7 +1932,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-univents/Pods-univents-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-univents/Pods-univents-resources.sh",
 				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
@@ -1937,7 +1943,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-univents/Pods-univents-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-univents/Pods-univents-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -2090,6 +2096,7 @@
 					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/**",
 					"$(SRCROOT)/../../React/**",
 					"$(SRCROOT)/../react-native/React/**",
+					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 				);
 				INFOPLIST_FILE = univents/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -2097,6 +2104,8 @@
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
+					"$(OTHER_LDFLAGS)",
+					"-ObjC",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = splurge.events.com;
 				PRODUCT_NAME = univents;
@@ -2120,6 +2129,7 @@
 					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/**",
 					"$(SRCROOT)/../../React/**",
 					"$(SRCROOT)/../react-native/React/**",
+					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 				);
 				INFOPLIST_FILE = univents/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -2127,6 +2137,8 @@
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
+					"$(OTHER_LDFLAGS)",
+					"-ObjC",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = splurge.events.com;
 				PRODUCT_NAME = univents;
