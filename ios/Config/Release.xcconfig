@@ -1,0 +1,14 @@
+//
+//  Release.xcconfig
+//  univents
+//
+//  Created by Subraiz Ahmed on 6/27/19.
+//  Copyright © 2019 Facebook. All rights reserved.
+//
+
+// Configuration settings file format documentation can be found at:
+// Server URL
+ROOT_URL = KRaJvZSxA6OU6wR7T6iBtMbmioZlByQhu_xFE
+
+// App Settings
+APP_NAME = Splurge

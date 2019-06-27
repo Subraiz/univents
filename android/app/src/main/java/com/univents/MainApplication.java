@@ -42,22 +42,23 @@ private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
 
 
         @Override
-        protected List<ReactPackage> getPackages() { return Arrays.<ReactPackage>asList(
-                new MainReactPackage(),
-                new RNFetchBlobPackage(),
-                new VectorIconsPackage(),
-                new SvgPackage(),
-                new MapsPackage(),
-                new ImagePickerPackage(),
-                new RNFSPackage(),
-                new FastImageViewPackage(),
-                new RNCameraPackage(),
-                new LottiePackage(),
-                new CodePush("T2KHKkNkbXe6eRIOFqqpzy4Lx9khrJMzF_gKE", MainApplication.this, BuildConfig.DEBUG),
-                new RNFirebasePackage(),
-                new RNFirebaseMessagingPackage(),
-                new RNFirebaseNotificationsPackage()
-        );
+        protected List<ReactPackage> getPackages() {
+                return Arrays.<ReactPackage>asList(
+                        new MainReactPackage(),
+                        new RNFetchBlobPackage(),
+                        new VectorIconsPackage(),
+                        new SvgPackage(),
+                        new MapsPackage(),
+                        new ImagePickerPackage(),
+                        new RNFSPackage(),
+                        new FastImageViewPackage(),
+                        new RNCameraPackage(),
+                        new LottiePackage(),
+                        new CodePush("T2KHKkNkbXe6eRIOFqqpzy4Lx9khrJMzF_gKE", MainApplication.this, BuildConfig.DEBUG),
+                        new RNFirebasePackage(),
+                        new RNFirebaseMessagingPackage(),
+                        new RNFirebaseNotificationsPackage()
+                        );
         }
 
 

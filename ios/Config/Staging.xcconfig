@@ -1,0 +1,14 @@
+//
+//  Staging.xcconfig
+//  univents
+//
+//  Created by Subraiz Ahmed on 6/27/19.
+//  Copyright © 2019 Facebook. All rights reserved.
+//
+
+// Configuration settings file format documentation can be found at:
+
+ROOT_URL = r1esdLKTYKLW4glLy-8p3XLg-xHOSkX2u_eFN
+
+// App Settings
+APP_NAME = Splurge (Staging)

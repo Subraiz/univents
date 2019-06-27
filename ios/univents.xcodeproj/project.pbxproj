@@ -39,6 +39,7 @@
 		59D0DBCE14F821571022DFAB /* libPods-univents.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 860010EF772F1AE2D02ADCF0 /* libPods-univents.a */; };
 		5D090F6B21A52E7D00CE4E13 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D090F6A21A52E6900CE4E13 /* libRNImagePicker.a */; };
 		5D0B3320219BF79300A3A903 /* libRNCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D0B331F219BF78800A3A903 /* libRNCamera.a */; };
+		5D2CBDAA22C4A34600078357 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5D2CBDA922C4A34600078357 /* GoogleService-Info.plist */; };
 		5D3881FC22C47E8100E37450 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D3881F922C47E4500E37450 /* UserNotifications.framework */; };
 		5D3882D022C4833500E37450 /* libRNFirebase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D3881F322C47DFA00E37450 /* libRNFirebase.a */; };
 		5D4D18FA21C1AA2100ADC0B8 /* libLottie.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D4D18C521C1A9F700ADC0B8 /* libLottie.a */; };
@@ -61,7 +62,6 @@
 		5D4D193021C1F0F000ADC0B8 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5D4D192121C1F0F000ADC0B8 /* Zocial.ttf */; };
 		5D4D193121C1F0F000ADC0B8 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5D4D192221C1F0F000ADC0B8 /* FontAwesome.ttf */; };
 		5D56E23A21AF76B5008E0167 /* libRNFetchBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D56E23921AF76AE008E0167 /* libRNFetchBlob.a */; };
-		5D5E67DF22C48AAE006D7052 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5D5E67A722C48AAE006D7052 /* GoogleService-Info.plist */; };
 		5D5FCEF521A0CB5300BBE725 /* libReactNativePermissions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D5FCEF321A0CB4500BBE725 /* libReactNativePermissions.a */; };
 		5D7C037A21945C8200A982E9 /* AIRGoogleMapUrlTile.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7C035521945C8200A982E9 /* AIRGoogleMapUrlTile.m */; };
 		5D7C037B21945C8200A982E9 /* AIRGoogleMapPolygonManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7C035821945C8200A982E9 /* AIRGoogleMapPolygonManager.m */; };
@@ -97,7 +97,6 @@
 		5D7C03A92194634500A982E9 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5D7C039A2194634500A982E9 /* EvilIcons.ttf */; };
 		5D7C03AA2194634500A982E9 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5D7C039B2194634500A982E9 /* SimpleLineIcons.ttf */; };
 		5D7C03AB2194634500A982E9 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5D7C039C2194634500A982E9 /* MaterialIcons.ttf */; };
-		5D8AEAE922C493DD00EA156D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5D8AEAB122C493DC00EA156D /* GoogleService-Info.plist */; };
 		5D8F20922198CF7700158BEC /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D8F206C2198CF5800158BEC /* libAirMaps.a */; };
 		5DA362BE21C0BBDC005414F7 /* libRNSVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DA362BB21C0BBD5005414F7 /* libRNSVG.a */; };
 		5DA362C821C15F2C005414F7 /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DA362C721C15F21005414F7 /* libRNFS.a */; };
@@ -565,8 +564,11 @@
 		530EF4984BB4BB45A0588732 /* Pods-univents.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-univents.release.xcconfig"; path = "Target Support Files/Pods-univents/Pods-univents.release.xcconfig"; sourceTree = "<group>"; };
 		5D090F3C21A52E6900CE4E13 /* RNImagePicker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNImagePicker.xcodeproj; path = "../node_modules/react-native-image-picker/ios/RNImagePicker.xcodeproj"; sourceTree = "<group>"; };
 		5D0B32F4219BF78800A3A903 /* RNCamera.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNCamera.xcodeproj; path = "../node_modules/react-native-camera/ios/RNCamera.xcodeproj"; sourceTree = "<group>"; };
+		5D2CBDA922C4A34600078357 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "univents/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5D3881BD22C47DFA00E37450 /* RNFirebase.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNFirebase.xcodeproj; path = "../node_modules/react-native-firebase/ios/RNFirebase.xcodeproj"; sourceTree = "<group>"; };
 		5D3881F922C47E4500E37450 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		5D45C9C322C4A8D900B2D415 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
+		5D45C9C422C4A8E500B2D415 /* Staging.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Staging.xcconfig; sourceTree = "<group>"; };
 		5D4D18B521C1A9F700ADC0B8 /* Lottie.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Lottie.xcodeproj; path = "../node_modules/lottie-ios/Lottie.xcodeproj"; sourceTree = "<group>"; };
 		5D4D18F421C1AA1600ADC0B8 /* LottieReactNative.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LottieReactNative.xcodeproj; path = "../node_modules/lottie-react-native/src/ios/LottieReactNative.xcodeproj"; sourceTree = "<group>"; };
 		5D4D191421C1F0F000ADC0B8 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
@@ -585,7 +587,6 @@
 		5D4D192121C1F0F000ADC0B8 /* Zocial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		5D4D192221C1F0F000ADC0B8 /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		5D56E23421AF76AE008E0167 /* RNFetchBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNFetchBlob.xcodeproj; path = "../node_modules/rn-fetch-blob/ios/RNFetchBlob.xcodeproj"; sourceTree = "<group>"; };
-		5D5E67A722C48AAE006D7052 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5D5FCEC821A0CB4500BBE725 /* ReactNativePermissions.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativePermissions.xcodeproj; path = "../node_modules/react-native-permissions/ios/ReactNativePermissions.xcodeproj"; sourceTree = "<group>"; };
 		5D7C035421945C8200A982E9 /* AIRGoogleMapPolyline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIRGoogleMapPolyline.h; sourceTree = "<group>"; };
 		5D7C035521945C8200A982E9 /* AIRGoogleMapUrlTile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIRGoogleMapUrlTile.m; sourceTree = "<group>"; };
@@ -640,7 +641,6 @@
 		5D7C039A2194634500A982E9 /* EvilIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EvilIcons.ttf; sourceTree = "<group>"; };
 		5D7C039B2194634500A982E9 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SimpleLineIcons.ttf; sourceTree = "<group>"; };
 		5D7C039C2194634500A982E9 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
-		5D8AEAB122C493DC00EA156D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5D8F20672198CF5800158BEC /* AirMaps.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AirMaps.xcodeproj; path = "../node_modules/react-native-maps/lib/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; };
 		5DA362B521C0BBD4005414F7 /* RNSVG.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSVG.xcodeproj; path = "../node_modules/react-native-svg/ios/RNSVG.xcodeproj"; sourceTree = "<group>"; };
 		5DA362BF21C15F20005414F7 /* RNFS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNFS.xcodeproj; path = "../node_modules/react-native-fs/RNFS.xcodeproj"; sourceTree = "<group>"; };
@@ -809,12 +809,13 @@
 		13B07FAE1A68108700A75B9A /* univents */ = {
 			isa = PBXGroup;
 			children = (
+				5D45C9C222C4A8BE00B2D415 /* Config */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
-				5D5E67A722C48AAE006D7052 /* GoogleService-Info.plist */,
+				5D2CBDA922C4A34600078357 /* GoogleService-Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
@@ -877,6 +878,15 @@
 				5D3881F322C47DFA00E37450 /* libRNFirebase.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		5D45C9C222C4A8BE00B2D415 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				5D45C9C322C4A8D900B2D415 /* Release.xcconfig */,
+				5D45C9C422C4A8E500B2D415 /* Staging.xcconfig */,
+			);
+			path = Config;
 			sourceTree = "<group>";
 		};
 		5D4D18B621C1A9F700ADC0B8 /* Products */ = {
@@ -1124,7 +1134,6 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				5D8AEAB122C493DC00EA156D /* GoogleService-Info.plist */,
 				5D7C038D2194634500A982E9 /* Fonts */,
 				5D7C035321945C8200A982E9 /* AirGoogleMaps */,
 				13B07FAE1A68108700A75B9A /* univents */,
@@ -1818,7 +1827,7 @@
 				5D7C03A72194634500A982E9 /* FontAwesome.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				5D7C03A12194634500A982E9 /* MaterialCommunityIcons.ttf in Resources */,
-				5D5E67DF22C48AAE006D7052 /* GoogleService-Info.plist in Resources */,
+				5D2CBDAA22C4A34600078357 /* GoogleService-Info.plist in Resources */,
 				5D4D192821C1F0F000ADC0B8 /* AntDesign.ttf in Resources */,
 				5D4D192B21C1F0F000ADC0B8 /* Entypo.ttf in Resources */,
 				5D4D192F21C1F0F000ADC0B8 /* FontAwesome5_Brands.ttf in Resources */,
@@ -1839,7 +1848,6 @@
 				5D4D192A21C1F0F000ADC0B8 /* EvilIcons.ttf in Resources */,
 				5D7C03A22194634500A982E9 /* AntDesign.ttf in Resources */,
 				5D7C03A52194634500A982E9 /* FontAwesome5_Solid.ttf in Resources */,
-				5D8AEAE922C493DD00EA156D /* GoogleService-Info.plist in Resources */,
 				5D7C03AA2194634500A982E9 /* SimpleLineIcons.ttf in Resources */,
 				5D4D192321C1F0F000ADC0B8 /* FontAwesome5_Solid.ttf in Resources */,
 				5D7C03A92194634500A982E9 /* EvilIcons.ttf in Resources */,
@@ -2043,7 +2051,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		00E356F61AD99517003FC87E /* Debug */ = {
+		00E356F61AD99517003FC87E /* Staging */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -2065,7 +2073,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/univents.app/univents";
 			};
-			name = Debug;
+			name = Staging;
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -2088,7 +2096,7 @@
 			};
 			name = Release;
 		};
-		13B07F941A680F5B00A75B9A /* Debug */ = {
+		13B07F941A680F5B00A75B9A /* Staging */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C9F8BD9DDE25CCF7DDED2B81 /* Pods-univents.debug.xcconfig */;
 			buildSettings = {
@@ -2119,7 +2127,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
-			name = Debug;
+			name = Staging;
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -2153,7 +2161,7 @@
 			};
 			name = Release;
 		};
-		2D02E4971E0B4A5E006451C7 /* Debug */ = {
+		2D02E4971E0B4A5E006451C7 /* Staging */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
@@ -2180,7 +2188,7 @@
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 			};
-			name = Debug;
+			name = Staging;
 		};
 		2D02E4981E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -2211,7 +2219,7 @@
 			};
 			name = Release;
 		};
-		2D02E4991E0B4A5E006451C7 /* Debug */ = {
+		2D02E4991E0B4A5E006451C7 /* Staging */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -2236,7 +2244,7 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/univents-tvOS.app/univents-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
-			name = Debug;
+			name = Staging;
 		};
 		2D02E49A1E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -2265,8 +2273,9 @@
 			};
 			name = Release;
 		};
-		83CBBA201A601CBA00E9B192 /* Debug */ = {
+		83CBBA201A601CBA00E9B192 /* Staging */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5D45C9C422C4A8E500B2D415 /* Staging.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -2316,10 +2325,11 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
-			name = Debug;
+			name = Staging;
 		};
 		83CBBA211A601CBA00E9B192 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5D45C9C322C4A8D900B2D415 /* Release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -2370,7 +2380,7 @@
 		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "univentsTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				00E356F61AD99517003FC87E /* Debug */,
+				00E356F61AD99517003FC87E /* Staging */,
 				00E356F71AD99517003FC87E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -2379,7 +2389,7 @@
 		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "univents" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				13B07F941A680F5B00A75B9A /* Debug */,
+				13B07F941A680F5B00A75B9A /* Staging */,
 				13B07F951A680F5B00A75B9A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -2388,7 +2398,7 @@
 		2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "univents-tvOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				2D02E4971E0B4A5E006451C7 /* Debug */,
+				2D02E4971E0B4A5E006451C7 /* Staging */,
 				2D02E4981E0B4A5E006451C7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -2397,7 +2407,7 @@
 		2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "univents-tvOSTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				2D02E4991E0B4A5E006451C7 /* Debug */,
+				2D02E4991E0B4A5E006451C7 /* Staging */,
 				2D02E49A1E0B4A5E006451C7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -2406,7 +2416,7 @@
 		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "univents" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				83CBBA201A601CBA00E9B192 /* Debug */,
+				83CBBA201A601CBA00E9B192 /* Staging */,
 				83CBBA211A601CBA00E9B192 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
