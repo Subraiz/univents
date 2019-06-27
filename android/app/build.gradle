@@ -175,6 +175,9 @@ dependencies {
     implementation('com.crashlytics.sdk.android:crashlytics:2.9.9@aar') {
         transitive = true;
     }
+    compile(project(':react-native-firebase')) {
+       transitive = false
+   }
     implementation project(':react-native-code-push')
     implementation project(':rn-fetch-blob')
     implementation project(':react-native-image-picker')

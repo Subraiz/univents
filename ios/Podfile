@@ -3,20 +3,16 @@
 
 target 'univents' do
 
-    pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga/Yoga.podspec'
-    pod 'GoogleMaps'
-    pod 'Fabric'
-    pod 'Crashlytics'
+pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga/Yoga.podspec'
+pod 'GoogleMaps'
+pod 'Fabric'
+pod 'Crashlytics'
 
-    pod 'react-native-fetch-blob', :path => '../node_modules/react-native-fetch-blob'
+  pod 'react-native-fetch-blob', :path => '../node_modules/react-native-fetch-blob'
 
-    pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
-    pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
-  
-    pod 'Firebase/Core'
-    pod 'Firebase/Messaging'
-
+  pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
 
 
 
