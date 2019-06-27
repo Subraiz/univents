@@ -97,6 +97,7 @@
 		5D7C03A92194634500A982E9 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5D7C039A2194634500A982E9 /* EvilIcons.ttf */; };
 		5D7C03AA2194634500A982E9 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5D7C039B2194634500A982E9 /* SimpleLineIcons.ttf */; };
 		5D7C03AB2194634500A982E9 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5D7C039C2194634500A982E9 /* MaterialIcons.ttf */; };
+		5D8AEAE922C493DD00EA156D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5D8AEAB122C493DC00EA156D /* GoogleService-Info.plist */; };
 		5D8F20922198CF7700158BEC /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D8F206C2198CF5800158BEC /* libAirMaps.a */; };
 		5DA362BE21C0BBDC005414F7 /* libRNSVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DA362BB21C0BBD5005414F7 /* libRNSVG.a */; };
 		5DA362C821C15F2C005414F7 /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DA362C721C15F21005414F7 /* libRNFS.a */; };
@@ -639,6 +640,7 @@
 		5D7C039A2194634500A982E9 /* EvilIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EvilIcons.ttf; sourceTree = "<group>"; };
 		5D7C039B2194634500A982E9 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SimpleLineIcons.ttf; sourceTree = "<group>"; };
 		5D7C039C2194634500A982E9 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
+		5D8AEAB122C493DC00EA156D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5D8F20672198CF5800158BEC /* AirMaps.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AirMaps.xcodeproj; path = "../node_modules/react-native-maps/lib/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; };
 		5DA362B521C0BBD4005414F7 /* RNSVG.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSVG.xcodeproj; path = "../node_modules/react-native-svg/ios/RNSVG.xcodeproj"; sourceTree = "<group>"; };
 		5DA362BF21C15F20005414F7 /* RNFS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNFS.xcodeproj; path = "../node_modules/react-native-fs/RNFS.xcodeproj"; sourceTree = "<group>"; };
@@ -1122,6 +1124,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				5D8AEAB122C493DC00EA156D /* GoogleService-Info.plist */,
 				5D7C038D2194634500A982E9 /* Fonts */,
 				5D7C035321945C8200A982E9 /* AirGoogleMaps */,
 				13B07FAE1A68108700A75B9A /* univents */,
@@ -1164,7 +1167,6 @@
 				C9F8BD9DDE25CCF7DDED2B81 /* Pods-univents.debug.xcconfig */,
 				530EF4984BB4BB45A0588732 /* Pods-univents.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -1837,6 +1839,7 @@
 				5D4D192A21C1F0F000ADC0B8 /* EvilIcons.ttf in Resources */,
 				5D7C03A22194634500A982E9 /* AntDesign.ttf in Resources */,
 				5D7C03A52194634500A982E9 /* FontAwesome5_Solid.ttf in Resources */,
+				5D8AEAE922C493DD00EA156D /* GoogleService-Info.plist in Resources */,
 				5D7C03AA2194634500A982E9 /* SimpleLineIcons.ttf in Resources */,
 				5D4D192321C1F0F000ADC0B8 /* FontAwesome5_Solid.ttf in Resources */,
 				5D7C03A92194634500A982E9 /* EvilIcons.ttf in Resources */,
@@ -2097,11 +2100,11 @@
 				DEVELOPMENT_TEAM = SJLKQ9N4NC;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)/**",
+					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/AirMaps/**",
 					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/**",
 					"$(SRCROOT)/../../React/**",
 					"$(SRCROOT)/../react-native/React/**",
-					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 				);
 				INFOPLIST_FILE = univents/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -2129,11 +2132,11 @@
 				DEVELOPMENT_TEAM = SJLKQ9N4NC;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)/**",
+					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/AirMaps/**",
 					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/**",
 					"$(SRCROOT)/../../React/**",
 					"$(SRCROOT)/../react-native/React/**",
-					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 				);
 				INFOPLIST_FILE = univents/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

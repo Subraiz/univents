@@ -4,6 +4,16 @@ import android.app.Application;
 
 import com.crashlytics.android.Crashlytics;
 import com.facebook.react.ReactApplication;
+import com.RNFetchBlob.RNFetchBlobPackage;
+import com.oblador.vectoricons.VectorIconsPackage;
+import com.horcrux.svg.SvgPackage;
+import com.airbnb.android.react.maps.MapsPackage;
+import com.imagepicker.ImagePickerPackage;
+import com.rnfs.RNFSPackage;
+import com.dylanvann.fastimage.FastImageViewPackage;
+import com.microsoft.codepush.react.CodePush;
+import org.reactnative.camera.RNCameraPackage;
+import com.airbnb.android.react.lottie.LottiePackage;
 import com.horcrux.svg.SvgPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -45,6 +55,16 @@ private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
         protected List<ReactPackage> getPackages() {
                 return Arrays.<ReactPackage>asList(
                         new MainReactPackage(),
+            new RNFetchBlobPackage(),
+            new VectorIconsPackage(),
+            new SvgPackage(),
+            new MapsPackage(),
+            new ImagePickerPackage(),
+            new RNFSPackage(),
+            new FastImageViewPackage(),
+            new CodePush(getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey), getApplicationContext(), BuildConfig.DEBUG),
+            new RNCameraPackage(),
+            new LottiePackage(),
                         new ImagePickerPackage(),
                         new VectorIconsPackage(),
                         new MapsPackage(),

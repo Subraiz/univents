@@ -172,6 +172,16 @@ android {
 }
 
 dependencies {
+    compile project(':rn-fetch-blob')
+    compile project(':react-native-vector-icons')
+    compile project(':react-native-svg')
+    compile project(':react-native-maps')
+    compile project(':react-native-image-picker')
+    compile project(':react-native-fs')
+    compile project(':react-native-fast-image')
+    compile project(':react-native-code-push')
+    compile project(':react-native-camera')
+    compile project(':lottie-react-native')
     implementation('com.crashlytics.sdk.android:crashlytics:2.9.9@aar') {
         transitive = true;
     }
