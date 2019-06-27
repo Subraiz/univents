@@ -115,6 +115,7 @@ class Explore extends Component {
         await AsyncStorage.setItem("fcmToken", fcmToken);
       }
     }
+    console.log(fcmToken);
   }
 
   //2
