@@ -14,7 +14,8 @@ import {
   TouchableOpacity,
   Keyboard,
   FlatList,
-  Platform
+  Platform,
+  Alert
 } from "react-native";
 import { AsyncStorage } from "react-native";
 import firebase from "react-native-firebase";
@@ -72,6 +73,7 @@ class Explore extends Component {
   }
 
   componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
     this.keyboardWillHide = Keyboard.addListener(
       "keyboardWillHide",
       this.keyboardWillHide.bind(this)
@@ -82,15 +84,16 @@ class Explore extends Component {
     );
 
     this.checkPermission();
+    this.createNotificationListeners();
   }
 
   componentWillMount() {
-    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
-
     // UIManager.setLayoutAnimationEnabledExperimental &&
     //   UIManager.setLayoutAnimationEnabledExperimental(true);
     // LayoutAnimation.easeInEaseOut();
   }
+
+  /* ***************************************************************************************************************************** */
 
   //1
   async checkPermission() {
@@ -125,6 +128,70 @@ class Explore extends Component {
       console.log("permission rejected");
     }
   }
+
+  ////////////////////// Add these methods //////////////////////
+
+  //Remove listeners allocated in createNotificationListeners()
+  componentWillUnmount() {
+    this.notificationListener();
+    this.notificationOpenedListener();
+  }
+
+  async createNotificationListeners() {
+    console.log("creating listeners");
+    /*
+     * Triggered when a particular notification has been received in foreground
+     * */
+    this.notificationListener = firebase
+      .notifications()
+      .onNotification(notification => {
+        console.log("hey");
+        const { title, body } = notification;
+        this.showAlert(title, body);
+      });
+
+    /*
+     * If your app is in background, you can listen for when a notification is clicked / tapped / opened as follows:
+     * */
+    this.notificationOpenedListener = firebase
+      .notifications()
+      .onNotificationOpened(notificationOpen => {
+        console.log("hey");
+        const { title, body } = notificationOpen.notification;
+        this.showAlert(title, body);
+      });
+
+    /*
+     * If your app is closed, you can check if it was opened by a notification being clicked / tapped / opened as follows:
+     * */
+    const notificationOpen = await firebase
+      .notifications()
+      .getInitialNotification();
+    if (notificationOpen) {
+      console.log("hey");
+      const { title, body } = notificationOpen.notification;
+      this.showAlert(title, body);
+    }
+    /*
+     * Triggered for data only payload in foreground
+     * */
+    this.messageListener = firebase.messaging().onMessage(message => {
+      //process data message
+      console.log("hey");
+      console.log(JSON.stringify(message));
+    });
+  }
+
+  showAlert(title, body) {
+    Alert.alert(
+      title,
+      body,
+      [{ text: "OK", onPress: () => console.log("OK Pressed") }],
+      { cancelable: false }
+    );
+  }
+
+  /* ***************************************************************************************************************************** */
 
   onReturn() {
     if (Platform.OS !== "ios") {

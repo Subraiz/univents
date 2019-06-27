@@ -5,8 +5,7 @@ import Root from "./Root";
 import store from "./store";
 import { Provider } from "react-redux";
 import { AsyncStorage } from "react-native";
-import firebase from "@firebase/app";
-require("@firebase/auth");
+import firebase from "react-native-firebase";
 
 class App extends Component {
   render() {
