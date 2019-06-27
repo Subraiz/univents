@@ -12,8 +12,10 @@ import {
   BackHandler,
   StatusBar
 } from "react-native";
-import firebase from "@firebase/app";
+import firebase_rn from "@firebase/app";
 require("@firebase/auth");
+import { AsyncStorage } from "react-native";
+import firebase from "react-native-firebase";
 import SplashScreen from "./screens/SplashScreen";
 
 import Login from "./screens/login/Login";
@@ -106,7 +108,7 @@ class Root extends React.Component {
 
   componentWillUpdate() {}
 
-  componentWillMount = async () => {
+  componentDidMount = async () => {
     StatusBar.setBarStyle("dark-content", true);
     var config = {
       apiKey: "AIzaSyAAeuyg8vOKzrFOkS-oeNBTGvSTiWz-y2E",
@@ -116,11 +118,14 @@ class Root extends React.Component {
       storageBucket: "univents-a5f76.appspot.com",
       messagingSenderId: "106554497811"
     };
-    firebase.initializeApp(config);
+    firebase_rn.initializeApp(config);
+
+    this.checkPermission();
+
     this.props.getCategories();
     this.props.getSpecialEvent();
 
-    firebase.auth().onAuthStateChanged(async user => {
+    firebase_rn.auth().onAuthStateChanged(async user => {
       if (user && count == 0) {
         await this.props.getUser(user.uid);
         this.setState({ authenticated: true });
@@ -133,6 +138,40 @@ class Root extends React.Component {
       }
     });
   };
+
+  //1
+  async checkPermission() {
+    const enabled = await firebase.messaging().hasPermission();
+    if (enabled) {
+      this.getToken();
+    } else {
+      this.requestPermission();
+    }
+  }
+
+  //3
+  async getToken() {
+    let fcmToken = await AsyncStorage.getItem("fcmToken");
+    if (!fcmToken) {
+      fcmToken = await firebase.messaging().getToken();
+      if (fcmToken) {
+        // user has a device token
+        await AsyncStorage.setItem("fcmToken", fcmToken);
+      }
+    }
+  }
+
+  //2
+  async requestPermission() {
+    try {
+      await firebase.messaging().requestPermission();
+      // User has authorised
+      this.getToken();
+    } catch (error) {
+      // User has rejected permissions
+      console.log("permission rejected");
+    }
+  }
 
   render() {
     if (this.state.loading) {

@@ -24,6 +24,10 @@
 {
   NSURL *jsCodeLocation;
   
+  [FIRApp configure];
+  [[UNUserNotificationCenter currentNotificationCenter] setDelegate:self];
+  [RNFirebaseNotifications configure];
+  
   [GMSServices provideAPIKey:@"AIzaSyD9TguYtWagQaPpe7rL3NrVjcZpXE_KvI0"];
 
 #ifdef DEBUG

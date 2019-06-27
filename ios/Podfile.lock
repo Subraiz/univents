@@ -1,7 +1,7 @@
 PODS:
-  - Crashlytics (3.11.1):
-    - Fabric (~> 1.8.1)
-  - Fabric (1.8.2)
+  - Crashlytics (3.13.2):
+    - Fabric (~> 1.10.2)
+  - Fabric (1.10.2)
   - Firebase/Core (5.20.2):
     - Firebase/CoreOnly
     - FirebaseAnalytics (= 5.8.1)
@@ -41,10 +41,10 @@ PODS:
     - GoogleUtilities/Network (~> 5.2)
     - "GoogleUtilities/NSData+zlib (~> 5.2)"
     - nanopb (~> 0.3)
-  - GoogleMaps (2.7.0):
-    - GoogleMaps/Maps (= 2.7.0)
-  - GoogleMaps/Base (2.7.0)
-  - GoogleMaps/Maps (2.7.0):
+  - GoogleMaps (3.1.0):
+    - GoogleMaps/Maps (= 3.1.0)
+  - GoogleMaps/Base (3.1.0)
+  - GoogleMaps/Maps (3.1.0):
     - GoogleMaps/Base
   - GoogleUtilities/AppDelegateSwizzler (5.8.0):
     - GoogleUtilities/Environment
@@ -101,8 +101,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga/Yoga.podspec"
 
 SPEC CHECKSUMS:
-  Crashlytics: ca7ab4bc304aa216bdc2e4c1a96389ee77252203
-  Fabric: d2b22f443ba195d8a7cc204da230977c72733b40
+  Crashlytics: 611738c7847f8291a1a51084e35987b86ba6b3ee
+  Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
   Firebase: 0c8cf33f266410c61ab3e2265cfa412200351d9c
   FirebaseAnalytics: ece1aa57a4f43c64d53a648b5a5e05151aae947b
   FirebaseAnalyticsInterop: efbe45c8385ec626e29f9525e5ebd38520dfb6c1
@@ -110,7 +110,7 @@ SPEC CHECKSUMS:
   FirebaseInstanceID: a122b0c258720cf250551bb2bedf48c699f80d90
   FirebaseMessaging: 4235f949ce1c4e827aeb19705ba5c53f9b85aa10
   GoogleAppMeasurement: ffe513e90551844a739e7bcbb1d2aca1c28a4338
-  GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
+  GoogleMaps: 5c13302e6fe6bb6e686b267196586b91cd594225
   GoogleUtilities: 04fce34bcd5620c1ee76fb79172105c74a4df335
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Protobuf: 3f617b9a6e73605565086864c9bc26b2bf2dd5a3
