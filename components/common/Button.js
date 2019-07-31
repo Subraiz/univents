@@ -14,9 +14,9 @@ const Button = props => {
         style={[
           {
             width: screenWidth * 0.7,
-            backgroundColor: "red",
+            backgroundColor: "black",
             alignItems: "center",
-            borderRadius: 35
+            borderRadius: 4
           },
           props.style
         ]}

@@ -99,9 +99,9 @@ class SignUpProfilePhoto extends Component {
             <View
               style={{
                 width: screenWidth * 0.7,
-                backgroundColor: "red",
+                backgroundColor: "black",
                 alignItems: "center",
-                borderRadius: 35
+                borderRadius: 4
               }}
             >
               <Text

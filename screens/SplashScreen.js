@@ -35,14 +35,18 @@ class SplashScreen extends Component {
     return (
       <View style={styles.container}>
         <View style={this.position.getLayout()}>
-          <Animatable.View style={styles.imageContainer} animation="zoomInDown">
+          <Animatable.View
+            style={styles.imageContainer}
+            animation="bounceInLeft"
+            delay={250}
+          >
             <Image
               source={require("../assets/images/UniventsSplashLogo.png")}
               style={styles.imageStyle}
             />
           </Animatable.View>
         </View>
-        <Animatable.View animation="zoomInDown">
+        <Animatable.View animation="bounceInRight" delay={250}>
           <Text
             style={{
               color: "white",

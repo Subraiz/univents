@@ -35,28 +35,7 @@ const screenHeight = Dimensions.get("window").height;
 
 class SignUpForm extends Component {
   static navigationOptions = {
-    title: "Create An Account",
-    gesturesEnabled: false,
-    headerRight: (
-      <View
-        style={{
-          width: 35,
-          height: 42,
-          padding: 8,
-          marginRight: 4
-        }}
-      >
-        <Image
-          style={{
-            flex: 1,
-            width: null,
-            height: null,
-            resizeMode: "contain"
-          }}
-          source={require("../../assets/images/UniventsLogo.png")}
-        />
-      </View>
-    )
+    gesturesEnabled: false
   };
 
   state = {
@@ -76,19 +55,18 @@ class SignUpForm extends Component {
   }
 
   onButtonPress = async () => {
-    //this.props.navigation.navigate("SignUpPersonalInfo");
-    await this.props.checkForSignUpErrors(
-      this.props.user,
-      this.state.emailExtension
-    );
-
-    if (this.props.error == "No Error") {
-      await this.props.signUpUser(this.props.email, this.props.password);
-      if (this.props.uid) {
-        this.props.saveUser(this.props.user);
-        this.props.navigation.navigate("SignUpPersonalInfo");
-      }
-    }
+    this.props.navigation.navigate("SignUpAbout");
+    // await this.props.checkForSignUpErrors(
+    //   this.props.user,
+    //   this.state.emailExtension
+    // );
+    //
+    // if (this.props.error == "No Error") {
+    //   await this.props.signUpUser(this.props.email, this.props.password);
+    //   if (this.props.uid) {
+    //     this.props.navigation.navigate("SignUpAbout");
+    //   }
+    // }
   };
 
   renderErrorEmailMessage() {
@@ -139,80 +117,60 @@ class SignUpForm extends Component {
   renderContinue() {
     return (
       <View style={styles.buttonContainer}>
-        <Button onPress={this.onButtonPress} title={"Continue"} />
+        <Button onPress={this.onButtonPress} title={"Sign Up"} />
       </View>
     );
   }
 
   render() {
     return (
-      <View style={styles.container}>
-        <TouchableOpacity activeOpacity={1} onPress={() => Keyboard.dismiss()}>
-          <KeyboardAvoidingView>
-            <View style={{ marginTop: 10 }}>
-              {/*<FormLabel>First Name</FormLabel>
-              <FormInput
-                placeholder={"F. Name"}
-                autoCorrect={false}
-                containerStyle={styles.inputStyle}
-                onChangeText={text =>
-                  this.props.updateUserInfo({ prop: "firstName", value: text })
-                }
-                value={this.props.firstName}
-              />
-              <FormLabel>Last Name</FormLabel>
-              <FormInput
-                placeholder={"L. Name"}
-                autoCorrect={false}
-                containerStyle={styles.inputStyle}
-                onChangeText={text =>
-                  this.props.updateUserInfo({ prop: "lastName", value: text })
-                }
-                value={this.props.lastName}
-              />*/}
-              <FormLabel>Email</FormLabel>
-              <FormInput
-                placeholder={"student@bc.edu"}
-                containerStyle={styles.inputStyle}
-                keyboardType={"email-address"}
-                autoCapitalize={"none"}
-                onChangeText={text =>
-                  this.props.updateUserInfo({ prop: "email", value: text })
-                }
-                value={this.props.email}
-              />
-              {this.renderErrorEmailMessage()}
+      <KeyboardAvoidingView behavior="padding" style={styles.container}>
+        <View style={styles.headerTitleContainer}>
+          <Text style={styles.headerTitle}>Create Your Account</Text>
+        </View>
 
-              <FormLabel>Password</FormLabel>
-              <FormInput
-                placeholder={"••••••"}
-                secureTextEntry
-                containerStyle={styles.inputStyle}
-                value={this.props.password}
-                onChangeText={text =>
-                  this.props.updateUserInfo({ prop: "password", value: text })
-                }
-              />
+        <View style={{ marginTop: 10 }}>
+          <FormLabel>Email</FormLabel>
+          <FormInput
+            placeholder={"student@bc.edu"}
+            containerStyle={styles.inputStyle}
+            keyboardType={"email-address"}
+            autoCapitalize={"none"}
+            onChangeText={text =>
+              this.props.updateUserInfo({ prop: "email", value: text })
+            }
+            value={this.props.email}
+          />
+          {this.renderErrorEmailMessage()}
 
-              <FormLabel>Confirm Password</FormLabel>
-              <FormInput
-                placeholder={"••••••"}
-                secureTextEntry
-                containerStyle={styles.inputStyle}
-                value={this.props.confirmPassword}
-                onChangeText={text =>
-                  this.props.updateUserInfo({
-                    prop: "confirmPassword",
-                    value: text
-                  })
-                }
-              />
-              {this.renderErrorPasswordMessage()}
-            </View>
-          </KeyboardAvoidingView>
+          <FormLabel>Password</FormLabel>
+          <FormInput
+            placeholder={"••••••"}
+            secureTextEntry
+            containerStyle={styles.inputStyle}
+            value={this.props.password}
+            onChangeText={text =>
+              this.props.updateUserInfo({ prop: "password", value: text })
+            }
+          />
 
-          {this.renderContinue()}
+          <FormLabel>Confirm Password</FormLabel>
+          <FormInput
+            placeholder={"••••••"}
+            secureTextEntry
+            containerStyle={styles.inputStyle}
+            value={this.props.confirmPassword}
+            onChangeText={text =>
+              this.props.updateUserInfo({
+                prop: "confirmPassword",
+                value: text
+              })
+            }
+          />
+          {this.renderErrorPasswordMessage()}
+        </View>
 
+        <View style={styles.footerContainer}>
           <View style={styles.termsContainer}>
             <Text style={styles.termsTextStyle}>
               By signing up, you accept Splurge's
@@ -225,8 +183,9 @@ class SignUpForm extends Component {
               <Text style={{ color: "blue" }}>Privacy Policy</Text>
             </TouchableOpacity>
           </View>
-        </TouchableOpacity>
-      </View>
+          {this.renderContinue()}
+        </View>
+      </KeyboardAvoidingView>
     );
   }
 }
@@ -259,8 +218,8 @@ const mapDispatchToProps = dispatch => {
 
 const styles = {
   container: {
-    backgroundColor: "white",
-    height: screenHeight
+    flex: 1,
+    backgroundColor: "white"
   },
   logoStyle: {
     flex: 1,
@@ -274,7 +233,7 @@ const styles = {
     paddingBottom: 4
   },
   inputStyle: {
-    borderBottomColor: "red"
+    borderBottomColor: "black"
   },
   headerContainer: {
     marginTop: screenHeight * 0.04,
@@ -282,20 +241,33 @@ const styles = {
     paddingBottom: screenHeight * 0.05
   },
   termsContainer: {
-    marginTop: screenHeight * 0.03,
     width: screenWidth * 0.7,
     alignSelf: "center",
     flexDirection: "row",
     justifyContent: "center",
-    flexWrap: "wrap"
+    flexWrap: "wrap",
+    marginBottom: 20
   },
   termsTextStyle: {
     textAlign: "center",
+    fontFamily: "PublicSans-Regular",
     fontSize: 16
   },
   buttonContainer: {
-    marginTop: screenHeight * 0.03,
     alignSelf: "center"
+  },
+  headerTitleContainer: {
+    marginTop: screenHeight * 0.07,
+    paddingLeft: 18
+  },
+  headerTitle: {
+    fontFamily: "PublicSans-Bold",
+    fontSize: 20
+  },
+  footerContainer: {
+    flex: 1,
+    justifyContent: "flex-end",
+    marginBottom: 25
   }
 };
 

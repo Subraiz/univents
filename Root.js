@@ -20,7 +20,7 @@ import SplashScreen from "./screens/SplashScreen";
 import Login from "./screens/login/Login";
 import SelectSchool from "./screens/login/SelectSchool";
 import SignUpForm from "./screens/login/SignUpForm";
-import SignUpPersonalInfo from "./screens/login/SignUpPersonalInfo";
+import SignUpAbout from "./screens/login/SignUpAbout";
 import SignUpProfilePhoto from "./screens/login/SignUpProfilePhoto";
 import LoginForm from "./screens/login/LoginForm";
 import SignUpInterests from "./screens/login/SignUpInterests";
@@ -52,7 +52,7 @@ const LoginStack = createStackNavigator(
     CreateEvent: CreateEvent,
     SelectSchool: SelectSchool,
     SignUpForm: SignUpForm,
-    SignUpPersonalInfo: SignUpPersonalInfo,
+    SignUpAbout: SignUpAbout,
     SignUpProfilePhoto: SignUpProfilePhoto,
     SignUpInterests: SignUpInterests,
     LoginForm: LoginForm,
@@ -79,7 +79,7 @@ const HomeStack = createStackNavigator(
     CreateEvent: CreateEvent,
     SelectSchool: SelectSchool,
     SignUpForm: SignUpForm,
-    SignUpPersonalInfo: SignUpPersonalInfo,
+    SignUpAbout: SignUpAbout,
     SignUpProfilePhoto: SignUpProfilePhoto,
     SignUpInterests: SignUpInterests,
     EventInformation: EventInformation,

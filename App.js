@@ -7,6 +7,8 @@ import { Provider } from "react-redux";
 import { AsyncStorage } from "react-native";
 import firebase from "react-native-firebase";
 
+console.disableYellowBox = true;
+
 class App extends Component {
   render() {
     return (

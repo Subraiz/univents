@@ -95,7 +95,7 @@ class SelectSchool extends Component {
             style={{
               color: "white",
               fontFamily: "PublicSans-Regular",
-              fontSize: 18
+              fontSize: 16
             }}
           >
             Next
@@ -112,7 +112,7 @@ class SelectSchool extends Component {
             style={{
               color: "white",
               fontFamily: "PublicSans-Regular",
-              fontSize: 18
+              fontSize: 16
             }}
           >
             Next
@@ -271,16 +271,17 @@ const styles = {
   buttonContainer: {
     flex: 1,
     justifyContent: "flex-end",
-    marginBottom: 36
+    marginBottom: 25
   },
   schoolImage: {
-    width: 100,
-    height: 100
+    width: 75,
+    height: 75
   },
   schoolsContainer: {
     marginTop: 50,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    marginBottom: 15
   },
   imageContainer: {
     marginLeft: 12,

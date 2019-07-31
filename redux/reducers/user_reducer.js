@@ -16,8 +16,8 @@ const INITIAL_STATE = {
       "https://articles-images.sftcdn.net/wp-content/uploads/sites/3/2016/01/wallpaper-for-facebook-profile-photo.jpg"
   },
   major: "",
-  year: "Junior",
-  sex: "male",
+  year: "",
+  sex: "",
   school: "",
   uid: "",
   endorsed: false,
