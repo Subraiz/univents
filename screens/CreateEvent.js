@@ -6,11 +6,14 @@ import {
   Button,
   Dimensions,
   LayoutAnimation,
-  UIManager
+  UIManager,
+  SafeAreaView
 } from "react-native";
+import LinearGradient from "react-native-linear-gradient";
 import Screen1 from "../components/CreateEventScreens/Screen1";
 import Screen2 from "../components/CreateEventScreens/Screen2";
 import Screen3 from "../components/CreateEventScreens/Screen3";
+import Icon from "react-native-vector-icons/Ionicons";
 import * as Animatable from "react-native-animatable";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -25,17 +28,8 @@ class CreateEvent extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: "Create An Event",
-      gesturesEnabled: false,
-      headerLeft: (
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("Events");
-          }}
-          style={{ padding: 3, marginLeft: 4 }}
-        >
-          <Text style={{ color: "#007AFF" }}>Cancel</Text>
-        </TouchableOpacity>
-      )
+      gesturesEnabled: true,
+      header: null
     };
   };
 
@@ -65,47 +59,11 @@ class CreateEvent extends Component {
       );
     } else if (this.state.screen == screens[1]) {
       return (
-        <Screen2
-          onPress={this.onNextPress.bind(this)}
-          onReturn={this.onReturnPress.bind(this)}
-          animation={this.state.animation}
-        />
-      );
-    } else if (this.state.screen == screens[2]) {
-      return (
         <Screen3
           onPress={this.onPublishPress.bind(this)}
           onReturn={this.onReturnPress.bind(this)}
           animation={this.state.animation}
         />
-      );
-    }
-  }
-
-  renderNavigationTabs() {
-    if (this.state.screen == screens[0]) {
-      return (
-        <Animatable.View style={styles.tabsContainer}>
-          <View style={styles.activeTab} />
-          <View style={styles.inactiveTab} />
-          <View style={styles.inactiveTab} />
-        </Animatable.View>
-      );
-    } else if (this.state.screen == screens[1]) {
-      return (
-        <Animatable.View style={styles.tabsContainer}>
-          <View style={styles.inactiveTab} />
-          <View style={styles.activeTab} />
-          <View style={styles.inactiveTab} />
-        </Animatable.View>
-      );
-    } else if (this.state.screen == screens[2]) {
-      return (
-        <Animatable.View style={styles.tabsContainer}>
-          <View style={styles.inactiveTab} />
-          <View style={styles.inactiveTab} />
-          <View style={styles.activeTab} />
-        </Animatable.View>
       );
     }
   }
@@ -133,8 +91,36 @@ class CreateEvent extends Component {
   render() {
     return (
       <View style={styles.container}>
-        {this.renderNavigationTabs()}
-        <View style={{ marginTop: 20 }}>{this.renderScreen()}</View>
+        <LinearGradient
+          style={styles.mainHeaderContainer}
+          colors={["#40E488", "#2DE85D"]}
+        >
+          <TouchableOpacity
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center"
+            }}
+            onPress={() => {
+              this.props.navigation.pop();
+            }}
+          >
+            <Icon
+              name={"ios-arrow-back"}
+              style={{ fontSize: 24, marginRight: 15, color: "white" }}
+            />
+            <Text
+              style={{
+                fontSize: 19,
+                fontFamily: "PublicSans-Regular",
+                color: "white"
+              }}
+            >
+              Create an Event
+            </Text>
+          </TouchableOpacity>
+        </LinearGradient>
+        <View style={{ flex: 1 }}>{this.renderScreen()}</View>
       </View>
     );
   }
@@ -172,6 +158,11 @@ const styles = {
   },
   tabsContainer: {
     flexDirection: "row"
+  },
+  mainHeaderContainer: {
+    paddingLeft: 15,
+    paddingTop: 60,
+    paddingBottom: 10
   }
 };
 

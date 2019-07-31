@@ -31,6 +31,7 @@ import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
 import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
+import com.BV.LinearGradient.LinearGradientPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -52,9 +53,9 @@ private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
         protected List<ReactPackage> getPackages() {
                 return Arrays.<ReactPackage>asList(
                         new MainReactPackage(),
-            new ReanimatedPackage(),
-            new RNGestureHandlerPackage(),
-            new AsyncStoragePackage(),
+                        new ReanimatedPackage(),
+                        new RNGestureHandlerPackage(),
+                        new AsyncStoragePackage(),
                         new RNGestureHandlerPackage(),
                         new ReanimatedPackage(),
                         new RNFetchBlobPackage(),
@@ -70,7 +71,7 @@ private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
                         new RNFirebasePackage(),
                         new RNFirebaseMessagingPackage(),
                         new RNFirebaseNotificationsPackage(),
-                        new AsyncStoragePackage()
+                        new LinearGradientPackage()
                         );
         }
 

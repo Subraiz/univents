@@ -53,7 +53,8 @@ class EventInformation extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: navigation.getParam("data").eventName,
-      gesturesEnabled: true
+      gesturesEnabled: true,
+      header: null
     };
   };
 
@@ -296,18 +297,62 @@ class EventInformation extends Component {
               paddingRight: 10
             }}
           >
-            <Text
+            <View
               style={{
-                padding: 4,
-                fontWeight: "600",
-                fontSize: 18
+                flexDirection: "row",
+                alignItems: "center"
               }}
             >
-              Admin Tools
-            </Text>
-
-            <Icon name="md-arrow-forward" style={{ fontSize: 32 }} />
+              <Icon
+                name="ios-build"
+                style={{ fontSize: 22, paddingRight: 10, color: "#c7c7c7" }}
+              />
+              <Text
+                style={{
+                  padding: 4,
+                  fontFamily: "PublicSans-Regular",
+                  fontSize: 18
+                }}
+              >
+                Admin Tools
+              </Text>
+            </View>
+            <Icon name="ios-arrow-forward" style={{ fontSize: 24 }} />
           </View>
+        </TouchableOpacity>
+      );
+    } else {
+      return (
+        <TouchableOpacity
+          onPress={() => this.onCheckInEvent()}
+          style={[
+            {
+              display: "flex",
+              justifyContent: "center",
+              backgroundColor: "#92C83D",
+              alignItems: "center",
+              marginLeft: 25,
+              marginRight: 25,
+              marginTop: 25,
+              marginBottom: 10,
+              borderRadius: 25,
+              paddingVertical: 15,
+              shadowOffset: { width: 1, height: 2.5 },
+              shadowColor: "black",
+              shadowOpacity: 0.08,
+              shadowRadius: 6
+            }
+          ]}
+        >
+          <Text
+            style={{
+              fontFamily: "PublicSans-Bold",
+              color: "white",
+              fontSize: 15
+            }}
+          >
+            Check Into Event
+          </Text>
         </TouchableOpacity>
       );
     }
@@ -420,11 +465,36 @@ class EventInformation extends Component {
     let eventTime = `${startTime} - ${endTime}`;
 
     return (
-      <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
         <ScrollView>
           <View style={styles.firstSection}>
             <View style={styles.headerImageContainer}>
               <FastImage style={styles.headerImage} source={event.eventImage} />
+              <TouchableOpacity
+                onPress={() => {
+                  this.props.navigation.pop();
+                }}
+                style={{
+                  position: "absolute",
+                  top: 40,
+                  left: 10,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  backgroundColor: "white",
+                  width: 30,
+                  height: 30,
+                  borderRadius: 15,
+                  shadowOffset: { width: 1, height: 1 },
+                  shadowColor: "black",
+                  shadowOpacity: 0.3,
+                  shadowRadius: 2
+                }}
+              >
+                <Icon
+                  name="ios-arrow-back"
+                  style={{ fontSize: 18, paddingTop: 1, paddingRight: 1 }}
+                />
+              </TouchableOpacity>
             </View>
             <View style={styles.informationContainer}>
               {/* Like and share button */}
@@ -439,40 +509,50 @@ class EventInformation extends Component {
                 }}
               >
                 <TouchableOpacity
+                  activeOpacity={0.75}
                   onPress={this.onLikePress.bind(this)}
                   style={[
                     styles.actionButtonStyle,
                     {
                       marginRight: 10,
-                      borderWidth: 0.5,
-                      borderColor: "orange"
+                      shadowColor: "black",
+                      shadowOffset: { x: 0, y: 2 },
+                      shadowRadius: 6,
+                      shadowOpacity: 0.1
                     }
                   ]}
                 >
-                  <LottieView
-                    progress={this.state.progress}
-                    style={{ width: 35, height: 35, marginBottom: 2 }}
-                    source={require("../assets/animations/favorite.json")}
-                    loop={false}
-                    ref={animation => (this.animation = animation)}
+                  <Icon
+                    name="ios-bookmark"
+                    style={{
+                      fontSize: 20,
+                      color: this.state.favorite ? "#92C83D" : "black",
+                      paddingLeft: 1,
+                      paddingBottom: 1
+                    }}
                   />
                 </TouchableOpacity>
                 <TouchableOpacity
+                  activeOpacity={0.75}
                   onPress={this.onSharePress.bind(this)}
                   style={[
                     styles.actionButtonStyle,
                     {
                       marginRight: 10,
-                      borderWidth: 0.5,
-                      borderColor: "teal"
+                      shadowColor: "black",
+                      shadowOffset: { x: 0, y: 2 },
+                      shadowRadius: 6,
+                      shadowOpacity: 0.1
                     }
                   ]}
                 >
                   <Icon
-                    name="md-share"
+                    name="ios-share"
                     style={{
                       fontSize: 20,
-                      color: "orange"
+                      color: "black",
+                      paddingLeft: 1,
+                      paddingBottom: 1
                     }}
                   />
                 </TouchableOpacity>
@@ -489,7 +569,7 @@ class EventInformation extends Component {
                 <View style={{ flexDirection: "column" }}>
                   <Text style={styles.eventNameStyle}>{event.eventName}</Text>
                   <Text style={styles.eventHostTextStyle}>
-                    {event.eventType} • {event.eventHost}
+                    {event.eventType} • Host: {event.eventHost}
                   </Text>
                 </View>
               </View>
@@ -506,15 +586,26 @@ class EventInformation extends Component {
                 </View>
                 <View style={styles.dateInformation}>
                   <Text
-                    style={{ fontSize: 19, color: "black", fontWeight: "600" }}
+                    style={{
+                      fontSize: 19,
+                      color: "black",
+                      fontFamily: "PublicSans-SemiBold"
+                    }}
                   >
                     {eventDate}
                   </Text>
-                  <Text style={{ color: "black", fontWeight: "300" }}>
+                  <Text
+                    style={{ color: "black", fontFamily: "PublicSans-Light" }}
+                  >
                     {eventTime}
                   </Text>
                   <TouchableOpacity>
-                    <Text style={{ color: "blue", fontWeight: "300" }}>
+                    <Text
+                      style={{
+                        color: "#00AEEF",
+                        fontFamily: "PublicSans-Light"
+                      }}
+                    >
                       Add to Calendar
                     </Text>
                   </TouchableOpacity>
@@ -536,16 +627,20 @@ class EventInformation extends Component {
                     style={{
                       fontSize: 19,
                       color: "black",
-                      fontWeight: "600",
+                      fontFamily: "PublicSans-SemiBold",
                       width: screenWidth * 0.9
                     }}
                   >
                     {event.eventLocation.locationName.trim()}
                   </Text>
-                  <Text style={{ color: "black", fontWeight: "300" }}>
+                  <Text
+                    style={{ color: "black", fontFamily: "PublicSans-Light" }}
+                  >
                     {locationAddress[0]}
                   </Text>
-                  <Text style={{ color: "black", fontWeight: "300" }}>
+                  <Text
+                    style={{ color: "black", fontFamily: "PublicSans-Light" }}
+                  >
                     {locationAddress[1].trim()},{locationAddress[2]}
                   </Text>
                 </View>
@@ -593,10 +688,11 @@ class EventInformation extends Component {
           visible={this.state.edit}
           onClose={() => this.setState({ edit: false })}
         />
+
         <View style={styles.cornerButtonStyle}>
           {this.renderCornerButton()}
         </View>
-      </SafeAreaView>
+      </View>
     );
   }
 }
@@ -624,14 +720,14 @@ const mapDispatchToProps = dispatch => {
 
 const styles = {
   container: {
-    backgroundColor: "#F7F7F7"
+    backgroundColor: "#F7F7F7",
+    flex: 1
   },
   firstSection: {
     marginBottom: 15
   },
   section: {
     marginTop: 15,
-
     paddingBottom: 10,
     backgroundColor: "white"
   },
@@ -651,12 +747,12 @@ const styles = {
   },
   eventNameStyle: {
     fontSize: 22,
-    fontWeight: "700",
+    fontFamily: "PublicSans-Bold",
     width: screenWidth * 0.7
   },
   eventHostTextStyle: {
     color: "grey",
-    fontWeight: "400",
+    fontFamily: "PublicSans-Regular",
     width: screenWidth * 0.75
   },
   dateStyle: {
@@ -682,23 +778,22 @@ const styles = {
     justifyContent: "center"
   },
   headerTextContainer: {
-    borderBottomWidth: 0.25,
-    borderBottomColor: "red",
-    marginLeft: 10,
-    marginRight: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#92C83D",
+    paddingLeft: 15,
     paddingTop: 10,
     paddingBottom: 6
   },
   headerText: {
-    fontWeight: "600",
+    fontFamily: "PublicSans-SemiBold",
     fontSize: 18
   },
   detailsText: {
-    paddingLeft: 10,
+    paddingLeft: 15,
     paddingTop: 10,
     paddingRight: 10,
     color: "darkgrey",
-    fontWeight: "300"
+    fontFamily: "PublicSans-Light"
   },
   adminToolsContainer: {
     backgroundColor: "white",
@@ -731,7 +826,7 @@ const styles = {
   cornerButtonStyle: {
     position: "absolute",
     right: 10,
-    top: 10,
+    top: 40,
     shadowOffset: { width: 1, height: 1 },
     shadowColor: "black",
     shadowOpacity: 0.3,

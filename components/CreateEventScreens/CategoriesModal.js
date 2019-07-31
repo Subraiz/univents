@@ -174,7 +174,7 @@ const styles = {
     alignItems: "center",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, .1)"
+    backgroundColor: "rgba(0, 0, 0, .4)"
   },
   categoryContainer: {
     backgroundColor: "white",

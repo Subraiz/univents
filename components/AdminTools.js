@@ -131,10 +131,20 @@ class AdminTools extends Component {
   }
 
   renderDataTab(item, i) {
-    if (item.item == "Attendance") {
+    if (item == "Attendance") {
       return (
-        <View style={styles.container}>
-          <VictoryChart width={screenWidth} theme={VictoryTheme.material}>
+        <View style={{ marginTop: -30 }}>
+          <VictoryChart
+            theme={VictoryTheme.material}
+            width={screenWidth}
+            style={{
+              axis: { stroke: "#756f6a" },
+              axisLabel: { fontSize: 20, padding: 30 },
+              grid: { stroke: t => (t > 0.5 ? "red" : "grey") },
+              ticks: { stroke: "grey", size: 5 },
+              tickLabels: { fontSize: 15, padding: 5 }
+            }}
+          >
             <VictoryBar
               animate={{
                 duration: 2000,
@@ -142,6 +152,7 @@ class AdminTools extends Component {
               }}
               width={340}
               barWidth={340 / this.timeData.length - 6}
+              style={{ data: { fill: "#92C83D", width: 30 } }}
               data={this.timeData}
               alignment="start"
               x="time"
@@ -151,50 +162,41 @@ class AdminTools extends Component {
           </VictoryChart>
         </View>
       );
-    } else if (item.item == "Sex") {
+    } else if (item == "Gender") {
       return (
-        <View style={styles.container}>
-          <VictoryPie
-            innerRadius={20}
-            labelRadius={55}
-            width={screenWidth}
-            height={screenWidth * 1.3}
-            style={{
-              labels: { fill: "white", fontSize: 14, fontWeight: "500" }
-            }}
-            data={this.sexData}
-          />
-        </View>
+        <VictoryPie
+          innerRadius={20}
+          labelRadius={55}
+          width={screenWidth}
+          style={{
+            labels: { fill: "white", fontSize: 14, fontWeight: "500" }
+          }}
+          data={this.sexData}
+        />
       );
-    } else if (item.item == "Year") {
+    } else if (item == "Year") {
       return (
-        <View style={styles.container}>
-          <VictoryPie
-            innerRadius={20}
-            labelRadius={50}
-            width={screenWidth}
-            height={screenWidth * 1.3}
-            style={{
-              labels: { fill: "white", fontSize: 14, fontWeight: "500" }
-            }}
-            data={this.yearData}
-          />
-        </View>
+        <VictoryPie
+          innerRadius={20}
+          labelRadius={50}
+          width={screenWidth}
+          style={{
+            labels: { fill: "white", fontSize: 14, fontWeight: "500" }
+          }}
+          data={this.yearData}
+        />
       );
     } else {
       return (
-        <View style={styles.container}>
-          <VictoryPie
-            innerRadius={5}
-            labelRadius={20}
-            width={screenWidth}
-            height={screenWidth * 1.3}
-            style={{
-              labels: { fill: "white", fontSize: 13, fontWeight: "500" }
-            }}
-            data={this.schoolData}
-          />
-        </View>
+        <VictoryPie
+          innerRadius={5}
+          labelRadius={20}
+          width={screenWidth}
+          style={{
+            labels: { fill: "white", fontSize: 13, fontWeight: "500" }
+          }}
+          data={this.schoolData}
+        />
       );
     }
   }
@@ -203,27 +205,51 @@ class AdminTools extends Component {
     if (event.eventData.currentAttendance != 0) {
       return (
         <View>
-          <View
-            style={{
-              width: screenWidth * 0.95,
-              marginTop: 20,
-              alignSelf: "center"
-            }}
-          >
-            <SegmentedControlTab
-              values={["Attendance", "Sex", "Class Year", "School"]}
-              selectedIndex={this.state.selectedIndex}
-              onTabPress={this.handleIndexChange.bind(this)}
-            />
+          <View style={styles.container}>
+            <View style={styles.attendanceContainer}>
+              <Text style={styles.dataHeader}>Traffic</Text>
+              <View style={styles.horizontalLine} />
+            </View>
+            <View style={styles.eventInformationContainer}>
+              <Text style={styles.infoTextStyle}>{event.eventName}</Text>
+              <Text style={styles.infoTextStyle}>{event.eventHost}</Text>
+              <Text style={styles.infoTextStyle}>{returnTime(event)}</Text>
+            </View>
+            <Text
+              style={{
+                paddingLeft: 15,
+                fontFamily: "PublicSans-Bold",
+                fontSize: 15,
+                marginTop: 5
+              }}
+            >
+              Number of Attendees
+            </Text>
+            {this.renderDataTab("Attendance", 0)}
           </View>
-          <FlatList
-            ref={dataList => (this.dataList = dataList)}
-            data={["Attendance", "Sex", "Year", "School"]}
-            renderItem={(item, index) => this.renderDataTab(item, index)}
-            horizontal={true}
-            keyExtractor={(item, index) => index.toString()}
-            scrollEnabled={false}
-          />
+          <View style={styles.container}>
+            <View style={styles.attendanceContainer}>
+              <Text style={styles.dataHeader}>Gender</Text>
+              <View style={styles.horizontalLine} />
+            </View>
+            {this.renderDataTab("Gender", 0)}
+          </View>
+
+          <View style={styles.container}>
+            <View style={styles.attendanceContainer}>
+              <Text style={styles.dataHeader}>School Years</Text>
+              <View style={styles.horizontalLine} />
+            </View>
+            {this.renderDataTab("Year", 0)}
+          </View>
+
+          <View style={styles.container}>
+            <View style={styles.attendanceContainer}>
+              <Text style={styles.dataHeader}>Schools</Text>
+              <View style={styles.horizontalLine} />
+            </View>
+            {this.renderDataTab("School", 0)}
+          </View>
         </View>
       );
     } else {
@@ -264,37 +290,47 @@ class AdminTools extends Component {
   render() {
     return (
       <View style={{ flex: 1, backgroundColor: "#F7F7F7" }}>
-        <TouchableOpacity
-          style={styles.buttonContainer}
-          onPress={this.onPress.bind(this)}
-        >
-          <Text style={{ color: "navy", fontWeight: "600" }}>
-            Track Attendance
-          </Text>
-        </TouchableOpacity>
-        {this.renderData()}
-        <QRCodeScannerModal
-          ref={scanner => {
-            this.scanner = scanner;
-          }}
-          value={this.props.uid}
-          visible={this.state.scannerActive}
-          onPress={this.onPress.bind(this)}
-          onRead={this.onRead.bind(this)}
-        />
-        <TouchableOpacity
-          onPress={this.onDelete.bind(this)}
-          style={styles.buttonStyle}
-        >
-          <Icon
-            name="md-trash"
-            size={16}
-            style={{ color: "white", marginRight: 10 }}
+        <ScrollView>
+          <TouchableOpacity
+            style={styles.buttonContainer}
+            onPress={this.onPress.bind(this)}
+          >
+            <Text
+              style={{
+                color: "black",
+                fontFamily: "PublicSans-Regular",
+                fontSize: 15
+              }}
+            >
+              QR Scanner
+            </Text>
+            <Icon name="ios-arrow-forward" style={{ fontSize: 24 }} />
+          </TouchableOpacity>
+          {this.renderData()}
+          <TouchableOpacity
+            onPress={this.onDelete.bind(this)}
+            style={styles.buttonStyle}
+          >
+            <Icon
+              name="md-trash"
+              size={16}
+              style={{ color: "white", marginRight: 10 }}
+            />
+            <Text style={{ fontSize: 15, color: "white", fontWeight: "500" }}>
+              Delete This Event
+            </Text>
+          </TouchableOpacity>
+
+          <QRCodeScannerModal
+            ref={scanner => {
+              this.scanner = scanner;
+            }}
+            value={this.props.uid}
+            visible={this.state.scannerActive}
+            onPress={this.onPress.bind(this)}
+            onRead={this.onRead.bind(this)}
           />
-          <Text style={{ fontSize: 15, color: "white", fontWeight: "500" }}>
-            Delete This Event
-          </Text>
-        </TouchableOpacity>
+        </ScrollView>
       </View>
     );
   }
@@ -321,30 +357,29 @@ const mapDispatchToProps = dispatch => {
 
 const styles = {
   buttonContainer: {
-    width: screenWidth * 0.9,
+    width: screenWidth,
     padding: 15,
     marginTop: 10,
     alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
     backgroundColor: "white",
     alignSelf: "center",
-    shadowOffset: { width: 2, height: 2 },
-    shadowColor: "black",
-    shadowOpacity: 0.4,
-    shadowRadius: 2,
-    borderRadius: 25
+    shadowOffset: { width: 2, height: 2 }
   },
   container: {
-    justifyContent: "center",
-    alignItems: "center",
     width: screenWidth,
-    height: 400
+    backgroundColor: "white",
+    marginTop: 20,
+    marginBottom: 20,
+    paddingVertical: 15,
+    zIndex: 2
   },
   buttonStyle: {
-    position: "absolute",
-    bottom: 30,
     display: "flex",
     width: 200,
-    left: screenWidth * 0.5 - 100,
+    bottom: 20,
+    marginTop: 20,
     backgroundColor: "red",
     paddingLeft: 20,
     paddingRight: 20,
@@ -355,8 +390,72 @@ const styles = {
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row"
+  },
+  attendanceContainer: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    marginTop: 15,
+    paddingLeft: 15
+  },
+  horizontalLine: {
+    height: 2,
+    flex: 1,
+    marginLeft: 5,
+    marginRight: 10,
+    backgroundColor: "#92C83D",
+    marginTop: 3
+  },
+  dataHeader: {
+    fontSize: 19,
+    fontFamily: "PublicSans-SemiBold"
+  },
+  eventInformationContainer: {
+    marginLeft: 15,
+    marginTop: 10
+  },
+  infoTextStyle: {
+    fontFamily: "PublicSans-ExtraLight",
+    color: "rgba(0,0,0,.7)",
+    marginBottom: 3
   }
 };
+
+function returnTime(event) {
+  let startTimeArray = event.eventTime.startTime.split(":");
+  let endTimeArray = event.eventTime.endTime.split(":");
+
+  let startHour;
+  let startMinute;
+  let endHour;
+  let endMinute;
+
+  let startTimeOfDay = "AM";
+  let endTimeOfDay = "AM";
+
+  startHour = parseInt(startTimeArray[0]);
+  if (startHour == 0) {
+    startHour = 12;
+    startTimeOfDay = "AM";
+  } else if (startHour > 12) {
+    startHour = startHour - 12;
+    startTimeOfDay = "PM";
+  }
+  let startTime = `${startHour}:${startTimeArray[1]}`;
+
+  endHour = parseInt(endTimeArray[0]);
+  if (endHour > 12) {
+    endHour = endHour - 12;
+    endTimeOfDay = "PM";
+  } else if (endHour == 0) {
+    endHour = 12;
+    timeOfDay = "AM";
+  }
+  let endTime = `${endHour}:${endTimeArray[1]}`;
+  let eventTime = `${startTime}${startTimeOfDay}  -  ${endTime}${endTimeOfDay}`;
+  return eventTime;
+}
 
 export default connect(
   mapStateToProps,

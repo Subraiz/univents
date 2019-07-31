@@ -72,7 +72,7 @@ const EventCard = ({ event, onPress }) => {
             paddingTop: 10,
             paddingBottom: 10,
             paddingRight: 15,
-            paddingLeft: 15,
+            paddingLeft: 5,
             justifyContent: "space-between"
           }}
         >
@@ -91,11 +91,11 @@ const EventCard = ({ event, onPress }) => {
 
 const styles = {
   container: {
-    height: screenHeight * 0.28,
+    height: screenHeight * 0.3,
     width: screenWidth * 0.85,
     marginLeft: 15,
     marginTop: 4,
-    overflow: "hidden"
+    overflow: "scroll"
   },
   opacityContainer: {
     position: "absolute",
@@ -114,15 +114,16 @@ const styles = {
     fontWeight: "400"
   },
   locationStyle: {
-    fontSize: 15,
+    fontSize: 12,
     fontFamily: "PublicSans-Light",
     color: "black",
-    paddingTop: 8
+    paddingTop: 5
   },
   timeStyle: {
     color: "#92C83D",
     fontFamily: "PublicSans-Light",
-    fontSize: 15
+    fontSize: 15,
+    paddingTop: 2
   }
 };
 

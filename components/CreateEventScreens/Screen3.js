@@ -1,6 +1,13 @@
 import React, { Component } from "react";
-import { Text, View, TouchableOpacity, Dimensions } from "react-native";
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Dimensions,
+  ActivityIndicator
+} from "react-native";
 import * as Animatable from "react-native-animatable";
+import Icon from "react-native-vector-icons/Ionicons";
 import EventCard from "../EventCard";
 import Event from "../../classes/Event";
 import LottieView from "lottie-react-native";
@@ -58,7 +65,7 @@ class Screen3 extends Component {
       if (!this.props.event.uploading) {
         this.props.navigation.navigate("Explore");
       }
-    }, 2000);
+    }, 1000);
   }
 
   makeid() {
@@ -78,25 +85,28 @@ class Screen3 extends Component {
         <View
           style={{
             alignSelf: "center",
-
+            width: screenWidth * 0.4,
             alignItems: "center"
           }}
         >
-          <LottieView
-            style={{ width: 100, height: 100 }}
-            autoPlay
-            loop
-            source={require("../../assets/animations/loading.json")}
-          />
+          <ActivityIndicator size="small" color="#a7a7a7" />
         </View>
       );
     } else {
       return (
         <TouchableOpacity
-          style={styles.buttonStyle}
+          style={styles.publishButtonStyle}
           onPress={this.onPublish.bind(this)}
         >
-          <Text style={{ color: "white", fontSize: 18 }}>Publish</Text>
+          <Text
+            style={{
+              color: "black",
+              fontSize: 16,
+              fontFamily: "PublicSans-Regular"
+            }}
+          >
+            Publish
+          </Text>
         </TouchableOpacity>
       );
     }
@@ -106,25 +116,54 @@ class Screen3 extends Component {
     let animation =
       this.props.animation == "right" ? "slideInRight" : "slideInLeft";
     return (
-      <Animatable.View animation={animation} duration={300}>
+      <Animatable.View
+        animation={animation}
+        duration={300}
+        style={{ marginTop: 20 }}
+      >
         <View style={{ width: screenWidth, alignItems: "center" }}>
-          <Text style={{ fontSize: 16, fontWeight: "600", marginBottom: 10 }}>
+          <Text
+            style={{
+              fontSize: 19,
+              fontFamily: "PublicSans-Bold",
+              marginBottom: 10
+            }}
+          >
             Event Preview
           </Text>
-          <EventCard event={tempEvent} />
+          <View
+            style={{
+              backgroundColor: "white",
+              width: screenWidth,
+              justifyContent: "center",
+              alignItems: "center",
+              paddingVertical: 15
+            }}
+          >
+            <EventCard event={tempEvent} />
+          </View>
         </View>
         <View
           style={{
             flexDirection: "row",
             justifyContent: "space-around",
-            marginTop: 30
+            marginTop: 30,
+            paddingHorizontal: 10
           }}
         >
           <TouchableOpacity
-            style={styles.buttonStyle}
+            style={styles.returnButtonStyle}
             onPress={this.props.onReturn}
           >
-            <Text style={{ color: "white", fontSize: 18 }}>Return</Text>
+            <Text
+              style={{
+                color: "black",
+                fontSize: 16,
+                fontFamily: "PublicSans-Regular"
+              }}
+            >
+              Edit Event
+            </Text>
           </TouchableOpacity>
           {this.renderPublishButton()}
         </View>
@@ -186,16 +225,46 @@ const mapStateToProps = state => {
 };
 
 const styles = {
-  buttonStyle: {
+  returnButtonStyle: {
     alignSelf: "center",
-    width: 100,
-    paddingLeft: 10,
-    paddingRight: 10,
-    paddingTop: 4,
-    paddingBottom: 4,
-    backgroundColor: "red",
-    borderRadius: 15,
-    alignItems: "center"
+    width: screenWidth * 0.4,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingTop: 8,
+    paddingBottom: 8,
+    borderBottomLeftRadius: 6,
+    borderBottomRightRadius: 6,
+    alignItems: "center",
+    backgroundColor: "#f7f7f7",
+    shadowColor: "black",
+    shadowOffset: { width: 3, height: 4 },
+    shadowRadius: 8,
+    shadowOpacity: 0.08,
+    borderWidth: 0.15,
+    borderTopWidth: 2,
+    borderTopColor: "#00AEEF"
+  },
+  publishButtonStyle: {
+    alignSelf: "center",
+    width: screenWidth * 0.4,
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingTop: 8,
+    paddingBottom: 8,
+    borderBottomLeftRadius: 6,
+    borderBottomRightRadius: 6,
+    alignItems: "center",
+    backgroundColor: "#f7f7f7",
+    shadowColor: "black",
+    shadowOffset: { width: -3, height: 4 },
+    shadowRadius: 8,
+    shadowOpacity: 0.08,
+    borderWidth: 0.15,
+    borderTopWidth: 2,
+    borderTopColor: "#40E488"
   }
 };
 

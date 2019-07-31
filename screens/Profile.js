@@ -14,6 +14,7 @@ import {
   Animated
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
+import LinearGradient from "react-native-linear-gradient";
 import QRCode from "react-native-qrcode";
 import QRCodeModal from "../components/QRCodeModal";
 import { connect } from "react-redux";
@@ -257,31 +258,35 @@ class Profile extends Component {
             top: 0,
             left: 0,
             right: 0,
-            backgroundColor: "#f4b042",
             height: headerHeight,
             zIndex: headerZindex,
             display: "flex",
             alignItems: "center"
           }}
         >
-          <Animated.View
-            style={{
-              position: "absolute",
-              bottom: headerTitleBottom,
-              opacity: headerTitleOpacity
-            }}
+          <LinearGradient
+            colors={["#40E488", "#2DE85D"]}
+            style={styles.linearGradient}
           >
-            <Text
+            <Animated.View
               style={{
-                fontSize: 22,
-                fontWeight: "bold",
-                color: "white",
-                paddingBottom: 3
+                position: "absolute",
+                bottom: headerTitleBottom,
+                opacity: headerTitleOpacity
               }}
             >
-              {this.props.user.firstName} {this.props.user.lastName}
-            </Text>
-          </Animated.View>
+              <Text
+                style={{
+                  fontSize: 22,
+                  fontFamily: "PublicSans-Bold",
+                  color: "white",
+                  paddingBottom: 3
+                }}
+              >
+                {this.props.user.firstName} {this.props.user.lastName}
+              </Text>
+            </Animated.View>
+          </LinearGradient>
         </Animated.View>
 
         <ScrollView
@@ -346,11 +351,23 @@ class Profile extends Component {
           </Animated.View>
 
           <View style={{ paddingBottom: 10 }}>
-            <Text style={{ fontWeight: "bold", paddingLeft: 9, fontSize: 24 }}>
+            <Text
+              style={{
+                fontFamily: "PublicSans-Bold",
+                paddingLeft: 9,
+                fontSize: 24
+              }}
+            >
               {this.props.user.firstName} {this.props.user.lastName}
             </Text>
             <View style={{ paddingLeft: 10 }}>
-              <Text style={{ fontWeight: "300", fontSize: 16, paddingTop: 2 }}>
+              <Text
+                style={{
+                  fontFamily: "PublicSans-Light",
+                  fontSize: 16,
+                  paddingTop: 2
+                }}
+              >
                 {this.props.user.school}
               </Text>
               <View
@@ -361,7 +378,7 @@ class Profile extends Component {
               >
                 <Text
                   style={{
-                    fontWeight: "300",
+                    fontFamily: "PublicSans-Light",
                     fontSize: 16,
                     paddingTop: 2,
                     color: "gray"
@@ -389,7 +406,7 @@ class Profile extends Component {
                 />
                 <Text
                   style={{
-                    fontWeight: "300",
+                    fontFamily: "PublicSans-Light",
                     fontSize: 14,
                     color: "grey",
                     marginRight: 20
@@ -410,7 +427,7 @@ class Profile extends Component {
                 />
                 <Text
                   style={{
-                    fontWeight: "300",
+                    fontFamily: "PublicSans-Light",
                     fontSize: 14,
                     color: "grey",
                     marginRight: 10
@@ -514,6 +531,15 @@ const styles = {
   container: {
     flex: 1,
     backgroundColor: "white"
+  },
+  linearGradient: {
+    flex: 1,
+    width: "100%",
+    paddingLeft: 15,
+    paddingRight: 15,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
   }
 };
 
