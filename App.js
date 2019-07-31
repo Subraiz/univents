@@ -9,7 +9,7 @@ import firebase from "react-native-firebase";
 
 console.disableYellowBox = true;
 
-console.log("test");
+console.log("univents");
 
 class App extends Component {
   render() {
