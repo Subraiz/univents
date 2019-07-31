@@ -38,7 +38,13 @@ const NoEventCard = () => {
       />
 
       <View style={styles.textContainer}>
-        <Text style={{ color: "white", fontWeight: "600", fontSize: 24 }}>
+        <Text
+          style={{
+            color: "white",
+            fontFamily: "PublicSans-SemiBold",
+            fontSize: 24
+          }}
+        >
           Check Back Soon
         </Text>
       </View>
@@ -157,7 +163,7 @@ class EventCardsRow extends Component {
 const styles = {
   titleStyle: {
     fontFamily: "PublicSans-Regular",
-    marginLeft: 20,
+    marginLeft: 15,
     marginTop: 5,
     fontSize: 20,
     paddingBottom: 5,
@@ -165,11 +171,11 @@ const styles = {
   },
   eventsContainer: {
     backgroundColor: "white",
-    height: screenHeight * 0.35,
     marginTop: 8
   },
   container: {
-    height: screenHeight * 0.28,
+    height: screenHeight * 0.2,
+    paddingBottom: 20,
     width: screenWidth * 0.85,
     borderRadius: 15,
     marginLeft: 10,
@@ -179,7 +185,6 @@ const styles = {
   textContainer: {
     height: "100%",
     justifyContent: "flex-end",
-    paddingBottom: 6,
     marginLeft: 6
   },
   imageStyle: {

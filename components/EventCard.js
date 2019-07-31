@@ -10,7 +10,7 @@ const EventCard = ({ event, onPress }) => {
   let eventDate = `${month} ${day}, ${year}`;
 
   let { locationAddress, locationName } = event.eventLocation;
-  let eventLocation = `${locationName} ~ ${locationAddress}`;
+  let eventLocation = `${locationName}  -  ${locationAddress}`;
 
   let eventName = event.eventName;
   let hostName = event.eventHost;
@@ -48,14 +48,7 @@ const EventCard = ({ event, onPress }) => {
   let eventTime = `${startTime}${startTimeOfDay} - ${endTime}${endTimeOfDay}`;
 
   return (
-    <View
-      style={{
-        shadowOffset: { width: 2, height: 2 },
-        shadowColor: "lightgrey",
-        shadowOpacity: 0.7,
-        shadowRadius: 10
-      }}
-    >
+    <View>
       <TouchableOpacity
         activeOpacity={0.8}
         onPress={onPress}
@@ -64,18 +57,17 @@ const EventCard = ({ event, onPress }) => {
         <CacheImage
           style={{
             width: "100%",
-            height: "40%",
-            opacity: 0.7
+            height: "55%",
+            borderRadius: 9,
+            opacity: 0.9
           }}
           uri={event.eventImage.uri}
         />
-        <View style={styles.opacityContainer} />
 
         <View
           style={{
             width: "100%",
             height: "60%",
-            backgroundColor: "white",
             flexDirection: "column",
             paddingTop: 10,
             paddingBottom: 10,
@@ -86,13 +78,9 @@ const EventCard = ({ event, onPress }) => {
         >
           <View>
             <Text style={styles.eventNameStyle}>{eventName}</Text>
-            <Text style={styles.hostNameStyle}>{hostName}</Text>
-          </View>
-          <View>
-            <Text style={styles.dateStyle}>
-              {eventDate} • {eventTime}
+            <Text style={styles.timeStyle}>
+              {eventDate.toUpperCase()} @ {eventTime.toUpperCase()}
             </Text>
-
             <Text style={styles.locationStyle}>{eventLocation}</Text>
           </View>
         </View>
@@ -105,8 +93,7 @@ const styles = {
   container: {
     height: screenHeight * 0.28,
     width: screenWidth * 0.85,
-    borderRadius: 15,
-    marginLeft: 10,
+    marginLeft: 15,
     marginTop: 4,
     overflow: "hidden"
   },
@@ -114,17 +101,13 @@ const styles = {
     position: "absolute",
     width: "100%",
     height: "100%",
-    backgroundColor: "black",
     borderRadius: 10,
     opacity: 0.25
   },
-  dateStyle: {
-    fontSize: 15,
-    fontWeight: "300"
-  },
+
   eventNameStyle: {
-    fontSize: 22,
-    fontWeight: "700"
+    fontSize: 20,
+    fontFamily: "PublicSans-SemiBold"
   },
   hostNameStyle: {
     fontSize: 15,
@@ -132,8 +115,14 @@ const styles = {
   },
   locationStyle: {
     fontSize: 15,
-    fontWeight: "300",
-    color: "grey"
+    fontFamily: "PublicSans-Light",
+    color: "black",
+    paddingTop: 8
+  },
+  timeStyle: {
+    color: "#92C83D",
+    fontFamily: "PublicSans-Light",
+    fontSize: 15
   }
 };
 
