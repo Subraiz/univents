@@ -15,7 +15,7 @@ import CreatedEvents from "../components/CreatedEvents";
 import AttendedEvents from "../components/AttendedEvents";
 import CreateEvent from "./CreateEvent";
 import Icon from "react-native-vector-icons/Ionicons";
-import { TabView, TabBar, SceneMap } from "react-native-tab-view";
+//import { TabView, TabBar, SceneMap } from "react-native-tab-view";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { clearEventInfo } from "../redux/actions/EventActions";
@@ -95,31 +95,6 @@ class Events extends Component {
             </View>
           </SafeAreaView>
         </View>
-        <TabView
-          navigationState={this.state}
-          renderScene={SceneMap({
-            first: this.FirstRoute,
-            second: this.SecondRoute,
-            third: this.ThirdRoute
-          })}
-          onIndexChange={index => this.setState({ index })}
-          renderTabBar={props => (
-            <TabBar
-              {...props}
-              indicatorStyle={{ backgroundColor: "red" }}
-              style={{ backgroundColor: "white" }}
-              labelStyle={
-                Platform.OS === "ios"
-                  ? styles.iosLabelStyle
-                  : styles.androidLabelStyle
-              }
-            />
-          )}
-          initialLayout={{
-            width: Dimensions.get("window").width,
-            height: Dimensions.get("window").height
-          }}
-        />
       </View>
     );
   }
