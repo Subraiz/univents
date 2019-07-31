@@ -9,7 +9,7 @@
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleGetInfoString</key>
-	<string></string>
+	<string/>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -41,7 +41,7 @@
 		</array>
 	</dict>
 	<key>LSApplicationCategoryType</key>
-	<string></string>
+	<string/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -98,6 +98,25 @@
 		<string>Octicons.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
+		<string>PublicSans-Black.otf</string>
+		<string>PublicSans-BlackItalic.otf</string>
+		<string>PublicSans-Bold.otf</string>
+		<string>PublicSans-BoldItalic.otf</string>
+		<string>PublicSans-ExtraBold.otf</string>
+		<string>PublicSans-ExtraBoldItalic.otf</string>
+		<string>PublicSans-ExtraLight.otf</string>
+		<string>PublicSans-ExtraLightItalic.otf</string>
+		<string>PublicSans-Italic.otf</string>
+		<string>PublicSans-Light.otf</string>
+		<string>PublicSans-LightItalic.otf</string>
+		<string>PublicSans-Medium.otf</string>
+		<string>PublicSans-MediumItalic.otf</string>
+		<string>PublicSans-Regular.otf</string>
+		<string>PublicSans-SemiBold.otf</string>
+		<string>PublicSans-SemiBoldItalic.otf</string>
+		<string>PublicSans-Thin.otf</string>
+		<string>PublicSans-ThinItalic.otf</string>
+		<string>SpaceMono-Regular.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

@@ -13,6 +13,7 @@ import {
   Linking,
   ScrollView
 } from "react-native";
+import Icon from "react-native-vector-icons/Ionicons";
 import SCHOOLS from "../../constants/schools";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -90,7 +91,15 @@ class SelectSchool extends Component {
     if (this.state.disabled) {
       return (
         <TouchableOpacity style={styles.inactiveButtonStyle} disabled={true}>
-          <Text style={{ color: "rgba(0,0,0,.4)" }}>Next</Text>
+          <Text
+            style={{
+              color: "white",
+              fontFamily: "PublicSans-Regular",
+              fontSize: 18
+            }}
+          >
+            Next
+          </Text>
         </TouchableOpacity>
       );
     } else {
@@ -99,7 +108,15 @@ class SelectSchool extends Component {
           style={styles.activeButtonStyle}
           onPress={this.handleNextPress.bind(this)}
         >
-          <Text>Next</Text>
+          <Text
+            style={{
+              color: "white",
+              fontFamily: "PublicSans-Regular",
+              fontSize: 18
+            }}
+          >
+            Next
+          </Text>
         </TouchableOpacity>
       );
     }
@@ -149,18 +166,19 @@ class SelectSchool extends Component {
     return (
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
         <View style={styles.headerContainer}>
-          <Text style={styles.titleStyle}>
-            Tap on your school logo to get started
-          </Text>
-          <TextInput
-            onChangeText={text => this.onTextChange(text)}
-            value={this.state.schoolValue}
-            autoFocus={true}
-            style={styles.inputStyle}
-            textAlign={"center"}
-            placeholderTextColor="rgba(255, 255, 255, .5)"
-            placeholder="School Name"
-          />
+          <Text style={styles.titleStyle}>Choose your School</Text>
+          <View style={styles.inputContainer}>
+            <Icon name="md-school" style={{ fontSize: 36, color: "black" }} />
+            <TextInput
+              onChangeText={text => this.onTextChange(text)}
+              value={this.state.schoolValue}
+              autoFocus={true}
+              style={styles.inputStyle}
+              textAlign={"left"}
+              placeholderTextColor="rgba(0,0,0,.4)"
+              placeholder="Enter your college"
+            />
+          </View>
         </View>
 
         <View style={styles.schoolsContainer}>{this.renderList()}</View>
@@ -189,34 +207,48 @@ const mapDispatchToProps = dispatch => {
 const styles = {
   container: {
     flex: 1,
-    backgroundColor: "#ffc8aa"
+    backgroundColor: "white"
   },
   headerContainer: {
     width: "100%",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "flex-start",
+    paddingLeft: 25,
+    paddingTop: 70
   },
   titleStyle: {
     marginTop: 10,
-    color: "white",
-    textAlign: "center",
+    color: "black",
     width: "90%",
     fontWeight: "800",
-    fontSize: 20
+    fontSize: 20,
+    fontFamily: "PublicSans-Regular"
+  },
+  inputContainer: {
+    width: "90%",
+    borderBottomWidth: 2,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 30,
+    paddingBottom: 2
   },
   inputStyle: {
-    marginTop: 15,
-    width: "80%",
-    color: "white",
+    color: "black",
     fontSize: 16,
-    paddingBottom: 4
+    fontFamily: "PublicSans-ExtraLight",
+    paddingLeft: 15,
+    width: "95%"
   },
   activeButtonStyle: {
     alignSelf: "center",
-    backgroundColor: "white",
+    width: "85%",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "black",
     paddingVertical: 15,
     paddingHorizontal: 85,
-    borderRadius: 45,
+    borderRadius: 4,
     shadowColor: "black",
     shadowOpacity: 0.05,
     shadowOffset: { width: -2, height: 2 },
@@ -224,10 +256,13 @@ const styles = {
   },
   inactiveButtonStyle: {
     alignSelf: "center",
-    backgroundColor: "rgba(255,255,255, .4)",
+    width: "85%",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0,0,0, .7)",
     paddingVertical: 15,
     paddingHorizontal: 85,
-    borderRadius: 45,
+    borderRadius: 4,
     shadowColor: "black",
     shadowOpacity: 0.05,
     shadowOffset: { width: -2, height: 2 },

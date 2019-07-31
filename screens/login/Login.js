@@ -85,19 +85,6 @@ class Login extends Component {
                 source={require("../../assets/images/loginBackgroundImage2.jpg")}
                 style={styles.imageStyle}
               />
-              <View
-                style={{
-                  position: "absolute",
-                  top: 35,
-                  width: screenWidth,
-                  alignItems: "flex-start",
-                  left: 10
-                }}
-              >
-                <Text style={{ color: "white", fontSize: 10 }}>
-                  Photo By: @Nikkita.Photo
-                </Text>
-              </View>
             </View>
             <View style={styles.slide3}>
               <Image

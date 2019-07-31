@@ -218,6 +218,7 @@ class LoginForm extends Component {
                 {...inputProps}
                 label="Email"
                 style={styles.inputStyle}
+                placeholder={"Enter your school email"}
                 onChangeText={text =>
                   this.props.updateLoginInfo({ prop: "email", value: text })
                 }
@@ -226,6 +227,7 @@ class LoginForm extends Component {
                 {...inputProps}
                 label="Password"
                 secureTextEntry={true}
+                placeholder={"Enter your password"}
                 style={styles.inputStyle}
                 onChangeText={text =>
                   this.props.updateLoginInfo({ prop: "password", value: text })
@@ -400,14 +402,17 @@ const styles = {
   },
   loginButtonStyle: {
     borderRadius: 4,
+    display: "flex",
+    justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "black",
+    color: "black",
+    borderWidth: 1,
     height: 40,
     width: "100%"
   },
   loginTextStyle: {
-    color: "white",
-    padding: 10
+    color: "black",
+    fontFamily: "PublicSans-Bold"
   },
   bottomTextStyle: {
     color: "black",
@@ -424,7 +429,7 @@ const styles = {
   authCircleStyle: {
     height: 40,
     width: 40,
-    backgroundColor: "black",
+    backgroundColor: "rbga(0,0,0,0)",
     position: "absolute",
     borderRadius: 20
   },

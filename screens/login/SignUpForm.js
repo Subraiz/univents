@@ -150,7 +150,7 @@ class SignUpForm extends Component {
         <TouchableOpacity activeOpacity={1} onPress={() => Keyboard.dismiss()}>
           <KeyboardAvoidingView>
             <View style={{ marginTop: 10 }}>
-              <FormLabel>First Name</FormLabel>
+              {/*<FormLabel>First Name</FormLabel>
               <FormInput
                 placeholder={"F. Name"}
                 autoCorrect={false}
@@ -169,7 +169,7 @@ class SignUpForm extends Component {
                   this.props.updateUserInfo({ prop: "lastName", value: text })
                 }
                 value={this.props.lastName}
-              />
+              />*/}
               <FormLabel>Email</FormLabel>
               <FormInput
                 placeholder={"student@bc.edu"}

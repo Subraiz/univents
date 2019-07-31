@@ -43,7 +43,13 @@ class SplashScreen extends Component {
           </Animatable.View>
         </View>
         <Animatable.View animation="zoomInDown">
-          <Text style={{ color: "white", fontSize: 36, fontWeight: "600" }}>
+          <Text
+            style={{
+              color: "white",
+              fontSize: 33,
+              fontFamily: "PublicSans-SemiBold"
+            }}
+          >
             Splurge
           </Text>
         </Animatable.View>
@@ -59,10 +65,10 @@ const styles = {
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
-    paddingBottom: 100
+    paddingBottom: 153
   },
   imageContainer: {
-    width: 100,
+    width: 80,
     height: 75
   },
   imageStyle: {
