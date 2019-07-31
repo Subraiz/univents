@@ -158,9 +158,9 @@ class LoginForm extends Component {
 
   render() {
     const inputProps = {
-      textColor: "white",
-      baseColor: "rgba(255,255,255,0.8)",
-      tintColor: "rgba(255,255,255,0.8)"
+      textColor: "black",
+      baseColor: "black",
+      tintColor: "black"
     };
 
     const spin = this.state.rotation.interpolate({
@@ -170,7 +170,7 @@ class LoginForm extends Component {
 
     const borderColor = this.state.buttonOpacity.interpolate({
       inputRange: [0, 1],
-      outputRange: ["rgba(0,0,0,0)", "white"]
+      outputRange: ["rgba(0,0,0,0)", "black"]
     });
 
     const scale = this.state.scale.interpolate({
@@ -185,10 +185,6 @@ class LoginForm extends Component {
 
     return (
       <View style={styles.container}>
-        <Image
-          style={styles.background}
-          source={require("../../assets/images/loginBackgroundImage2.jpg")}
-        />
         <View style={styles.backgroundOverlay} />
         <SafeAreaView
           style={{ position: "absolute", marginLeft: screenWidth * 0.05 }}
@@ -200,7 +196,7 @@ class LoginForm extends Component {
           >
             <Icon
               name="md-arrow-round-back"
-              style={{ fontSize: 36, color: "white" }}
+              style={{ fontSize: 36, color: "black" }}
             />
           </TouchableOpacity>
         </SafeAreaView>
@@ -363,7 +359,8 @@ const styles = {
     marginTop: screenHeight * 0.07,
     flexDirection: "row",
     justifyContent: "center",
-    flexWrap: "wrap"
+    flexWrap: "wrap",
+    color: "black"
   },
   buttonContainer: {
     marginTop: screenHeight * 0.08,
@@ -386,7 +383,7 @@ const styles = {
   titleStyle: {
     fontWeight: "bold",
     fontSize: 35,
-    color: "white",
+    color: "black",
     marginTop: 80,
     letterSpacing: 2,
     alignSelf: "center"
@@ -394,16 +391,17 @@ const styles = {
   inputContainer: {
     flex: 1,
     justifyContent: "flex-end",
-    paddingHorizontal: 50
+    paddingHorizontal: 50,
+    color: "black"
   },
   inputStyle: {
     backgroundColor: "transparent",
-    color: "white"
+    color: "black"
   },
   loginButtonStyle: {
-    borderRadius: 20,
-    borderWidth: 1.5,
+    borderRadius: 4,
     alignItems: "center",
+    backgroundColor: "black",
     height: 40,
     width: "100%"
   },
@@ -412,7 +410,7 @@ const styles = {
     padding: 10
   },
   bottomTextStyle: {
-    color: "rgba(255,255,255,0.8)",
+    color: "black",
     marginBottom: 40,
     marginTop: 40,
     alignSelf: "center",
@@ -426,7 +424,7 @@ const styles = {
   authCircleStyle: {
     height: 40,
     width: 40,
-    backgroundColor: "white",
+    backgroundColor: "black",
     position: "absolute",
     borderRadius: 20
   },
@@ -434,7 +432,7 @@ const styles = {
     position: "absolute",
     height: "100%",
     width: "100%",
-    backgroundColor: "rgba(0,0,0,.4)"
+    backgroundColor: "#e7e7e7"
   },
   splurgeTextStyle: {
     flex: 1,

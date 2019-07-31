@@ -20,6 +20,7 @@
     "add": "^2.0.6",
     "firebase": "^5.5.7",
     "lottie-react-native": "^2.5.10",
+    "native-base": "^2.13.4",
     "prop-types": "^15.7.2",
     "react": "16.6.0-alpha.8af6728",
     "react-native": "0.57.4",
@@ -69,5 +70,8 @@
   },
   "jest": {
     "preset": "react-native"
+  },
+  "rnpm": {
+    "assets": "./assets/fonts"
   }
 }

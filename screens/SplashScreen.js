@@ -42,6 +42,11 @@ class SplashScreen extends Component {
             />
           </Animatable.View>
         </View>
+        <Animatable.View animation="zoomInDown">
+          <Text style={{ color: "white", fontSize: 36, fontWeight: "600" }}>
+            Splurge
+          </Text>
+        </Animatable.View>
       </View>
     );
   }
@@ -50,13 +55,15 @@ class SplashScreen extends Component {
 const styles = {
   container: {
     flex: 1,
-    backgroundColor: "",
+    backgroundColor: "black",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    flexDirection: "row",
+    paddingBottom: 100
   },
   imageContainer: {
-    width: 250,
-    height: 500
+    width: 100,
+    height: 75
   },
   imageStyle: {
     flex: 1,
