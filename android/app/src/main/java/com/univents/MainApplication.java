@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.crashlytics.android.Crashlytics;
 import com.facebook.react.ReactApplication;
+import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.RNFetchBlob.RNFetchBlobPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.horcrux.svg.SvgPackage;
@@ -24,6 +25,7 @@ import java.util.List;
 import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
 import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
+import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -45,6 +47,7 @@ private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
         protected List<ReactPackage> getPackages() {
                 return Arrays.<ReactPackage>asList(
                         new MainReactPackage(),
+                        new AsyncStoragePackage(),
                         new RNFetchBlobPackage(),
                         new VectorIconsPackage(),
                         new SvgPackage(),
@@ -57,7 +60,8 @@ private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
                         new CodePush("T2KHKkNkbXe6eRIOFqqpzy4Lx9khrJMzF_gKE", MainApplication.this, BuildConfig.DEBUG),
                         new RNFirebasePackage(),
                         new RNFirebaseMessagingPackage(),
-                        new RNFirebaseNotificationsPackage()
+                        new RNFirebaseNotificationsPackage(),
+                        new AsyncStoragePackage()
                         );
         }
 

@@ -73,6 +73,7 @@ class SignUpProfilePhoto extends Component {
     return (
       <View
         style={{
+          backgroundColor: "white",
           flex: 1,
           justifyContent: "space-around",
           flexDirection: "column"

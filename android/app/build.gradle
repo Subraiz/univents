@@ -172,6 +172,7 @@ android {
 }
 
 dependencies {
+    compile project(':@react-native-community_async-storage')
     compile project(':rn-fetch-blob')
     compile project(':react-native-vector-icons')
     compile project(':react-native-svg')
@@ -217,6 +218,7 @@ dependencies {
     }
     implementation "com.google.firebase:firebase-core:15.0.2"
     implementation "com.google.firebase:firebase-messaging:15.0.2"
+    implementation project(':@react-native-community_async-storage')
 
 
 }

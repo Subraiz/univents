@@ -26,13 +26,13 @@ const screenHeight = Dimensions.get("window").height;
 
 class SignUpInterests extends Component {
   state = {
+    allInterests: this.props.categories,
     interests: this.props.categories,
     likedInterests: [],
     searchValue: ""
   };
 
   static navigationOptions = {
-    title: "Tell Us About Yourself",
     gesturesEnabled: false
   };
 
@@ -71,10 +71,11 @@ class SignUpInterests extends Component {
   }
 
   updateSearchedInterests(e) {
-    console.log(e);
+    console.log("updating");
     this.setState({ searchValue: e });
     let newInterests = [];
-    this.state.interests.forEach(interest => {
+    console.log(this.state.interests);
+    this.state.allInterests.forEach(interest => {
       if (interest.item.includes(e)) {
         newInterests.push(interest);
       }
@@ -133,24 +134,17 @@ class SignUpInterests extends Component {
       <View style={styles.container}>
         <TouchableOpacity activeOpacity={1} onPress={() => Keyboard.dismiss()}>
           <View style={styles.headerContainer}>
-            <View style={styles.logoContainer}>
-              <Image
-                style={styles.logoStyle}
-                source={require("../../assets/images/UniventsLogo.png")}
-              />
-            </View>
-            <Text>What are your interests?</Text>
+            <Text style={styles.titleStyle}>What are your interests?</Text>
           </View>
 
           <View>
             <SearchBar
               containerStyle={styles.searchBar}
-              round
-              lightTheme
+              inputContainerStyle={styles.inputContainerStyle}
+              inputStyle={styles.inputStyle}
               showLoading
-              searchIcon={{ size: 24 }}
               onChangeText={this.updateSearchedInterests.bind(this)}
-              placeholder="Type Here..."
+              placeholder="Search"
               value={this.state.searchValue}
             />
           </View>
@@ -158,8 +152,8 @@ class SignUpInterests extends Component {
           <View style={styles.interestsContainer}>
             {this.renderInterests()}
           </View>
-          <View style>{this.renderButton()}</View>
         </TouchableOpacity>
+        <View style={styles.buttonContainer}>{this.renderButton()}</View>
       </View>
     );
   }
@@ -168,13 +162,19 @@ class SignUpInterests extends Component {
 const styles = {
   container: {
     backgroundColor: "white",
-    height: screenHeight
+    height: screenHeight,
+    flex: 1
   },
   logoStyle: {
     flex: 1,
     width: null,
     height: null,
     resizeMode: "contain"
+  },
+  titleStyle: {
+    fontFamily: "PublicSans-Bold",
+    fontSize: 20,
+    paddingLeft: 15
   },
   logoContainer: {
     width: 35,
@@ -187,20 +187,29 @@ const styles = {
     paddingBottom: screenHeight * 0.05
   },
   interestsContainer: {
+    display: "flex",
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
-    marginBottom: screenHeight * 0.1,
     height: screenHeight * 0.4
   },
   searchBar: {
     alignSelf: "center",
     width: screenWidth * 0.9,
     backgroundColor: "rgba(0,0,0,0)",
-    borderBottomColor: "red",
-    borderBottomWidth: 0.4,
+    borderBottomColor: "black",
+    borderBottomWidth: 1,
     borderTopColor: "rgba(0,0,0,0)",
     marginBottom: 10
+  },
+  inputStyle: {
+    backgroundColor: "rgba(0,0,0,0)"
+  },
+  buttonContainer: {
+    flex: 1,
+    display: "flex",
+    justifyContent: "flex-end",
+    bottom: 30
   }
 };
 

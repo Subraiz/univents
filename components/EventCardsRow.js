@@ -156,8 +156,8 @@ class EventCardsRow extends Component {
 
 const styles = {
   titleStyle: {
-    fontWeight: "500",
-    marginLeft: 8,
+    fontFamily: "PublicSans-Regular",
+    marginLeft: 20,
     marginTop: 5,
     fontSize: 20,
     paddingBottom: 5,

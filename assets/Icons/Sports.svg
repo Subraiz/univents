@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="35px" height="34px" viewBox="0 0 35 34" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com -->
+    <title>Sports</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Univents" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Home-Page-2.0" transform="translate(-204.000000, -412.000000)">
+            <g id="Sports" transform="translate(221.635394, 429.500000) rotate(-23.000000) translate(-221.635394, -429.500000) translate(205.135394, 413.000000)">
+                <circle id="Oval" fill="#F1815A" cx="17" cy="17" r="16"></circle>
+                <path d="M16,32.5 C25.1126984,32.5 32.5,25.1126984 32.5,16 C32.5,6.88730163 25.1126984,-0.5 16,-0.5 C6.88730163,-0.5 -0.5,6.88730163 -0.5,16 C-0.5,25.1126984 6.88730163,32.5 16,32.5 Z M16,31.5 C7.43958638,31.5 0.5,24.5604136 0.5,16 C0.5,7.43958638 7.43958638,0.5 16,0.5 C24.5604136,0.5 31.5,7.43958638 31.5,16 C31.5,24.5604136 24.5604136,31.5 16,31.5 Z" id="Oval" fill="#000000" fill-rule="nonzero"></path>
+                <polygon id="Path-17" fill="#000000" fill-rule="nonzero" points="15.5 0 15.5 32 16.5 32 16.5 0"></polygon>
+                <polygon id="Path-18" fill="#000000" fill-rule="nonzero" points="0 16.5492368 32 16.5492368 32 15.5492368 0 15.5492368"></polygon>
+                <path d="M5.3673942,4.83554527 C13.7511444,12.6987067 13.7511444,20.2370457 5.37591458,27.7359911 L6.04297216,28.4809972 C14.8592851,20.5871184 14.8592851,12.3670283 6.05149254,4.10615548 L5.3673942,4.83554527 Z" id="Path-19" fill="#000000" fill-rule="nonzero"></path>
+                <path d="M19.6579508,4.83554527 C28.041701,12.6987067 28.041701,20.2370457 19.6664712,27.7359911 L20.3335288,28.4809972 C29.1498417,20.5871184 29.1498417,12.3670283 20.3420492,4.10615548 L19.6579508,4.83554527 Z" id="Path-19" fill="#000000" fill-rule="nonzero" transform="translate(23.302390, 16.293576) scale(-1, 1) translate(-23.302390, -16.293576) "></path>
+            </g>
+        </g>
+    </g>
+</svg>

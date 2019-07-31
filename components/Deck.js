@@ -16,6 +16,16 @@ import {
   StyleSheet
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
+import {
+  Bars,
+  Fashion,
+  Food,
+  More,
+  Music,
+  Promotions,
+  Sports,
+  Technology
+} from "./common/icons";
 import EventCardsRow from "./EventCardsRow";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -30,40 +40,16 @@ let emptyEvent = {
   name: "EmptyEvent"
 };
 
-let categories = [
-  {
-    name: "Food",
-    iconName: "md-restaurant"
-  },
-  {
-    name: "Music",
-    iconName: "ios-musical-notes"
-  },
-  {
-    name: "Sports",
-    iconName: "ios-basketball"
-  },
-  {
-    name: "Social",
-    iconName: "ios-wine"
-  },
-  {
-    name: "Fashion",
-    iconName: "ios-shirt"
-  },
-  {
-    name: "Art",
-    iconName: "ios-color-palette"
-  },
-  {
-    name: "Promotions",
-    iconName: "ios-pricetags"
-  },
-  {
-    name: "Technology",
-    iconName: "ios-desktop"
-  }
-];
+const Icons = {
+  bars: Bars,
+  fashion: Fashion,
+  food: Food,
+  more: More,
+  music: Music,
+  promotions: Promotions,
+  sports: Sports,
+  technology: Technology
+};
 
 class Deck extends Component {
   state = {
@@ -73,6 +59,34 @@ class Deck extends Component {
 
   constructor(props) {
     super(props);
+
+    this.categories = [
+      {
+        name: "Bars"
+      },
+      {
+        name: "Promotions"
+      },
+      {
+        name: "Sports"
+      },
+      {
+        name: "Technology"
+      },
+      {
+        name: "Food"
+      },
+      {
+        name: "Music"
+      },
+      {
+        name: "Fashion"
+      },
+      {
+        name: "More"
+      }
+    ];
+
     const position = new Animated.ValueXY();
 
     const panResponderForBar = PanResponder.create({
@@ -148,12 +162,7 @@ class Deck extends Component {
         </View>
       );
     } else {
-      return (
-        <Image
-          source={require("../assets/images/ArrowUp.png")}
-          style={styles.iconStyle}
-        />
-      );
+      return <Animated.View style={[this.getBarStyle(), styles.iconStyle]} />;
     }
   }
 
@@ -267,13 +276,13 @@ class Deck extends Component {
 
   getBarStyle() {
     const { position } = this.state;
-    const rotate = position.y.interpolate({
+    const bgColor = position.y.interpolate({
       inputRange: [-screenHeight * 0.451, 0, screenHeight * 0.451],
-      outputRange: ["-180deg", "0deg", "0deg"]
+      outputRange: ["#e7e7e7", "#B3B3B3", "#B3B3B3"]
     });
 
     return {
-      transform: [{ rotate: rotate }]
+      backgroundColor: bgColor
     };
   }
 
@@ -289,28 +298,34 @@ class Deck extends Component {
   }
 
   renderIcons() {
-    return categories.map((category, i) => {
+    return this.categories.map((category, i) => {
+      let Icon = Icons[category.name.toLowerCase()];
       return (
         <TouchableOpacity
           onPress={this.onExploreIconPress.bind(this, category.name)}
-          key={category.iconName + i}
+          key={i}
           style={{
             width: 55,
             height: 50,
             justifyContent: "center",
             alignItems: "center",
             borderRadius: 50,
-            marginLeft: 10,
-            marginBottom: 10,
-            marginRight: 10,
+            marginLeft: 15,
+            marginTop: 10,
+            marginBottom: 5,
+            marginRight: 15,
             alignItems: "center"
           }}
         >
-          <Icon
-            name={category.iconName}
-            style={{ fontSize: 36, color: "#3f3f3f" }}
-          />
-          <Text style={{ fontSize: 9, fontWeight: "300" }}>
+          <Icon width={40} height={40} />
+          <Text
+            style={{
+              fontSize: 9,
+              fontWeight: "300",
+              marginTop: 6,
+              marginBottom: 6
+            }}
+          >
             {category.name}
           </Text>
         </TouchableOpacity>
@@ -336,9 +351,9 @@ class Deck extends Component {
           style={styles.exploreContainer}
           {...this.state.panResponderForBar.panHandlers}
         >
-          <Animated.View style={[this.getBarStyle()]}>
-            <View style={styles.arrowStyle}>{this.renderSpinner()}</View>
-          </Animated.View>
+          <View>
+            <View style={styles.barStyle}>{this.renderSpinner()}</View>
+          </View>
           <Text style={styles.headerTextStyle}>Explore Events</Text>
           <View style={styles.iconsContainer}>{this.renderIcons()}</View>
         </View>
@@ -382,8 +397,7 @@ const styles = StyleSheet.create({
   },
   exploreContainer: {
     backgroundColor: "white",
-    borderTopRightRadius: 35,
-    borderTopLeftRadius: 35,
+
     shadowOffset: { width: 0, height: 2 },
     shadowColor: "black",
     shadowRadius: 3,
@@ -394,7 +408,6 @@ const styles = StyleSheet.create({
     marginTop: 8
   },
   titleStyle: {
-    fontWeight: "500",
     marginLeft: 5,
     marginTop: 5,
     fontSize: 20
@@ -412,31 +425,28 @@ const styles = StyleSheet.create({
     marginBottom: 5
   },
   headerTextStyle: {
-    alignSelf: "center",
+    paddingLeft: 25,
     color: "black",
-    fontSize: 22,
-    fontWeight: "300",
+    fontSize: 20,
+    fontFamily: "PublicSans-Regular",
     marginBottom: 2
   },
   iconStyle: {
-    flex: 1,
-    width: null,
-    height: null,
-    resizeMode: "contain"
+    width: screenWidth * 0.2,
+    height: 7,
+    borderRadius: 10
   },
-  arrowStyle: {
-    width: 25,
-    height: 25,
+  barStyle: {
     alignSelf: "center",
-    marginTop: 4,
-    marginBottom: 4
+    marginTop: 10,
+    marginBottom: 10
   },
   iconsContainer: {
     width: screenWidth,
     flexDirection: "row",
     justifyContent: "center",
     paddingVertical: 10,
-    paddingHorizontal: screenWidth * 0.1,
+    paddingHorizontal: screenWidth * 0.04,
     flexWrap: "wrap"
   }
 });

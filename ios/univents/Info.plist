@@ -117,6 +117,8 @@
 		<string>PublicSans-Thin.otf</string>
 		<string>PublicSans-ThinItalic.otf</string>
 		<string>SpaceMono-Regular.ttf</string>
+		<string>Fontisto.ttf</string>
+		<string>icomoon.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

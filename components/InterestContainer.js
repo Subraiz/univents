@@ -28,13 +28,14 @@ class InterestContainer extends Component {
               backgroundColor: this.props.colors.mainColor || "orange",
               margin: 10,
               alignSelf: "flex-start",
-              borderRadius: 20
+              borderRadius: 8
             }}
           >
             <Text
               style={{
                 fontSize: 14,
-                padding: 10,
+                paddingVertical: 5,
+                paddingHorizontal: 10,
                 color: "white"
               }}
             >
@@ -50,14 +51,14 @@ class InterestContainer extends Component {
             style={{
               backgroundColor: this.props.colors.secondaryColor || "orange",
               alignSelf: "flex-start",
-              borderRadius: 20,
+              borderRadius: 8,
               margin: 10,
               flexDirection: "row",
               borderWidth: 1,
               borderColor: this.props.colors.mainColor
             }}
           >
-            <View style={{ padding: 10, flexDirection: "row" }}>
+            <View style={{ paddingLeft: 10, flexDirection: "row" }}>
               <Icon
                 name="check-circle"
                 color={this.props.colors.mainColor}
@@ -67,7 +68,8 @@ class InterestContainer extends Component {
                 style={{
                   fontSize: 14,
                   color: this.props.colors.mainColor,
-                  paddingLeft: 2
+                  paddingVertical: 5,
+                  paddingHorizontal: 10
                 }}
               >
                 {this.props.title}
