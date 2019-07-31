@@ -24,8 +24,10 @@ import {
   Music,
   Promotions,
   Sports,
-  Technology
+  Technology,
+  Explore
 } from "./common/icons";
+import TabBarIcon from "./TabBarIcon";
 import EventCardsRow from "./EventCardsRow";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";

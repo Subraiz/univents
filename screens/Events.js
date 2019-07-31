@@ -15,7 +15,7 @@ import CreatedEvents from "../components/CreatedEvents";
 import AttendedEvents from "../components/AttendedEvents";
 import CreateEvent from "./CreateEvent";
 import Icon from "react-native-vector-icons/Ionicons";
-//import { TabView, TabBar, SceneMap } from "react-native-tab-view";
+import { TabView, TabBar, SceneMap } from "react-native-tab-view";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { clearEventInfo } from "../redux/actions/EventActions";
@@ -73,7 +73,7 @@ class Events extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: "#f7f7f7" }}>
         <View style={styles.headerContainer}>
           <SafeAreaView style={{ marginLeft: screenWidth * 0.03 }}>
             <View
@@ -83,7 +83,13 @@ class Events extends Component {
                 justifyContent: "space-between"
               }}
             >
-              <Text style={{ fontSize: 24, color: "black", fontWeight: "600" }}>
+              <Text
+                style={{
+                  fontSize: 24,
+                  color: "black",
+                  fontFamily: "PublicSans-Bold"
+                }}
+              >
                 My Events
               </Text>
               <TouchableOpacity onPress={this.onButtonPress.bind(this)}>
@@ -95,6 +101,31 @@ class Events extends Component {
             </View>
           </SafeAreaView>
         </View>
+        <TabView
+          navigationState={this.state}
+          renderScene={SceneMap({
+            first: this.FirstRoute,
+            second: this.SecondRoute,
+            third: this.ThirdRoute
+          })}
+          onIndexChange={index => this.setState({ index })}
+          renderTabBar={props => (
+            <TabBar
+              {...props}
+              indicatorStyle={{ backgroundColor: "#92C83D", height: 4 }}
+              style={{ backgroundColor: "white" }}
+              labelStyle={
+                Platform.OS === "ios"
+                  ? styles.iosLabelStyle
+                  : styles.androidLabelStyle
+              }
+            />
+          )}
+          initialLayout={{
+            width: Dimensions.get("window").width,
+            height: Dimensions.get("window").height
+          }}
+        />
       </View>
     );
   }
@@ -159,11 +190,13 @@ const styles = {
   iosLabelStyle: {
     color: "black",
     fontWeight: "400",
-    textTransform: "capitalize"
+    textTransform: "capitalize",
+    fontFamily: "PublicSans-Medium"
   },
   androidLabelStyle: {
     color: "black",
-    fontWeight: "400"
+    fontWeight: "400",
+    fontFamily: "PublicSans-Medium"
   }
 };
 

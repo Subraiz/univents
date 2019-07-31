@@ -39,7 +39,6 @@ const PROFILE_IMAGE_MIN_HEIGHT = 40;
 const Row = ({ title, sections }) => {
   function renderSections() {
     return sections.map((section, i) => {
-      let borderBottomWidth = i == sections.length - 1 ? 0.4 : 0;
       return (
         <TouchableOpacity
           onPress={section.onPress}
@@ -50,16 +49,15 @@ const Row = ({ title, sections }) => {
             paddingRight: 15,
             paddingTop: 10,
             paddingBottom: 10,
+            marginTop: 8,
+            fontSize: 13,
             backgroundColor: "white",
             flexDirection: "row",
             justifyContent: "space-between",
-            alignItems: "center",
-            borderTopWidth: 0.4,
-            borderBottomWidth: borderBottomWidth,
-            borderColor: "grey"
+            alignItems: "center"
           }}
         >
-          <Text style={{ fontSize: 16, fontWeight: "500" }}>
+          <Text style={{ fontSize: 16, fontFamily: "PublicSans-Light" }}>
             {section.title}
           </Text>
           <Icon
@@ -77,10 +75,10 @@ const Row = ({ title, sections }) => {
         style={{
           paddingLeft: 16,
           fontSize: 20,
-          fontWeight: "600",
           paddingBottom: 10,
-          opacity: 0.85,
-          paddingTop: 10
+          paddingTop: 10,
+          fontFamily: "PublicSans-SemiBold",
+          color: "black"
         }}
       >
         {title}

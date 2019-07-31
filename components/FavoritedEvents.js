@@ -79,7 +79,7 @@ class FavoritedEvents extends Component {
             some events to favorite them!
           </Text>
           <Animatable.View animation="pulse" iterationCount="infinite">
-            <Icon name="ios-star" style={{ fontSize: 80, color: "#ff802b" }} />
+            <Icon name="ios-star" style={{ fontSize: 80, color: "#00AEEF" }} />
           </Animatable.View>
         </Animatable.View>
       );

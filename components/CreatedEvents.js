@@ -51,7 +51,12 @@ class CreatedEvents extends Component {
   renderEvent(item) {
     return (
       <Animatable.View
-        style={{ marginTop: 5, marginLeft: 5, marginBottom: 5 }}
+        style={{
+          marginTop: 5,
+          marginBottom: 5,
+          backgroundColor: "white",
+          paddingVertical: 10
+        }}
         key={item.eventID + "1"}
       >
         <EventCard
@@ -101,7 +106,7 @@ class CreatedEvents extends Component {
           <Animatable.View animation="pulse" iterationCount="infinite">
             <Icon
               name="ios-rocket"
-              style={{ fontSize: 80, color: "#ff802b" }}
+              style={{ fontSize: 80, color: "#00AEEF" }}
             />
           </Animatable.View>
         </Animatable.View>

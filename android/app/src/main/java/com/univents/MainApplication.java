@@ -4,6 +4,11 @@ import android.app.Application;
 
 import com.crashlytics.android.Crashlytics;
 import com.facebook.react.ReactApplication;
+import com.swmansion.reanimated.ReanimatedPackage;
+import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
+import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
+import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
+import com.swmansion.reanimated.ReanimatedPackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.RNFetchBlob.RNFetchBlobPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -47,7 +52,11 @@ private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
         protected List<ReactPackage> getPackages() {
                 return Arrays.<ReactPackage>asList(
                         new MainReactPackage(),
-                        new AsyncStoragePackage(),
+            new ReanimatedPackage(),
+            new RNGestureHandlerPackage(),
+            new AsyncStoragePackage(),
+                        new RNGestureHandlerPackage(),
+                        new ReanimatedPackage(),
                         new RNFetchBlobPackage(),
                         new VectorIconsPackage(),
                         new SvgPackage(),

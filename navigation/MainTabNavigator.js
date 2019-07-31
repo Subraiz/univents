@@ -14,7 +14,6 @@ import BottomNavigation, {
   IconTab,
   Badge
 } from "react-native-material-bottom-navigation";
-import TabBarComponent from "./TabBarComponent";
 
 let regularSize = 25;
 let selectedSize = 27;
@@ -40,9 +39,7 @@ ExploreScreen.navigationOptions = {
   header: null,
   gesturesEnabled: false,
   tabBarLabel: "Explore",
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={"ios-send"} />
-  )
+  tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name={"Explore"} />
 };
 
 const EventsScreen = createStackNavigator({
@@ -54,7 +51,7 @@ EventsScreen.navigationOptions = {
   gesturesEnabled: false,
   tabBarLabel: "Events",
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={"ios-calendar"} />
+    <TabBarIcon focused={focused} name={"Calendar"} />
   )
 };
 
@@ -66,9 +63,7 @@ ProfileScreen.navigationOptions = {
   header: null,
   gesturesEnabled: false,
   tabBarLabel: "Profile",
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={"md-contact"} />
-  )
+  tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name={"Profile"} />
 };
 
 const TabNavigator = createBottomTabNavigator(

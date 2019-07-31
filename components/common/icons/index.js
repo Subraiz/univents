@@ -6,3 +6,6 @@ module.exports.Food = require("./Food").Food;
 module.exports.Music = require("./Music").Music;
 module.exports.Fashion = require("./Fashion").Fashion;
 module.exports.More = require("./More").More;
+module.exports.Explore = require("./Explore").Explore;
+module.exports.Profile = require("./Profile").Profile;
+module.exports.Calendar = require("./Calendar").Calendar;
