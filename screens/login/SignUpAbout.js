@@ -95,35 +95,34 @@ class SignUpAbout extends Component {
   };
 
   onButtonPress = async () => {
-    this.props.navigation.navigate("SignUpProfilePhoto");
-    // if (!this.checkForErrors()) {
-    //   this.props.updateUserInfo({
-    //     prop: "lastName",
-    //     value: this.state.lastName
-    //   });
-    //   this.props.updateUserInfo({
-    //     prop: "firstName",
-    //     value: this.state.firstName
-    //   });
-    //   this.props.updateUserInfo({
-    //     prop: "major",
-    //     value: this.state.selectedMajor
-    //   });
-    //   this.props.updateUserInfo({
-    //     prop: "sex",
-    //     value: this.state.selectedGender
-    //   });
-    //   this.props.updateUserInfo({
-    //     prop: "year",
-    //     value: this.state.selectedSchoolYear
-    //   });
-    //   this.props.navigation.navigate("SignUpProfilePhoto");
-    // }
+    if (!this.checkForErrors()) {
+      this.props.updateUserInfo({
+        prop: "lastName",
+        value: this.state.lastName
+      });
+      this.props.updateUserInfo({
+        prop: "firstName",
+        value: this.state.firstName
+      });
+      this.props.updateUserInfo({
+        prop: "major",
+        value: this.state.selectedMajor
+      });
+      this.props.updateUserInfo({
+        prop: "sex",
+        value: this.state.selectedGender
+      });
+      this.props.updateUserInfo({
+        prop: "year",
+        value: this.state.selectedSchoolYear
+      });
+      this.props.navigation.navigate("SignUpProfilePhoto");
+    }
 
-    // if (this.props.uid) {
-    //   this.props.saveUser(this.props.user);
-    //   this.props.navigation.navigate("SignUpProfilePhoto");
-    // }
+    if (this.props.uid) {
+      this.props.saveUser(this.props.user);
+      this.props.navigation.navigate("SignUpProfilePhoto");
+    }
   };
 
   renderContinue() {

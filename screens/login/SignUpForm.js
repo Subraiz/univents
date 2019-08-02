@@ -55,18 +55,17 @@ class SignUpForm extends Component {
   }
 
   onButtonPress = async () => {
-    this.props.navigation.navigate("SignUpAbout");
-    // await this.props.checkForSignUpErrors(
-    //   this.props.user,
-    //   this.state.emailExtension
-    // );
-    //
-    // if (this.props.error == "No Error") {
-    //   await this.props.signUpUser(this.props.email, this.props.password);
-    //   if (this.props.uid) {
-    //     this.props.navigation.navigate("SignUpAbout");
-    //   }
-    // }
+    await this.props.checkForSignUpErrors(
+      this.props.user,
+      this.state.emailExtension
+    );
+
+    if (this.props.error == "No Error") {
+      await this.props.signUpUser(this.props.email, this.props.password);
+      if (this.props.uid) {
+        this.props.navigation.navigate("SignUpAbout");
+      }
+    }
   };
 
   renderErrorEmailMessage() {

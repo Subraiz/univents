@@ -155,7 +155,7 @@ class Screen1 extends Component {
 
   renderCategories() {
     if (this.props.eventCategories.length == 0) {
-      return <Text style={{ color: "lightgrey" }}>Categories</Text>;
+      return <Text style={{ color: "#92C83D" }}>Add Categories +</Text>;
     } else {
       let categoriesString;
       for (var i = 0; i < this.props.eventCategories.length; i++) {
@@ -459,19 +459,18 @@ class Screen1 extends Component {
   }
 
   renderButtonFunction() {
-    // if (
-    //   this.props.eventName !== "" &&
-    //   this.props.eventHost !== "" &&
-    //   this.props.eventContact !== "" &&
-    //   this.props.eventLocation.locationName !== "" &&
-    //   this.props.eventLocation.locationAddress !== "" &&
-    //   this.props.eventDate.month !== ""
-    // ) {
-    //   this.props.onPress();
-    // } else {
-    //   this.onButtonPress();
-    // }
-    this.props.onPress();
+    if (
+      this.props.eventName !== "" &&
+      this.props.eventHost !== "" &&
+      this.props.eventContact !== "" &&
+      this.props.eventLocation.locationName !== "" &&
+      this.props.eventLocation.locationAddress !== "" &&
+      this.props.eventDate.month !== ""
+    ) {
+      this.props.onPress();
+    } else {
+      this.onButtonPress();
+    }
   }
 
   handleScroll = event => {
@@ -484,8 +483,8 @@ class Screen1 extends Component {
       inputRange: [
         0,
         screenHeight * 0.1,
-        screenHeight * 0.2,
-        screenHeight * 0.23
+        screenHeight * 0.165,
+        screenHeight * 0.2
       ],
       outputRange: [1, 0.5, 0.2, 0],
       extrapolate: "clamp"
@@ -525,21 +524,28 @@ class Screen1 extends Component {
             iterationCount="infinite"
             style={[styles.scrollDownContainer]}
           >
-            <Animatable.View
-              animation="swing"
-              duration={1000}
-              iterationCount="infinite"
-              direction="reverse"
-              easing="ease"
+            <TouchableOpacity
+              onPress={() => {
+                this._scrollBar.scrollToEnd();
+              }}
             >
-              <Icon
-                name="md-arrow-down"
-                style={{ fontSize: 22, color: "white", paddingTop: 2 }}
-              />
-            </Animatable.View>
+              <Animatable.View
+                animation="swing"
+                duration={1000}
+                iterationCount="infinite"
+                direction="reverse"
+                easing="ease"
+              >
+                <Icon
+                  name="md-arrow-down"
+                  style={{ fontSize: 22, color: "white", paddingTop: 2 }}
+                />
+              </Animatable.View>
+            </TouchableOpacity>
           </Animatable.View>
         </Animated.View>
         <KeyboardAwareScrollView
+          ref={component => (this._scrollBar = component)}
           extraScrollHeight={45}
           scrollEventThrottle={16}
           style={{ flex: 1 }}
@@ -598,8 +604,8 @@ class Screen1 extends Component {
                     placeholder="Who's Hosting?"
                     placeholderTextColor="rgba(255,255,255,.8)"
                     spellCheck={false}
-                    containerStyle={[styles.inputStyle, { width: "42%" }]}
-                    inputStyle={styles.textInputStyle}
+                    containerStyle={[styles.inputStyle, { width: "40%" }]}
+                    inputStyle={[styles.textInputStyle, { fontSize: 14 }]}
                     onChangeText={text =>
                       this.props.updateEventInfo({
                         prop: "eventHost",
@@ -617,7 +623,7 @@ class Screen1 extends Component {
                       styles.inputStyle,
                       { width: "42%", marginLeft: 0 }
                     ]}
-                    inputStyle={styles.textInputStyle}
+                    inputStyle={[styles.textInputStyle, { fontSize: 14 }]}
                     onChangeText={text =>
                       this.props.updateEventInfo({
                         prop: "eventContact",
@@ -636,6 +642,7 @@ class Screen1 extends Component {
               style={{
                 width: "75%",
                 alignSelf: "center",
+                marginTop: 5,
                 marginBottom: 15
               }}
             >
@@ -718,7 +725,7 @@ class Screen1 extends Component {
                       borderBottomWidth: 0.4,
                       paddingBottom: 4
                     }}
-                    placeholder="Additional Links"
+                    placeholder="Add Additional Links"
                     value={this.state.eventLink}
                     spellCheck={false}
                     onChange={text =>
@@ -952,8 +959,7 @@ const styles = {
     paddingBottom: 10,
     borderTopRightRadius: 5,
     borderTopLeftRadius: 5,
-    overflow: "hidden",
-    backgroundColor: "white"
+    overflow: "hidden"
   },
   infoContainer: {
     width: screenWidth * 0.9,

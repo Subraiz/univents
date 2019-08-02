@@ -7,9 +7,6 @@ import com.facebook.react.ReactApplication;
 import com.swmansion.reanimated.ReanimatedPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
-import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
-import com.swmansion.reanimated.ReanimatedPackage;
-import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.RNFetchBlob.RNFetchBlobPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.horcrux.svg.SvgPackage;
@@ -30,7 +27,6 @@ import java.util.List;
 import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
 import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
-import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 
 public class MainApplication extends Application implements ReactApplication {
@@ -56,8 +52,6 @@ private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
                         new ReanimatedPackage(),
                         new RNGestureHandlerPackage(),
                         new AsyncStoragePackage(),
-                        new RNGestureHandlerPackage(),
-                        new ReanimatedPackage(),
                         new RNFetchBlobPackage(),
                         new VectorIconsPackage(),
                         new SvgPackage(),
