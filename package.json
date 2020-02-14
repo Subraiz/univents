@@ -68,7 +68,7 @@
     "rn-fetch-blob": "^0.10.13",
     "shorthash": "^0.0.2",
     "victory-native": "^31.0.0",
-    "yarn": "^1.12.3"
+    "yarn": "^1.22.0"
   },
   "devDependencies": {
     "babel-jest": "23.6.0",
